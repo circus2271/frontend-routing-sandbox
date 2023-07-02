@@ -1,0 +1,31 @@
+@import "normalize.css";
+
+body {
+  margin: 0;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  h1 {
+    color: green;
+    font-size: 4rem;
+  }
+}
+
+.wrapper {
+  padding: 1.25rem 1rem;
+}
+
+p {
+  //font-weight: 400;
+}
+
+.app-bar {
+  background: green;
+  color: #fff;
+  color: transparent;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+
+
+
