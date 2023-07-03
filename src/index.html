@@ -15,22 +15,54 @@
         app bar
       </div>
     </div>
-  </div>
 
   <header class="header">
     <div class="top-image">
-      <img src="assets/media/images/tramvai_bandcamp_header_image.png" alt="tramvai bandcamp header image">
+      <img src="~/src/assets/media/images/tramvai_bandcamp_header_image.png" alt="tramvai bandcamp header image">
     </div>
   </header>
+  <nav class="navigation">
+    <div class="wrapper">
+      <ul class="nav-links">
+        <li>
+          <a href="/">home</a>
+        </li>
+        <li>
+          <a href="/555/555">555/555</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
   <div class="wrapper">
     <p>
       <span>Current url is:</span>
       <span id="current-url"></span>
     </p>
+
+    <div class="audio-player">
+    </div>
   </div>
-<!--  <h1 class="text-3xl font-bold underline">-->
+
+  <div class="funin-fixed-player">
+    <div class="wrapper">
+<!--      <div class="play-button">-->
+
+<!--      </div>-->
+      <div class="controls">
+        <div class="prev"></div>
+        <div class="play-pause"></div>
+        <div class="next"></div>
+      </div>
+      <div class="song-info">
+        current song — current songname
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!--  <h1 class="text-3xl font-bold underline">-->
 <!--    Hello world!-->
 <!--  </h1>-->
-  <script type="module" src="assets/scripts/index.js"></script>
+  <script type="module" src="~/src/assets/scripts/index.ts"></script>
 </body>
 </html>
