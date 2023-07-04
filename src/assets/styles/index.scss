@@ -35,10 +35,13 @@ img {
 
 .app-bar {
   background: green;
+  background: hsl(109 73% 26%);; // roteted cornflowerblue
   color: #fff;
   color: transparent;
   font-size: 1.2rem;
   text-transform: uppercase;
+
+  box-shadow: inset hoff voff blur #000;
 }
 
 .navigation {
@@ -80,20 +83,21 @@ img {
     background: no-repeat center url('~/src/assets/media/images/icons/play.svg');
   }
 
-  &[paused]::after {
+  body[data-player-state="true"]  &::after {
     background-image: url('~/src/assets/media/images/icons/pause.svg');
   }
 
-  &[loading]::after {
-    background-image: url('~/src/assets/media/images/icons/loading.svg');
-  }
+  //&[loading]::after {
+  //  background-image: url('~/src/assets/media/images/icons/loading.svg');
+  //}
 }
 
 .funin-fixed-player {
   position: fixed;
   left: 0;
   right: 0;
-  background: red;
+  //background: red;
+  background: cornflowerblue;
   bottom: 0;
   color: #fff;
   padding-top: 2.5rem;
@@ -136,11 +140,11 @@ img {
       transform: rotate(180deg);
     }
 
-    .play-pause::after {
+    & .play-pause::after {
       background-image: url('~/src/assets/media/images/icons/play.svg');
     }
 
-    .play-pause[paused]::after {
+    body[data-player-state="true"] & .play-pause::after {
       background-image: url('~/src/assets/media/images/icons/pause.svg');
     }
 
