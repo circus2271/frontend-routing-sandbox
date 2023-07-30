@@ -1,4 +1,5 @@
-@import "normalize.css";
+@import '_normalize.css';
+@import '_breakpoints.scss';
 
 body {
   margin: 0;
@@ -34,16 +35,29 @@ img {
 }
 
 .app-bar {
-  background: green;
-  background: hsl(109 73% 26%);; // roteted cornflowerblue
-  color: #fff;
-  color: transparent;
+//  background: green;
+//  background: hsl(109 73% 26%);; // roteted cornflowerblue
+//  color: #fff;
+//  color: transparent;
   font-size: 1.2rem;
   text-transform: uppercase;
 
   box-shadow: inset hoff voff blur #000;
 }
 
+.header {
+  .top-image {
+    display: flex;
+    justify-content:center;
+
+    @include big() {
+      transform: scale(1.5);
+    }
+//    img {
+//      margin: 0 auto;
+//    }
+  }
+}
 .navigation {
 
   .nav-links {

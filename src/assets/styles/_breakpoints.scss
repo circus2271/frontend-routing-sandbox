@@ -1,0 +1,11 @@
+//--tablet-start:
+//:root {
+//    --desktop-start: 1200px;
+//}
+$desktop-start: 1200px;
+
+@mixin big() {
+    @media only screen and (min-width: $desktop-start) {
+        @content;
+    }
+}
