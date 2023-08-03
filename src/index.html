@@ -9,18 +9,26 @@
   <title>routing-player</title>
 </head>
 <body>
-  <div class="page">
-    <div class="app-bar">
-      <div class="wrapper">
-        app bar
-      </div>
+<div class="page">
+  <div class="app-bar">
+    <div class="wrapper">
+      app bar
     </div>
+  </div>
 
-  <header class="header">
-    <div class="top-image">
-      <img src="~/src/assets/media/images/tramvai_bandcamp_header_image.png" alt="tramvai bandcamp header image">
-    </div>
-  </header>
+  <parallax-header>
+    <header class="header">
+      <div class="top-image">
+        <img
+          src="~/src/assets/media/images/tramvai_bandcamp_header_image.png"
+          alt="tramvai bandcamp header image"
+          height=180
+          width=975
+        >
+      </div>
+    </header>
+  </parallax-header>
+
   <nav class="navigation">
     <div class="wrapper">
       <ul class="nav-links">
@@ -45,9 +53,9 @@
 
   <div class="funin-fixed-player">
     <div class="wrapper">
-<!--      <div class="play-button">-->
+      <!--      <div class="play-button">-->
 
-<!--      </div>-->
+      <!--      </div>-->
       <div class="controls">
         <div class="prev"></div>
         <div class="play-pause"></div>
@@ -58,11 +66,11 @@
       </div>
     </div>
   </div>
-  </div>
+</div>
 
-  <!--  <h1 class="text-3xl font-bold underline">-->
+<!--  <h1 class="text-3xl font-bold underline">-->
 <!--    Hello world!-->
 <!--  </h1>-->
-  <script type="module" src="~/src/assets/scripts/index.ts"></script>
+<script type="module" src="~/src/assets/scripts/index.ts"></script>
 </body>
 </html>
