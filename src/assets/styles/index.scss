@@ -105,6 +105,8 @@ img {
   justify-content: center;
   cursor: pointer;
 
+  display:none;
+
   &::after {
     --icon-size: 48px;
 
@@ -125,6 +127,8 @@ img {
 }
 
 .funin-fixed-player {
+  display: none;
+
   position: fixed;
   left: 0;
   right: 0;
@@ -183,5 +187,29 @@ img {
     .next::after {
 //      background-image: url('~/src/assets/media/images/icons/next.svg');
     }
+  }
+}
+
+available-albums {
+  ul {
+    display: grid;
+//    grid-template-columns: repeat(3, 1fr);
+//    grid-template-columns: repeat(auto-fit, 144px);
+//    grid-template-columns: ;
+//  grid-template-columns: repeat(auto-fit, minmax(144px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
+  grid-column-gap: .5rem;
+  grid-row-gap: .75rem;
+  }
+
+  .album-cover {
+//    --size: 144px;
+//
+//    width: var(--size);
+//    height: var(--size);
+//    background: grey;
+  padding-top: 100%;
+  background: #22c55e; //tailwind green 500
+  margin-bottom: .4rem;
   }
 }

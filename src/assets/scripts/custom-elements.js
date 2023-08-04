@@ -1,3 +1,5 @@
+import {getData} from "./helpers.mjs";
+
 class ParallaxImage extends HTMLElement {
   constructor() {
     super();
@@ -13,7 +15,7 @@ class ParallaxImage extends HTMLElement {
 //      this.image.style.transform = `translateY(${this.image.getBoundingClientRect().bottom})px`
 //      console.log(this.image)
 
-    window.addEventListener('scroll', this.onScroll, {passive: true})
+      window.addEventListener('scroll', this.onScroll, {passive: true})
   }
 
   onScroll(e) {
@@ -23,9 +25,9 @@ class ParallaxImage extends HTMLElement {
 //        const topY = this.image.getBoundingClientRect().top
     const bottomY = this.image.getBoundingClientRect().bottom
 
-      if (bottomY > 0) {
+    if (bottomY > 0) {
 //          if (bottomY + this.gap > 0) {
-              //            console.log(topY)
+      //            console.log(topY)
 //            this.image.style.top = -bottomY / 10 + 'px'
 //        this.image.style.top = bottomY / 5 + 'px'
 //        this.image.style.top = 10 + 'px'
@@ -38,3 +40,19 @@ class ParallaxImage extends HTMLElement {
 }
 
 customElements.define('parallax-image', ParallaxImage)
+
+
+class AvailableGroups extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  async connectedCallback() {
+    this.data = await getData()
+    console.log(this.data)
+    const { groups } = this.data
+
+  }
+}
+
+customElements.define('available-groups', AvailableGroups)

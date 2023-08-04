@@ -19,7 +19,7 @@ const data = {
         },
         {
           albumName: 'album 2 blabla babla',
-          coverImage: 'https://dfssf.dfsf'
+          coverImage: 'https://dfssf.dfsf',
           tracks: [
             {
               name: 'track wow',
@@ -37,6 +37,12 @@ const data = {
   ]
 }
 
+const group = [data.groups[0]]
+const newGroup = [...group]
+newGroup.groupName = 'blabla22'
+data.groups.push(newGroup)
+
+console.log(data)
 export const getData = async () => {
   return data
 }

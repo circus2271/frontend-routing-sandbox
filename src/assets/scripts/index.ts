@@ -6,6 +6,7 @@
 //
 // set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
 import './custom-elements'
+import './helpers.mjs'
 
 document.querySelector('#current-url').innerHTML = location.pathname
 
@@ -30,15 +31,26 @@ audioPlayer.addEventListener('click', event => {
   player.togglePlaying()
 })
 
-
-document.querySelector('.navigation').addEventListener('click', event => {
+document.body.addEventListener('click', event => {
   if (event.target instanceof HTMLAnchorElement) {
+    if (event.target.target) return;
+    // https://stackoverflow.com/a/6806291/9675926
+    if (event.ctrlKey) return;
+
     event.preventDefault()
 
     const href = event.target.href
     navigate(href)
   }
 })
+//document.querySelector('.navigation').addEventListener('click', event => {
+//  if (event.target instanceof HTMLAnchorElement) {
+//    event.preventDefault()
+//
+//    const href = event.target.href
+//    navigate(href)
+//  }
+//})
 
 
 // add state and controllers
@@ -68,7 +80,7 @@ class Player {
   state: PlayerState
   initialState: PlayerState = {
     playing: false,
-    defaultSong: 'https://t4.bcbits.com/stream/397d033da156343a86b71302aad9be72/mp3-v0/3970411301?p=1&ts=1688430687&t=34d036f456ccb3e46edb8f5f1ac296de58484ba7&token=1688430687_ad5728c1b929b1695dbc938898a8608b1bf90f5c'
+//    defaultSong: 'https://t4.bcbits.com/stream/397d033da156343a86b71302aad9be72/mp3-v0/3970411301?p=1&ts=1688430687&t=34d036f456ccb3e46edb8f5f1ac296de58484ba7&token=1688430687_ad5728c1b929b1695dbc938898a8608b1bf90f5c'
   }
   audioElement: HTMLAudioElement = document.createElement('audio')
 
@@ -136,9 +148,6 @@ window.addEventListener('playerStateChanged', (e: CustomEvent) => {
 
   player.audioElement.pause()
 })
-
-
-
 
 
 // const updateMarkup = () => {
