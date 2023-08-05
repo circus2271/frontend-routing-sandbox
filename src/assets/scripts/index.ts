@@ -8,12 +8,14 @@
 import './custom-elements'
 import {getData} from "./_helpers";
 
-document.querySelector('#current-url').innerHTML = location.pathname
+//document.querySelector('#current-url').innerHTML = location.pathname
 
 
 // https://flaviocopes.com/history-api/
 window.addEventListener("popstate", (event) => {
-  document.querySelector('#current-url').innerHTML = location.pathname
+//  document.querySelector('#current-url').innerHTML = location.pathname
+
+  updateUi()
 });
 
 
@@ -21,12 +23,26 @@ const navigate = async (url, state = {}) => {
   history.pushState(state, '', url)
   document.querySelector('#current-url').innerHTML = location.pathname
 
-//  await updateUi(url)
+  await updateUi(url)
 }
 
+const updateUi = () => {
+//  const urlParts = location.pathname.split('/').filter(part => part !== '')
+//
+//  if (urlParts.length === 1) {
+//    // assume this is group name,
+//    // so show group detail page
+//
+//    const groupName = urlParts[0]
+//
+//  }
+
+}
+
+updateUi()
 
 // navigate('555')
-const updateUi = async (newUrl) => {
+const oldupdateUi = async (newUrl) => {
   const urlParts = location.pathname.split('/').filter(part => part !== '')
 
   if (urlParts.length === 2) {

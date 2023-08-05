@@ -42,6 +42,7 @@ const data = {
 ['group11', 'group12', 'group13'].forEach(groupName => {
   const newGroup = {...data.groups[0]}
   newGroup.groupName = groupName
+  newGroup.coverImage = 'b2_train_gimp.png'
 
   data.groups.push(newGroup)
 })

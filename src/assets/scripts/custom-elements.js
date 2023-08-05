@@ -11,6 +11,11 @@ class ParallaxImage extends HTMLElement {
   connectedCallback() {
     this.image = this.querySelector('img')
     this.image.style.position = 'relative'
+
+//    alert(import.meta.url)
+//    this.image.src = new URL('../../images/b2_train_gimp.png', import.meta.url);
+    this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
+
     this.imageHeight =
 //      this.image.style.transform = `translateY(${this.image.getBoundingClientRect().bottom})px`
 //      console.log(this.image)
