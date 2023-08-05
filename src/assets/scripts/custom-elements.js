@@ -1,4 +1,4 @@
-import {getData} from "./helpers.mjs";
+import {getData} from "./_helpers";
 
 class ParallaxImage extends HTMLElement {
   constructor() {
@@ -50,9 +50,43 @@ class AvailableGroups extends HTMLElement {
   async connectedCallback() {
     this.data = await getData()
     console.log(this.data)
-    const { groups } = this.data
+//    const currentGroup = data.groups?.filter(group => {
+//      return group.groupName === groupName
+//    })[0]
+//    const {groupName} = currentGroup
+    const {groups} = this.data
 
+    let groupsHtml = ``
+    groups.forEach(group => {
+      const { groupName } = group
+      groupsHtml += `
+        <li>
+          <a href="/${groupName}">
+            ${groupName}
+          </a>
+        </li>
+      `
+    })
+
+    const content = this.querySelector('.content')
+
+    setTimeout(() => {
+
+    content.innerHTML = `
+        <ul>
+          ${groupsHtml}
+        </ul>
+      </section>
+    `
+    }, 1500)
   }
 }
 
 customElements.define('available-groups', AvailableGroups)
+
+
+//class AvailableAlbums extends HTMLElement {
+//  constructor() {
+//    super();
+//  }
+//}

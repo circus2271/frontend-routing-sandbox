@@ -8,7 +8,7 @@ html {
 body {
   margin: 0;
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-//  overflow: hidden;
+  //  overflow: hidden;
   overflow-x: hidden;
 
   h1 {
@@ -41,37 +41,37 @@ img {
 }
 
 .app-bar {
-//  background: green;
-//  background: hsl(109 73% 26%);; // roteted cornflowerblue
-//  color: #fff;
-//  color: transparent;
+  //  background: green;
+  //  background: hsl(109 73% 26%);; // roteted cornflowerblue
+  //  color: #fff;
+  //  color: transparent;
   font-size: 1.2rem;
   text-transform: uppercase;
 
-//  box-shadow: inset hoff voff blur #000;
+  //  box-shadow: inset hoff voff blur #000;
 }
 
 .header {
   overflow: hidden;
 
   .top-image {
-//    padding-top: calc(180/975 * 1px)
-//    display: flex;
-//    justify-content:center;
+    //    padding-top: calc(180/975 * 1px)
+    //    display: flex;
+    //    justify-content:center;
 
-//    @include big() {
-//      height: 360px !important;
-//      transform: scale(1.5);
-//    }
+    //    @include big() {
+    //      height: 360px !important;
+    //      transform: scale(1.5);
+    //    }
 
     img {
       margin: 0 auto;
-//      transform: translateY(-25%);
+      //      transform: translateY(-25%);
 
-//      @include big() {
-//        height: 360px !important;
-        //      transform: scale(1.5);
-//      }
+      //      @include big() {
+      //        height: 360px !important;
+      //      transform: scale(1.5);
+      //      }
     }
   }
 }
@@ -105,7 +105,7 @@ img {
   justify-content: center;
   cursor: pointer;
 
-  display:none;
+  display: none;
 
   &::after {
     --icon-size: 48px;
@@ -117,7 +117,7 @@ img {
     background: no-repeat center url('~/src/assets/media/images/icons/play.svg');
   }
 
-  body[data-player-state="true"]  &::after {
+  body[data-player-state="true"] &::after {
     background-image: url('~/src/assets/media/images/icons/pause.svg');
   }
 
@@ -144,7 +144,7 @@ img {
     gap: .5rem;
 
     .prev, .play-pause, .next {
-//      --size: 24px;
+      //      --size: 24px;
       --size: 48px;
       //--size: 32px;
 
@@ -172,7 +172,7 @@ img {
     }
 
     .prev::after {
-//      background-image: url('~/src/assets/media/images/icons/next.svg');
+      //      background-image: url('~/src/assets/media/images/icons/next.svg');
       transform: rotate(180deg);
     }
 
@@ -185,7 +185,7 @@ img {
     }
 
     .next::after {
-//      background-image: url('~/src/assets/media/images/icons/next.svg');
+      //      background-image: url('~/src/assets/media/images/icons/next.svg');
     }
   }
 }
@@ -193,23 +193,50 @@ img {
 available-albums {
   ul {
     display: grid;
-//    grid-template-columns: repeat(3, 1fr);
-//    grid-template-columns: repeat(auto-fit, 144px);
-//    grid-template-columns: ;
-//  grid-template-columns: repeat(auto-fit, minmax(144px, 1fr));
-  grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
-  grid-column-gap: .5rem;
-  grid-row-gap: .75rem;
+    //    grid-template-columns: repeat(3, 1fr);
+    //    grid-template-columns: repeat(auto-fit, 144px);
+    //    grid-template-columns: ;
+    //  grid-template-columns: repeat(auto-fit, minmax(144px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
+    grid-column-gap: .5rem;
+    grid-row-gap: .75rem;
   }
 
+
   .album-cover {
-//    --size: 144px;
-//
-//    width: var(--size);
-//    height: var(--size);
-//    background: grey;
-  padding-top: 100%;
-  background: #22c55e; //tailwind green 500
-  margin-bottom: .4rem;
+    //    --size: 144px;
+    //
+    //    width: var(--size);
+    //    height: var(--size);
+    //    background: grey;
+    padding-top: 100%;
+    background: #22c55e; //tailwind green 500
+    margin-bottom: .4rem;
+  }
+}
+
+.loader {
+  //  --size: 74px;
+  //  --border-width: 10px;
+  --size: 34px;
+  --border-width: 5.5px;
+  //  --rotation-speed: 1s;
+  --rotation-speed: 1.35s;
+
+  width: var(--size);
+  height: var(--size);
+  border: var(--border-width) solid white;
+  border-top: var(--border-width) solid transparent;
+  border-radius: 50%;
+  animation: rotate var(--rotation-speed) infinite linear;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(135deg);
+  }
+
+  100% {
+    transform: rotate(495deg);
   }
 }

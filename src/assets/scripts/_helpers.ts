@@ -1,11 +1,14 @@
 const data = {
   groups: [
     {
-      groupName: 'blablabla',
+//      groupName: 'blablabla',
+      groupName: 'group10',
       coverImage: 'https://fdfsdf.fdsdf',
       albums: [
         {
-          albumName: 'album blabla',
+//          albumName: 'album blabla',
+          albumName: 'album-1',
+          coverImage: 'https:/ffdsf.ff',
           tracks: [
             {
               name: 'track blabla',
@@ -33,16 +36,16 @@ const data = {
         },
       ]
     },
-    
   ]
-}
+};
 
-const group = [data.groups[0]]
-const newGroup = [...group]
-newGroup.groupName = 'blabla22'
-data.groups.push(newGroup)
+['group11', 'group12', 'group13'].forEach(groupName => {
+  const newGroup = {...data.groups[0]}
+  newGroup.groupName = groupName
 
-console.log(data)
+  data.groups.push(newGroup)
+})
+
 export const getData = async () => {
   return data
 }

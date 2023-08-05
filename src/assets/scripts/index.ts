@@ -6,7 +6,7 @@
 //
 // set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
 import './custom-elements'
-import './helpers.mjs'
+import {getData} from "./_helpers";
 
 document.querySelector('#current-url').innerHTML = location.pathname
 
@@ -17,14 +17,78 @@ window.addEventListener("popstate", (event) => {
 });
 
 
-const navigate = (url, state = {}) => {
+const navigate = async (url, state = {}) => {
   history.pushState(state, '', url)
   document.querySelector('#current-url').innerHTML = location.pathname
+
+//  await updateUi(url)
 }
 
 
 // navigate('555')
+const updateUi = async (newUrl) => {
+  const urlParts = location.pathname.split('/').filter(part => part !== '')
 
+  if (urlParts.length === 2) {
+    // assume that first part is groupName and second is album name
+    const groupName = urlParts[0]
+    const albumName = urlParts[1]
+
+    const data = await getData()
+
+    const currentGroup = data.groups?.filter(group => {
+      return group.groupName === groupName
+    })[0]
+
+    if (!currentGroup) return console.error('can\'t find a group, 404')
+
+    const currentAlbum = currentGroup.albums?.filter(album => {
+      return album.albumName === albumName
+    })[0]
+
+    console.log(currentAlbum)
+
+  }
+
+  if (urlParts.length === 1) {
+    const part = urlParts[0]
+
+    if (part === 'about') {
+      // show about page
+    }
+
+    if (part == 'contacts') {
+      // show contacts page
+    }
+
+    // assume it's a group name and hense a group page
+
+    const groupName = part
+    const data = await getData()
+    const currentGroup = data.groups?.filter(group => {
+      return group.groupName === groupName
+    })[0]
+
+    if (!currentGroup) return console.error('can\'t find a group, 404')
+
+    console.log(currentGroup)
+
+  }
+//  if (albumName) {
+////    showAlbumPage()
+//  }
+//
+//  if (groupName) {
+////    showGroupPage()
+//  }
+
+//  switch (newUrl) {
+//    case '':
+//      break;
+//    default:
+//      alert('хых')
+//  }
+}
 
 const audioPlayer = document.querySelector('.audio-player')
 audioPlayer.addEventListener('click', event => {
