@@ -46,11 +46,17 @@ class ParallaxImage extends HTMLElement {
     }
   }
 
-  onUrlChange = () => {
+  onUrlChange = (event) => {
     this.image.style.opacity = 0;
 
-    setTimeout(() => {
+    const {newLocation} = event.detail
+    if (newLocation === '/') {
+      this.image.src = new URL('~/src/assets/media/images/tramvai_bandcamp_header_image.png', import.meta.url);
+    } else {
       this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
+    }
+
+    setTimeout(() => {
       this.image.style.opacity = 1;
     }, 1500)
 
@@ -81,7 +87,7 @@ class AvailableGroups extends HTMLElement {
 
     let groupsHtml = ``
     groups.forEach(group => {
-      const { groupName } = group
+      const {groupName} = group
       groupsHtml += `
         <li>
           <a href="/${groupName}">
