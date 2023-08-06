@@ -13,11 +13,11 @@ class ParallaxImage extends HTMLElement {
     this.placeholder = this.querySelector('.loader')
     this.image = this.querySelector('img')
 //    this.image.style.position = 'relative'
-
-    setTimeout(() => {
+    this.showImage()
+//    setTimeout(() => {
 //      this.loader.style.display = 'none'
-      this.image.style.opacity = 1
-    }, 1500)
+//      this.image.style.opacity = 1
+//    }, 1500)
 //    alert(import.meta.url)
 //    this.image.src = new URL('../../images/b2_train_gimp.png', import.meta.url);
 //    this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
@@ -47,10 +47,16 @@ class ParallaxImage extends HTMLElement {
   }
 
   onUrlChange = (event) => {
+    this.showImage()
+  }
+
+  showImage = () => {
     this.image.style.opacity = 0;
 
-    const {newLocation} = event.detail
-    if (newLocation === '/') {
+    const {pathname} = location
+//    alert(pathname)
+//    const {newLocation} = event.detail
+    if (pathname === '/') {
       this.image.src = new URL('~/src/assets/media/images/tramvai_bandcamp_header_image.png', import.meta.url);
     } else {
       this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
@@ -58,8 +64,7 @@ class ParallaxImage extends HTMLElement {
 
     setTimeout(() => {
       this.image.style.opacity = 1;
-    }, 1500)
-
+      }, 1500)
   }
 
   disconnectedCallback() {

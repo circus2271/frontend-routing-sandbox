@@ -131,9 +131,9 @@ document.body.addEventListener('click', event => {
 
 const emitUrlChangeEvent = () => {
   const event = new CustomEvent(urlChange, {
-    detail: {
-      newLocation: location.pathname
-    }
+//    detail: {
+//      newLocation: location.pathname
+//    }
   })
 
   window.dispatchEvent(event)
