@@ -55,23 +55,18 @@ img {
   overflow: hidden;
 
   .top-image {
-    //    padding-top: calc(180/975 * 1px)
-    //    display: flex;
-    //    justify-content:center;
+    min-height: 180px; //replace with padding
+    display: grid;
+    place-items: center;
 
-    //    @include big() {
-    //      height: 360px !important;
-    //      transform: scale(1.5);
-    //    }
+    .loader {
+      position: absolute;
+    }
 
     img {
       margin: 0 auto;
-      //      transform: translateY(-25%);
-
-      //      @include big() {
-      //        height: 360px !important;
-      //      transform: scale(1.5);
-      //      }
+      position: relative;
+      opacity: 0;
     }
   }
 }

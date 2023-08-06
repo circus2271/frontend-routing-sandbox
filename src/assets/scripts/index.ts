@@ -6,24 +6,16 @@
 //
 // set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
 import './custom-elements'
-import {getData} from "./_helpers";
+import {getData, urlChange} from "./_helpers";
 
 //document.querySelector('#current-url').innerHTML = location.pathname
 
 
-// https://flaviocopes.com/history-api/
-window.addEventListener("popstate", (event) => {
-//  document.querySelector('#current-url').innerHTML = location.pathname
-
-  updateUi()
-});
-
-
 const navigate = async (url, state = {}) => {
   history.pushState(state, '', url)
-  document.querySelector('#current-url').innerHTML = location.pathname
+//  document.querySelector('#current-url').innerHTML = location.pathname
 
-  await updateUi(url)
+//  await updateUi(url)
 }
 
 const updateUi = () => {
@@ -111,6 +103,16 @@ audioPlayer.addEventListener('click', event => {
   player.togglePlaying()
 })
 
+// https://flaviocopes.com/history-api/
+window.addEventListener("popstate", (event) => {
+  //  document.querySelector('#current-url').innerHTML = location.pathname
+
+//  console.log('popstate', event)
+//  updateUi()
+  emitUrlChangeEvent()
+});
+
+
 document.body.addEventListener('click', event => {
   if (event.target instanceof HTMLAnchorElement) {
     if (event.target.target) return;
@@ -121,7 +123,24 @@ document.body.addEventListener('click', event => {
 
     const href = event.target.href
     navigate(href)
+
+    emitUrlChangeEvent()
+//    alert(location.pathname)
   }
+})
+
+const emitUrlChangeEvent = () => {
+  const event = new CustomEvent(urlChange, {
+    detail: {
+      newLocation: location.pathname
+    }
+  })
+
+  window.dispatchEvent(event)
+}
+
+window.addEventListener(urlChange, (e: CustomEvent) => {
+//  alert(e.detail.newLocation)
 })
 //document.querySelector('.navigation').addEventListener('click', event => {
 //  if (event.target instanceof HTMLAnchorElement) {

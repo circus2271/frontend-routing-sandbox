@@ -50,3 +50,6 @@ const data = {
 export const getData = async () => {
   return data
 }
+
+export const URL_CHANGE_EVENT = 'urlChange'
+export const urlChange = 'urlChange'

@@ -1,29 +1,36 @@
-import {getData} from "./_helpers";
+import {getData, urlChange} from "./_helpers";
 
 class ParallaxImage extends HTMLElement {
   constructor() {
     super();
 
     this.gap = 50;
-    this.onScroll = this.onScroll.bind(this)
+//    this.onScroll = this.onScroll.bind(this)
+//    this.onUrlChange = this.onUrlChange.bind(this)
   }
 
   connectedCallback() {
+    this.placeholder = this.querySelector('.loader')
     this.image = this.querySelector('img')
-    this.image.style.position = 'relative'
+//    this.image.style.position = 'relative'
 
+    setTimeout(() => {
+//      this.loader.style.display = 'none'
+      this.image.style.opacity = 1
+    }, 1500)
 //    alert(import.meta.url)
 //    this.image.src = new URL('../../images/b2_train_gimp.png', import.meta.url);
-    this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
+//    this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
 
-    this.imageHeight =
+//    this.imageHeight =
 //      this.image.style.transform = `translateY(${this.image.getBoundingClientRect().bottom})px`
 //      console.log(this.image)
 
-      window.addEventListener('scroll', this.onScroll, {passive: true})
+    window.addEventListener('scroll', this.onScroll, {passive: true})
+    window.addEventListener(urlChange, this.onUrlChange, {passive: true})
   }
 
-  onScroll(e) {
+  onScroll = (e) => {
 //        console.log('i', this.image)
 //        console.log(this.image.getBoundingClientRect().top)
 //        console.log(this.image.getBoundingClientRect().top)
@@ -39,8 +46,19 @@ class ParallaxImage extends HTMLElement {
     }
   }
 
+  onUrlChange = () => {
+    this.image.style.opacity = 0;
+
+    setTimeout(() => {
+      this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
+      this.image.style.opacity = 1;
+    }, 1500)
+
+  }
+
   disconnectedCallback() {
     window.removeEventListener('scroll', this.onScroll)
+    window.removeEventListener('scroll', this.onUrlChange)
   }
 }
 
@@ -77,12 +95,12 @@ class AvailableGroups extends HTMLElement {
 
     setTimeout(() => {
 
-    content.innerHTML = `
-        <ul>
-          ${groupsHtml}
-        </ul>
-      </section>
-    `
+//    content.innerHTML = `
+//        <ul>
+//          ${groupsHtml}
+//        </ul>
+//      </section>
+//    `
     }, 1500)
   }
 }
