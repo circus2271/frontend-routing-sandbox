@@ -3,7 +3,8 @@ const data = {
     {
 //      groupName: 'blablabla',
       groupName: 'group10',
-      coverImage: 'https://fdfsdf.fdsdf',
+//      coverImage: 'https://fdfsdf.fdsdf',
+      coverImage: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/7f60a7149564547.62ee76a7bb0dd.jpg',
       albums: [
         {
 //          albumName: 'album blabla',
