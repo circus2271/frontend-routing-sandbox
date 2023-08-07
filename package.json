@@ -7,11 +7,10 @@
   },
   "browserslist": "> 0.5%, last 2 versions, not dead, iOS 13",
   "devDependencies": {
+    "@parcel/resolver-glob": "^2.9.3",
     "@parcel/transformer-sass": "^2.9.3",
     "live-server": "^1.2.2",
     "parcel": "^2.9.3",
     "rimraf": "^5.0.1"
-  },
-  "dependencies": {
   }
 }

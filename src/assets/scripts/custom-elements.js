@@ -1,4 +1,8 @@
-import {getData, urlChange} from "./_helpers";
+import {getData, urlChange, defaultTimeout} from "./_helpers";
+import * as images from '~/src/assets/media/images/**/*.png';
+//import  images from '../media/images/**/*';
+//import images from '../media/images/**/*.png';
+console.log('images:', images)
 
 class ParallaxImage extends HTMLElement {
   constructor() {
@@ -17,7 +21,9 @@ class ParallaxImage extends HTMLElement {
 //    setTimeout(() => {
 //      this.loader.style.display = 'none'
 //      this.image.style.opacity = 1
-//    }, 1500)
+// //        }, 1500)
+//        }, defaultTimeout)
+
 //    alert(import.meta.url)
 //    this.image.src = new URL('../../images/b2_train_gimp.png', import.meta.url);
 //    this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
@@ -53,23 +59,37 @@ class ParallaxImage extends HTMLElement {
   showImage = () => {
     this.image.style.opacity = 0;
 
-    const {pathname} = location
+    const {pathname} = location;
 //    alert(pathname)
 //    const {newLocation} = event.detail
-    if (pathname === '/') {
-      this.image.src = new URL('~/src/assets/media/images/tramvai_bandcamp_header_image.png', import.meta.url);
-    } else {
-      this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
+//    ['Jim_Jarmush_movie_screenshot.png', 'electronic_bandcamp.png'].forEach(src => {
+//      const image = new Image()
+//      image.onload = () => console.log('loaded:', src)
+//      image.src = new URL('~/src/assets/media/images/' + src, import.meta.url);
+//    })
+    switch (location.pathname) {
+      case '/':
+        this.image.src = new URL('~/src/assets/media/images/tramvai_bandcamp_header_image.png', import.meta.url);
+        break;
+      case '/about':
+        this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
+        break;
+      default:
+        this.image.src = new URL('~/src/assets/media/images/b3_train_reversed_gimp.png', import.meta.url)
     }
 
+//    if (pathname === '/') {
+//    } else {
+//      this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
+//    }
     setTimeout(() => {
       this.image.style.opacity = 1;
-      }, 1500)
+    }, defaultTimeout)
   }
 
   disconnectedCallback() {
     window.removeEventListener('scroll', this.onScroll)
-    window.removeEventListener('scroll', this.onUrlChange)
+    window.removeEventListener(urlChange, this.onUrlChange)
   }
 }
 
@@ -83,7 +103,7 @@ class AvailableGroups extends HTMLElement {
 
   async connectedCallback() {
     this.data = await getData()
-    console.log(this.data)
+//    console.log(this.data)
 //    const currentGroup = data.groups?.filter(group => {
 //      return group.groupName === groupName
 //    })[0]
@@ -112,7 +132,7 @@ class AvailableGroups extends HTMLElement {
 //        </ul>
 //      </section>
 //    `
-    }, 1500)
+    }, defaultTimeout)
   }
 }
 

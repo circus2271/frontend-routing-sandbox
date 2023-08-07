@@ -53,3 +53,5 @@ export const getData = async () => {
 
 export const URL_CHANGE_EVENT = 'urlChange'
 export const urlChange = 'urlChange'
+//export const defaultTimeout = 1500
+export const defaultTimeout = 500
