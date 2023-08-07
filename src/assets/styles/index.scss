@@ -72,6 +72,12 @@ img {
       position: relative;
       opacity: 0;
       object-fit: cover;
+      visibility: hidden;
+
+      &.visible {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 }

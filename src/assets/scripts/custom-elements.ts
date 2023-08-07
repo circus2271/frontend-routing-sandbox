@@ -21,7 +21,7 @@ class ParallaxImage extends HTMLElement {
     this.placeholder = this.querySelector('.loader')
     this.image = this.querySelector('img')
     //    this.image.style.position = 'relative'
-    this.showImage()
+    this.updateImage()
     //    setTimeout(() => {
     //      this.loader.style.display = 'none'
     //      this.image.style.opacity = 1
@@ -57,21 +57,24 @@ class ParallaxImage extends HTMLElement {
   }
 
   onUrlChange = (event) => {
-    this.showImage()
+    this.updateImage()
   }
 
-  showImage = async () => {
-    this.image.style.opacity = 0;
+  updateImage = async () => {
+//    this.image.style.opacity = 0;
+//    this.image.style.visibility
+    this.image.classList.remove('visible')
+    this.image.src = ''
 
-//    const {pathname} = location;
-    //    alert(pathname)
-    //    const {newLocation} = event.detail
-    //    ['Jim_Jarmush_movie_screenshot.png', 'electronic_bandcamp.png'].forEach(src => {
-    //      const image = new Image()
-    //      image.onload = () => console.log('loaded:', src)
-    //      image.src = new URL('~/src/assets/media/images/' + src, import.meta.url);
-    //    })
-    //    const { pathname } = location
+
+//    this.image.onload = () => {
+//      this.image.classList.add('visible')
+//    }
+
+    this.image.onerror = () => {
+      // set default
+      this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
+    }
 
 //    alert(location.pathname)
     switch (location.pathname) {
@@ -95,12 +98,13 @@ class ParallaxImage extends HTMLElement {
 
 //          alert(currentGroup.groupName)
           if (currentGroup.coverImage) {
-            this.image.onerror = () => {
-              // set default
-              this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
+            let random = Math.random()
+            if (Math.round(random)) {
+              this.image.src = currentGroup.coverImage
+            } else {
+              // fallback image
+              this.image.src = 'error-case' + currentGroup.coverImage
             }
-
-            this.image.src = currentGroup.coverImage
           }
 
           if (!currentGroup.coverImage) {
@@ -116,7 +120,7 @@ class ParallaxImage extends HTMLElement {
 
 
     setTimeout(() => {
-      this.image.style.opacity = 1;
+      this.image.classList.add('visible')
     }, defaultTimeout)
   }
 
