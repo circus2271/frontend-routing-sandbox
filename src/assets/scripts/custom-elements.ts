@@ -1,10 +1,14 @@
 import {getData, urlChange, defaultTimeout} from "./_helpers";
-import * as images from '~/src/assets/media/images/**/*.png';
+//import * as images from '~/src/assets/media/images/**/*.png';
 //import  images from '../media/images/**/*';
 //import images from '../media/images/**/*.png';
-console.log('images:', images)
+//console.log('images:', images)
 
 class ParallaxImage extends HTMLElement {
+  placeholder: any;
+  image: any;
+  gap: number;
+
   constructor() {
     super();
 
@@ -125,8 +129,9 @@ class ParallaxImage extends HTMLElement {
 customElements.define('parallax-image', ParallaxImage)
 
 
-class AvailableGroups
-  extends HTMLElement {
+class AvailableGroups extends HTMLElement {
+  data: any;
+  
   constructor() {
     super();
   }
