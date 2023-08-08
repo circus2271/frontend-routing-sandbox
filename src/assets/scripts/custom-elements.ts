@@ -1,4 +1,4 @@
-import {getData, urlChange, defaultTimeout} from "./_helpers";
+import { getData, urlChange, defaultTimeout } from "./_helpers";
 
 class ParallaxImage extends HTMLElement {
   placeholder: any;
@@ -104,53 +104,53 @@ class ParallaxImage extends HTMLElement {
 customElements.define('parallax-image', ParallaxImage)
 
 
-class AvailableGroups extends HTMLElement {
-  data: any;
-
-  constructor() {
-    super();
-  }
-
-  async connectedCallback() {
-    this.data = await getData()
-//    console.log(this.data)
-//    const currentGroup = data.groups?.filter(group => {
-//      return group.groupName === groupName
-//    })[0]
-//    const {groupName} = currentGroup
-    const {groups} = this.data
-
-    let groupsHtml = ``
-    groups.forEach(group => {
-      const {groupName} = group
-      groupsHtml += `
-        <li>
-          <a href="/${groupName}">
-            ${groupName}
-          </a>
-        </li>
-      `
-    })
-
-//    const content = this.querySelector('.content')
-    const listWrapper = this.querySelector('.content .list-wrapper')
-
-//    listWrapper.log
-    setTimeout(() => {
-
-      listWrapper.innerHTML = `
-        <ul>
-          ${groupsHtml}
-        </ul>
-      `
-
-      listWrapper.classList.add('visible')
-    }, defaultTimeout)
-  }
-}
-
-customElements.define('available-groups', AvailableGroups)
-
+// class AvailableGroups extends HTMLElement {
+//   data: any;
+//
+//   constructor() {
+//     super();
+//   }
+//
+//   async connectedCallback() {
+//     this.data = await getData()
+// //    console.log(this.data)
+// //    const currentGroup = data.groups?.filter(group => {
+// //      return group.groupName === groupName
+// //    })[0]
+// //    const {groupName} = currentGroup
+//     const {groups} = this.data
+//
+//     let groupsHtml = ``
+//     groups.forEach(group => {
+//       const {groupName} = group
+//       groupsHtml += `
+//         <li>
+//           <a href="/${groupName}">
+//             ${groupName}
+//           </a>
+//         </li>
+//       `
+//     })
+//
+// //    const content = this.querySelector('.content')
+//     const listWrapper = this.querySelector('.content .list-wrapper')
+//
+// //    listWrapper.log
+//     setTimeout(() => {
+//
+//       listWrapper.innerHTML = `
+//         <ul>
+//           ${groupsHtml}
+//         </ul>
+//       `
+//
+//       listWrapper.classList.add('visible')
+//     }, defaultTimeout)
+//   }
+// }
+//
+// customElements.define('available-groups', AvailableGroups)
+//
 
 //class AvailableAlbums extends HTMLElement {
 //  constructor() {
@@ -167,40 +167,112 @@ class AvailableAlbums extends HTMLElement {
 
   async connectedCallback() {
     this.data = await getData()
-    //    console.log(this.data)
-    //    const currentGroup = data.groups?.filter(group => {
-    //      return group.groupName === groupName
-    //    })[0]
-    //    const {groupName} = currentGroup
-    const {groups} = this.data
 
-    let groupsHtml = ``
-    groups.forEach(group => {
-      const {groupName} = group
-      groupsHtml += `
-        <li>
-          <a href="/${groupName}">
-            ${groupName}
-          </a>
-        </li>
-      `
-    })
+    const urlParts = location.pathname.split('/').filter(part => part !== '')
 
-    //    const content = this.querySelector('.content')
-    const listWrapper = this.querySelector('.content .list-wrapper')
+    if (urlParts.length === 0) {
+      const availableAlbums = []
 
-    //    listWrapper.log
-    setTimeout(() => {
+      this.data.groups?.forEach(group => {
+        const albums = [...group.albums]
+        if (albums) {
+          albums.forEach(album => {
+            // alert(group.groupName)
+            album.groupName = group.groupName             //...
+            availableAlbums.push(album)
+            // debugger
+          })
+        }
+      })
 
-      listWrapper.innerHTML = `
-        <ul>
-          ${groupsHtml}
-        </ul>
-      `
+      console.log(availableAlbums)
+      let html = ``
+      availableAlbums.forEach(album => {
+        html += `
+          <li>
+               <div class="album-cover">
+                 <!--<img src="">-->
+               </div>
+               <a href="/${album.groupName}/${album.albumName}">
+                 ${album.albumName} wow
+               </a>
+             </li>
+        `
+      })
 
-      listWrapper.classList.add('visible')
-    }, defaultTimeout)
+      const listWrapper = this.querySelector('.content .list-wrapper')
+      listWrapper.innerHTML = `<ul>${html}</ul>`
+      // listWrapper.style.display = 'block'
+
+      setTimeout(() => {
+        // listWrapper.style.display = 'block'
+        listWrapper.classList.add('visible')
+      }, defaultTimeout)
+    }
+
+//     if (urlParts.length === 1) {
+//       const possibleGroupName = urlParts[0]
+//
+//       const data = await getData()
+//
+//       const currentGroup = data.groups?.filter(group => {
+//         return group.groupName === possibleGroupName
+//       })[0]
+//
+//       const albums = currentGroup.albums
+//       if (albums) {
+//         let albumsHTML = ``
+//         albums.forEach(album => {
+//           // const { albumName } = album;
+//           albumsHTML += `
+//             <li>
+//               <div class="album-cover">
+//                 <!--<img src="">-->
+//               </div>
+// <!--              <a href="/group10/album-1">-->
+// <!--                blabala album 1-->
+// <!--              </a>-->
+//               <a href="${possibleGroupName}/${album.albumName}">
+//                 blabala album 1
+//               </a>
+//             </li>
+//           `
+//         })
+//
+//         const listWrapper = this.querySelector('.content .list-wrapper')
+//         listWrapper.innerHTML = `
+//           <ul>
+//             ${albumsHTML}
+//           </ul>
+//         `
+//       }
+//     }
+
+
   }
+
+
+
+  // if (currentAlbum) {
+  //
+  // }
+
+
+  //    const content = this.querySelector('.content')
+  // const listWrapper = this.querySelector('.content .list-wrapper')
+
+  //    listWrapper.log
+  // setTimeout(() => {
+  //
+  //   listWrapper.innerHTML = `
+  //     <ul>
+  //       ${groupsHtml}
+  //     </ul>
+  //   `
+  //
+  //   listWrapper.classList.add('visible')
+  // }, defaultTimeout)
+
 }
 
 customElements.define('available-albums', AvailableAlbums)
