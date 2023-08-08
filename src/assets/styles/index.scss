@@ -52,6 +52,7 @@ img {
     text-decoration: none;
     color: #fff;
   }
+
   //  box-shadow: inset hoff voff blur #000;
 }
 
@@ -63,9 +64,9 @@ img {
     display: grid;
     place-items: center;
 
-    .loader {
-      position: absolute;
-    }
+    //    .loader {
+    //      position: absolute;
+    //    }
 
     img {
       margin: 0 auto;
@@ -196,7 +197,30 @@ img {
   }
 }
 
+available-groups {
+  ul {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    max-width: 40%;
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  }
+
+}
+
 available-albums {
+  .list-wrapper {
+    display: none;
+
+    &.visible {
+      display: block;
+    }
+  }
+
   ul {
     display: grid;
     //    grid-template-columns: repeat(3, 1fr);
@@ -216,7 +240,12 @@ available-albums {
     //    height: var(--size);
     //    background: grey;
     padding-top: 100%;
-    background: #22c55e; //tailwind green 500
+    //    background: #22c55e; //tailwind green 500
+    //    background: linear-gradient(55deg, #bef264, #22c55e);
+    // tailwind green
+    //    background: linear-gradient(26deg, #a7f3d0 24%, #22c55e);
+//    background: linear-gradient(26deg, #86efac 9%, #22c55e);;
+    background: linear-gradient(13deg, yellow 28%, #22c55e);
     margin-bottom: .4rem;
   }
 }
@@ -235,6 +264,8 @@ available-albums {
   border-top: var(--border-width) solid transparent;
   border-radius: 50%;
   animation: rotate var(--rotation-speed) infinite linear;
+  position: absolute;
+  z-index: -1;
 }
 
 @keyframes rotate {

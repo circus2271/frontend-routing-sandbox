@@ -1,8 +1,4 @@
 import {getData, urlChange, defaultTimeout} from "./_helpers";
-//import * as images from '~/src/assets/media/images/**/*.png';
-//import  images from '../media/images/**/*';
-//import images from '../media/images/**/*.png';
-//console.log('images:', images)
 
 class ParallaxImage extends HTMLElement {
   placeholder: any;
@@ -13,8 +9,6 @@ class ParallaxImage extends HTMLElement {
     super();
 
     this.gap = 50;
-    //    this.onScroll = this.onScroll.bind(this)
-    //    this.onUrlChange = this.onUrlChange.bind(this)
   }
 
   connectedCallback() {
@@ -22,19 +16,6 @@ class ParallaxImage extends HTMLElement {
     this.image = this.querySelector('img')
     //    this.image.style.position = 'relative'
     this.updateImage()
-    //    setTimeout(() => {
-    //      this.loader.style.display = 'none'
-    //      this.image.style.opacity = 1
-    // //        }, 1500)
-    //        }, defaultTimeout)
-
-    //    alert(import.meta.url)
-    //    this.image.src = new URL('../../images/b2_train_gimp.png', import.meta.url);
-    //    this.image.src = new URL('~/src/assets/media/images/b2_train_gimp.png', import.meta.url);
-
-    //    this.imageHeight =
-    //      this.image.style.transform = `translateY(${this.image.getBoundingClientRect().bottom})px`
-    //      console.log(this.image)
 
     window.addEventListener('scroll', this.onScroll, {passive: true})
     window.addEventListener(urlChange, this.onUrlChange, {passive: true})
@@ -61,8 +42,6 @@ class ParallaxImage extends HTMLElement {
   }
 
   updateImage = async () => {
-//    this.image.style.opacity = 0;
-//    this.image.style.visibility
     this.image.classList.remove('visible')
     this.image.src = ''
 
@@ -76,7 +55,6 @@ class ParallaxImage extends HTMLElement {
       this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
     }
 
-//    alert(location.pathname)
     switch (location.pathname) {
       case '/':
         this.image.src = new URL('~/src/assets/media/images/tramvai_bandcamp_header_image.png', import.meta.url);
@@ -96,15 +74,8 @@ class ParallaxImage extends HTMLElement {
             return group.groupName === possibleGroupName
           })[0]
 
-//          alert(currentGroup.groupName)
           if (currentGroup.coverImage) {
-            let random = Math.random()
-            if (Math.round(random)) {
-              this.image.src = currentGroup.coverImage
-            } else {
-              // fallback image
-              this.image.src = 'error-case' + currentGroup.coverImage
-            }
+            this.image.src = currentGroup.coverImage
           }
 
           if (!currentGroup.coverImage) {
@@ -135,7 +106,7 @@ customElements.define('parallax-image', ParallaxImage)
 
 class AvailableGroups extends HTMLElement {
   data: any;
-  
+
   constructor() {
     super();
   }
@@ -161,16 +132,19 @@ class AvailableGroups extends HTMLElement {
       `
     })
 
-    const content = this.querySelector('.content')
+//    const content = this.querySelector('.content')
+    const listWrapper = this.querySelector('.content .list-wrapper')
 
+//    listWrapper.log
     setTimeout(() => {
 
-//    content.innerHTML = `
-//        <ul>
-//          ${groupsHtml}
-//        </ul>
-//      </section>
-//    `
+      listWrapper.innerHTML = `
+        <ul>
+          ${groupsHtml}
+        </ul>
+      `
+
+      listWrapper.classList.add('visible')
     }, defaultTimeout)
   }
 }
@@ -183,3 +157,50 @@ customElements.define('available-groups', AvailableGroups)
 //    super();
 //  }
 //}
+
+class AvailableAlbums extends HTMLElement {
+  data: any;
+
+  constructor() {
+    super();
+  }
+
+  async connectedCallback() {
+    this.data = await getData()
+    //    console.log(this.data)
+    //    const currentGroup = data.groups?.filter(group => {
+    //      return group.groupName === groupName
+    //    })[0]
+    //    const {groupName} = currentGroup
+    const {groups} = this.data
+
+    let groupsHtml = ``
+    groups.forEach(group => {
+      const {groupName} = group
+      groupsHtml += `
+        <li>
+          <a href="/${groupName}">
+            ${groupName}
+          </a>
+        </li>
+      `
+    })
+
+    //    const content = this.querySelector('.content')
+    const listWrapper = this.querySelector('.content .list-wrapper')
+
+    //    listWrapper.log
+    setTimeout(() => {
+
+      listWrapper.innerHTML = `
+        <ul>
+          ${groupsHtml}
+        </ul>
+      `
+
+      listWrapper.classList.add('visible')
+    }, defaultTimeout)
+  }
+}
+
+customElements.define('available-albums', AvailableAlbums)
