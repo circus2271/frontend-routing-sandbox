@@ -6,7 +6,7 @@
 //
 // set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
 import './custom-elements'
-import {getData, urlChange} from "./_helpers";
+import { getData, urlChange } from "./_helpers";
 
 //document.querySelector('#current-url').innerHTML = location.pathname
 
@@ -18,7 +18,7 @@ const navigate = async (url, state = {}) => {
 //  await updateUi(url)
 }
 
-const updateUi = () => {
+// const updateUi = () => {
 //  const urlParts = location.pathname.split('/').filter(part => part !== '')
 //
 //  if (urlParts.length === 1) {
@@ -29,9 +29,10 @@ const updateUi = () => {
 //
 //  }
 
-}
+// }
 
-updateUi()
+// updateUi()
+
 
 // navigate('555')
 const oldupdateUi = async (newUrl) => {
@@ -141,7 +142,42 @@ const emitUrlChangeEvent = () => {
 
 window.addEventListener(urlChange, (e: CustomEvent) => {
 //  alert(e.detail.newLocation)
+//   highlightActiveNavLink()
+updateUi()
 })
+
+const updateUi = () => {
+  const albumDetail = document.querySelector('album-detail')
+  const navigation = document.querySelector('.navigation')
+  const availableAlbums = document.querySelector('available-albums')
+
+  const urlParts = location.pathname.split('/').filter(part => part !== '')
+
+  if (urlParts.length === 2) {
+    // assume it's an album page
+
+    // navigation.classList.remove('visible')
+    albumDetail.classList.add('visible')
+    navigation.classList.remove('visible')
+    availableAlbums.classList.remove('visible')
+
+    return
+  }
+
+  navigation.classList.add('visible')
+  albumDetail.classList.remove('visible')
+  availableAlbums.classList.add('visible')
+}
+
+updateUi()
+// const highlightActiveNavLink = () => {
+//   document.querySelector('.navigation a.active')?.classList.remove('active')
+//   document.querySelectorAll('.navigation a').forEach((a: HTMLAnchorElement) => {
+//     if (a.getAttribute('href') === location.pathname) a.classList.add('active')
+//   })
+// }
+//
+// highlightActiveNavLink()
 //document.querySelector('.navigation').addEventListener('click', event => {
 //  if (event.target instanceof HTMLAnchorElement) {
 //    event.preventDefault()

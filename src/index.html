@@ -9,211 +9,154 @@
   <title>routing-player</title>
 </head>
 <body>
-<div class="page">
-  <div class="app-bar">
-    <div class="wrapper">
-      <a href="/">
-        app bar
-      </a>
+  <div class="page">
+    <div class="app-bar">
+      <div class="wrapper">
+        <a href="/">
+          app bar
+        </a>
+      </div>
     </div>
-  </div>
-
-  <header class="header">
-    <parallax-image class="top-image">
-      <div class="loader"></div>
-
-      <img
-        src="~/src/assets/media/images/tramvai_bandcamp_header_image.png"
-        alt="tramvai bandcamp header image"
-        height=180
-        width=975
-      >
-    </parallax-image>
-  </header>
-
-  <nav class="navigation">
-    <div class="wrapper">
-      <ul class="nav-links">
-        <li>
-          <a href="/">
-            home
-          </a>
-        </li>
-        <li>
-          <a href="/555/555">
-            555/555
-          </a>
-        </li>
-        <li>
-          <a href="/about">
-            about
-          </a>
-        </li>
-        <li>
-          <a href="/group10">
-            groupName (group10)
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div class="wrapper" id="content-wrapper">
-    <p style="display: none">
-      <span>Current url is:</span>
-      <span id="current-url"></span>
-    </p>
-
-    <available-groups style="display: none">
-      <!--<available-groups>-->
-      <section class="groups">
+    <header class="header">
+      <parallax-image class="top-image">
+        <div class="loader"></div>
+        <img
+            src="~/src/assets/media/images/tramvai_bandcamp_header_image.png"
+            alt="tramvai bandcamp header image"
+            height=180
+            width=975
+        >
+      </parallax-image>
+    </header>
+    <nav class="navigation visible">
+      <div class="wrapper">
+        <ul class="nav-links">
+          <li>
+            <a href="/">
+              home
+            </a>
+          </li>
+          <li>
+            <a href="/555/555">
+              555/555
+            </a>
+          </li>
+          <li>
+            <a href="/about">
+              about
+            </a>
+          </li>
+          <li>
+            <a href="/group10">
+              groupName (group10)
+            </a>
+          </li>
+          <li>
+            <a href="/group10/album-1">
+              album page
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="wrapper" id="content-wrapper">
+      <p style="display: none">
+        <span>Current url is:</span>
+        <span id="current-url"></span>
+      </p>
+      <album-detail>
+        <div class="album-cover"></div>
+        <div class="album-info">
+          <div class="album-name">
+            Album name
+          </div>
+          <div class="group-name">
+            Group name
+          </div>
+          <div class="date-of-release">
+            22.03.1996
+          </div>
+        </div>
+      </album-detail>
+      <available-groups style="display: none">
+        <!--<available-groups>-->
+        <section class="groups">
+          <h3>
+            Groups:
+          </h3>
+          <div class="content">
+            <div class="loader" style="display: none"></div>
+            <ul>
+              <li>
+                <a href="/group10">
+                  group10
+                </a>
+              </li>
+              <li>
+                <a href="/group11">
+                  group11
+                </a>
+              </li>
+              <li>
+                <a href="/group12">
+                  group12
+                </a>
+              </li>
+              <li>
+                <a href="/group13">
+                  group13
+                </a>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <!--<div class="loader"></div>-->
+        <!--loading...-->
+        <!--<section class="groups">-->
+        <!--  <h3>-->
+        <!--    Groups:-->
+        <!--  </h3>-->
+        <!--  <ul>-->
+        <!--    <li>-->
+        <!--      <a href="/blablabla">-->
+        <!--        blabala group-->
+        <!--      </a>-->
+        <!--    </li>-->
+        <!--  </ul>-->
+        <!--</section>-->
+      </available-groups>
+<!--      <available-albums style="display: none;">-->
+              <available-albums>
         <h3>
-          Groups:
+          Available albums:
         </h3>
         <div class="content">
-          <div class="loader" style="display: none"></div>
-
-          <ul>
-
-            <li>
-              <a href="/group10">
-                group10
-              </a>
-            </li>
-
-            <li>
-              <a href="/group11">
-                group11
-              </a>
-            </li>
-
-            <li>
-              <a href="/group12">
-                group12
-              </a>
-            </li>
-
-            <li>
-              <a href="/group13">
-                group13
-              </a>
-            </li>
-
-          </ul>
+          <div class="loader"></div>
+          <div class="list-wrapper">
+          </div>
         </div>
-
-      </section>
-      <!--<div class="loader"></div>-->
-      <!--loading...-->
-      <!--<section class="groups">-->
-      <!--  <h3>-->
-      <!--    Groups:-->
-      <!--  </h3>-->
-
-      <!--  <ul>-->
-      <!--    <li>-->
-      <!--      <a href="/blablabla">-->
-      <!--        blabala group-->
-      <!--      </a>-->
-      <!--    </li>-->
-      <!--  </ul>-->
-      <!--</section>-->
-    </available-groups>
-
-
-    <available-albums>
-      <h3>
-        Available albums:
-      </h3>
-      <div class="content">
-        <div class="loader"></div>
-        <!--<ul style="display: none">-->
-        <div class="list-wrapper">
-          <ul>
-            <li>
-              <div class="album-cover">
-                <!--<img src="">-->
-              </div>
-              <a href="/group10/album-1">
-                blabala album 1
-              </a>
-            </li>
-            <li>
-              <div class="album-cover">
-                <!--<img src="">-->
-              </div>
-              <a href="/group11/88">
-                blabala album 2
-              </a>
-            </li>
-            <li>
-              <div class="album-cover">
-                <!--<img src="">-->
-              </div>
-              <a href="./album-1">
-                blabala album 3
-              </a>
-            </li>
-            <li>
-              <div class="album-cover">
-                <!--<img src="">-->
-              </div>
-              <a href="./album-1">
-                blabala album 4
-              </a>
-            </li>
-            <li>
-              <div class="album-cover">
-                <!--<img src="">-->
-              </div>
-              <a href="./album-1">
-                blabala album 5
-              </a>
-            </li>
-            <li>
-              <div class="album-cover">
-                <!--<img src="">-->
-              </div>
-              <a href="/group10/album-1">
-                blabala album 6
-              </a>
-            </li>
-            <li>
-              <div class="album-cover">
-                <!--<img src="">-->
-              </div>
-              <a href="./album-1">
-                blabala album 7
-              </a>
-            </li>
-          </ul>
-        </div>
+      </available-albums>
+      <div class="audio-player">
       </div>
-
-    </available-albums>
-    <div class="audio-player">
     </div>
-  </div>
-
-  <div class="funin-fixed-player">
-    <div class="wrapper">
-      <!--      <div class="play-button">-->
-
-      <!--      </div>-->
-      <div class="controls">
-        <div class="prev"></div>
-        <div class="play-pause"></div>
-        <div class="next"></div>
-      </div>
-      <div class="song-info">
-        current song — current songname
+    <div class="funin-fixed-player">
+      <div class="wrapper">
+        <!--      <div class="play-button">-->
+        <!--      </div>-->
+        <div class="controls">
+          <div class="prev"></div>
+          <div class="play-pause"></div>
+          <div class="next"></div>
+        </div>
+        <div class="song-info">
+          current song — current songname
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<!--  <h1 class="text-3xl font-bold underline">-->
-<!--    Hello world!-->
-<!--  </h1>-->
-<script type="module" src="~/src/assets/scripts/index.ts"></script>
+  <!--  <h1 class="text-3xl font-bold underline">-->
+  <!--    Hello world!-->
+  <!--  </h1>-->
+  <script type="module" src="~/src/assets/scripts/index.ts"></script>
 </body>
 </html>
