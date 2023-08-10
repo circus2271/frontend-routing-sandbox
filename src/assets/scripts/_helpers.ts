@@ -4,6 +4,34 @@ export const getData = async () => {
   return data
 }
 
+export const getAllAlbums = async () => {
+  const availableAlbums = [];
+  const data = await getData();
+
+  data.groups?.forEach(group => {
+    const albums = [...group.albums]
+    if (albums) {
+      albums.forEach(album => {
+        // alert(group.groupName)
+        album.groupName = group.groupName             //...
+        availableAlbums.push(album)
+        // debugger
+      })
+    }
+  })
+
+  return availableAlbums
+}
+
+const getAllGroups = async () => {
+  const data = await getData()
+  const groups = data.groups || []
+
+  return groups
+}
+
+
+
 export const URL_CHANGE_EVENT = 'urlChange'
 export const urlChange = 'urlChange'
 //export const defaultTimeout = 1500

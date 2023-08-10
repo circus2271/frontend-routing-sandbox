@@ -1,4 +1,4 @@
-import { getData, urlChange, defaultTimeout } from "./_helpers";
+import { getData, urlChange, defaultTimeout, getAllAlbums } from "./_helpers";
 
 class ParallaxImage extends HTMLElement {
   placeholder: any;
@@ -171,19 +171,7 @@ class AvailableAlbums extends HTMLElement {
     const urlParts = location.pathname.split('/').filter(part => part !== '')
 
     if (urlParts.length === 0) {
-      const availableAlbums = []
-
-      this.data.groups?.forEach(group => {
-        const albums = [...group.albums]
-        if (albums) {
-          albums.forEach(album => {
-            // alert(group.groupName)
-            album.groupName = group.groupName             //...
-            availableAlbums.push(album)
-            // debugger
-          })
-        }
-      })
+      const availableAlbums = await getAllAlbums()
 
       console.log(availableAlbums)
       let html = ``
@@ -209,70 +197,7 @@ class AvailableAlbums extends HTMLElement {
         listWrapper.classList.add('visible')
       }, defaultTimeout)
     }
-
-//     if (urlParts.length === 1) {
-//       const possibleGroupName = urlParts[0]
-//
-//       const data = await getData()
-//
-//       const currentGroup = data.groups?.filter(group => {
-//         return group.groupName === possibleGroupName
-//       })[0]
-//
-//       const albums = currentGroup.albums
-//       if (albums) {
-//         let albumsHTML = ``
-//         albums.forEach(album => {
-//           // const { albumName } = album;
-//           albumsHTML += `
-//             <li>
-//               <div class="album-cover">
-//                 <!--<img src="">-->
-//               </div>
-// <!--              <a href="/group10/album-1">-->
-// <!--                blabala album 1-->
-// <!--              </a>-->
-//               <a href="${possibleGroupName}/${album.albumName}">
-//                 blabala album 1
-//               </a>
-//             </li>
-//           `
-//         })
-//
-//         const listWrapper = this.querySelector('.content .list-wrapper')
-//         listWrapper.innerHTML = `
-//           <ul>
-//             ${albumsHTML}
-//           </ul>
-//         `
-//       }
-//     }
-
-
   }
-
-
-
-  // if (currentAlbum) {
-  //
-  // }
-
-
-  //    const content = this.querySelector('.content')
-  // const listWrapper = this.querySelector('.content .list-wrapper')
-
-  //    listWrapper.log
-  // setTimeout(() => {
-  //
-  //   listWrapper.innerHTML = `
-  //     <ul>
-  //       ${groupsHtml}
-  //     </ul>
-  //   `
-  //
-  //   listWrapper.classList.add('visible')
-  // }, defaultTimeout)
-
 }
 
 customElements.define('available-albums', AvailableAlbums)

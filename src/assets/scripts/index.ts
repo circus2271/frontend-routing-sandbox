@@ -151,7 +151,25 @@ const updateUi = () => {
   const navigation = document.querySelector('.navigation')
   const availableAlbums = document.querySelector('available-albums')
 
-  const urlParts = location.pathname.split('/').filter(part => part !== '')
+  const urlParts = location.pathname.split('/').filter(part => part !== '');
+
+
+  const backArrow = document.querySelector('.back-arrow a')
+  if (urlParts.length === 0) {
+    backArrow.classList.remove('visible')
+    backArrow.setAttribute('href', '/')
+  } else if (urlParts.length === 1) {
+    backArrow.classList.add('visible')
+    backArrow.setAttribute('href', '/')
+  } else {
+    backArrow.classList.add('visible')
+
+    // slice returns new array (from start, to end (not included))
+    const newUrl = urlParts.slice(0, urlParts.length - 1 ).join('');
+    backArrow.setAttribute('href', '/' + newUrl)
+    // const lastUrlPart = urlParts[urlParts.length - 1]
+    // const newUrl =
+  }
 
   if (urlParts.length === 2) {
     // assume it's an album page
@@ -170,6 +188,17 @@ const updateUi = () => {
 }
 
 updateUi()
+
+
+
+// const backButton = document.querySelector('.back-button a')
+
+// backButton.setAttribute('href', '..' + location.pathname)
+// const backButton = document.querySelector('.back-button') as HTMLElement
+// backButton.onclick = () => {
+  // console.log(history.state)
+  // history.back()
+// }
 // const highlightActiveNavLink = () => {
 //   document.querySelector('.navigation a.active')?.classList.remove('active')
 //   document.querySelectorAll('.navigation a').forEach((a: HTMLAnchorElement) => {

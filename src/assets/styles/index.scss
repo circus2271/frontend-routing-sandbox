@@ -48,6 +48,39 @@ img {
   font-size: 1.2rem;
   text-transform: uppercase;
 
+  .wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .back-arrow {
+    //width: 48px;
+    //height: 48px;
+    //background: yellow;
+    a {
+      cursor: pointer;
+      display: none;
+
+      &.visible {
+        display: block;
+      }
+    }
+  }
+  //.back-arrow-button {
+  //  cursor: pointer;
+  //  background: transparent;
+  //  box-shadow: none;
+  //  border: none;
+  //  display: inline-flex;
+  //  align-items: center;
+  //  border: 2px solid grey;
+  //
+  //  svg {
+  //    height: 1em;
+  //  }
+  //}
+
   a {
     text-decoration: none;
     color: #fff;
@@ -118,15 +151,15 @@ img {
   }
 }
 
-.navigation {
-  display: none;
-}
+//.navigation {
+//  display: none;
+//}
 
 album-detail {
   --wrapper-padding: 1.25rem;
   //transform: translateY(calc(-50% - var(--wrapper-padding)));
   //top: calc(-50% - var(--wrapper-padding));
-  top: calc(-144px/2 - var(--wrapper-padding));
+  top: calc(-144px / 2 - var(--wrapper-padding));
   position: relative;
   display: none;
 
@@ -148,6 +181,7 @@ album-detail {
     border: 2px solid #000;
     border-radius: 7%;
     margin: 0 auto 1.5rem;
+    //background: center / cover no-repeat url(https://f4.bcbits.com/img/a2545099157_2.jpg);
   }
 
   .album-info {
