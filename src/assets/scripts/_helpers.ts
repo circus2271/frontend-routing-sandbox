@@ -30,7 +30,13 @@ const getAllGroups = async () => {
   return groups
 }
 
+export const scrollToTop = () => {
+  window.scroll(0,0)
+}
 
+export const scrollUp = () => {
+  window.scroll(0,0)
+}
 
 export const URL_CHANGE_EVENT = 'urlChange'
 export const urlChange = 'urlChange'

@@ -6,7 +6,7 @@
 //
 // set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
 import './custom-elements'
-import { getData, urlChange } from "./_helpers";
+import { getData, scrollToTop, scrollUp, urlChange } from "./_helpers";
 
 //document.querySelector('#current-url').innerHTML = location.pathname
 
@@ -143,6 +143,8 @@ const emitUrlChangeEvent = () => {
 window.addEventListener(urlChange, (e: CustomEvent) => {
 //  alert(e.detail.newLocation)
 //   highlightActiveNavLink()
+//   scrollToTop()
+  scrollUp()
 updateUi()
 })
 
