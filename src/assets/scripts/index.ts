@@ -154,7 +154,7 @@ const updateUi = () => {
   const urlParts = location.pathname.split('/').filter(part => part !== '');
 
 
-  const backArrow = document.querySelector('.back-arrow a')
+  const backArrow = document.querySelector('.back-arrow')
   if (urlParts.length === 0) {
     backArrow.classList.remove('visible')
     backArrow.setAttribute('href', '/')

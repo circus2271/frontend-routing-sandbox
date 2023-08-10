@@ -55,16 +55,11 @@ img {
   }
 
   .back-arrow {
-    //width: 48px;
-    //height: 48px;
-    //background: yellow;
-    a {
       cursor: pointer;
       display: none;
 
       &.visible {
         display: block;
-      }
     }
   }
   //.back-arrow-button {
