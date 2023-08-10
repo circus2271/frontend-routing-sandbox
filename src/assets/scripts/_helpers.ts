@@ -23,11 +23,30 @@ export const getAllAlbums = async () => {
   return availableAlbums
 }
 
-const getAllGroups = async () => {
+export const getAllGroups = async () => {
   const data = await getData()
   const groups = data.groups || []
 
   return groups
+}
+
+export const getGroup = async (groupName) => {
+  const allGroups = await getAllGroups()
+  const group = allGroups.find(group => group.groupName === groupName)
+
+  return group
+}
+//
+// const getGroupAlbums = async (groupName) => {
+//   const group = await getGroup(groupName)
+//   return group.albums || []
+// }
+
+export const findAlbum = async (groupName, albumName) => {
+  const group = await getGroup(groupName)
+  const album = group.albums.find(album => album.albumName === albumName)
+
+  return album
 }
 
 export const scrollToTop = () => {

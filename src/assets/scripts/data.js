@@ -6,7 +6,7 @@ export const data = {
       albums: [
         {
           albumName: 'album-1',
-          coverImage: 'https:/ffdsf.ff',
+          coverImage: 'https://f4.bcbits.com/img/a2545099157_2.jpg',
           tracks: [
             {
               name: 'track blabla',
@@ -19,8 +19,8 @@ export const data = {
           ]
         },
         {
-          albumName: 'album 2 blabla babla',
-          coverImage: 'https://dfssf.dfsf',
+          albumName: 'album_2_blabla_babla',
+          coverImage: 'https://f4.bcbits.com/img/a0125615091_2.jpg',
           tracks: [
             {
               name: 'track wow',

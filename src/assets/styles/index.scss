@@ -169,7 +169,8 @@ album-detail {
     //padding-top: 144px;
     height: 144px;
     //padding-top: 100%;
-    background: linear-gradient(13deg, yellow 28%, #22c55e);
+    //background: linear-gradient(13deg, yellow 28%, #22c55e);
+    background: center / cover no-repeat linear-gradient(13deg, yellow 28%, #22c55e);
     //--wrapper-padding: 1.25rem;
     ////transform: translateY(calc(-50% - var(--wrapper-padding)));
     //top: calc(-50% - var(--wrapper-padding));
@@ -179,6 +180,9 @@ album-detail {
     border-radius: 7%;
     margin: 0 auto 1.5rem;
     //background: center / cover no-repeat url(https://f4.bcbits.com/img/a2545099157_2.jpg);
+    //background: center / cover no-repeat url(https://f4.bcbits.com/img/a2545099157_2.jpg);
+    //background: center / cover no-repeat url(https://f4.bcbits.com/img/a2545099157_2.jpg);
+    //background-image: url(https://f4.bcbits.com/img/a2545099157_2.jpg);
   }
 
   .album-info {

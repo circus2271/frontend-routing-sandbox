@@ -23,7 +23,6 @@
             ← back
           </a>
         </back-button>
-
         <!--          ← back-->
         <!--        ← back-->
         <a href="/">
@@ -42,115 +41,117 @@
         >
       </parallax-image>
     </header>
-    <nav class="navigation visible">
-      <div class="wrapper">
-        <ul class="nav-links">
-          <li>
-            <a href="/">
-              home
-            </a>
-          </li>
-          <li>
-            <a href="/555/555">
-              555/555
-            </a>
-          </li>
-          <li>
-            <a href="/about">
-              about
-            </a>
-          </li>
-          <li>
-            <a href="/group10">
-              groupName (group10)
-            </a>
-          </li>
-          <li>
-            <a href="/group10/album-1">
-              album page
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="wrapper" id="content-wrapper">
-      <p style="display: none">
-        <span>Current url is:</span>
-        <span id="current-url"></span>
-      </p>
-      <album-detail>
-        <div class="album-cover"></div>
-        <div class="album-info">
-          <div class="album-name">
-            Album name
-          </div>
-          <div class="group-name">
-            Group name
-          </div>
-          <div class="date-of-release">
-            22.03.1996
-          </div>
+    <div id="swappable">
+      <nav class="navigation visible">
+        <div class="wrapper">
+          <ul class="nav-links">
+            <li>
+              <a href="/">
+                home
+              </a>
+            </li>
+            <li>
+              <a href="/555/555">
+                555/555
+              </a>
+            </li>
+            <li>
+              <a href="/about">
+                about
+              </a>
+            </li>
+            <li>
+              <a href="/group10">
+                groupName (group10)
+              </a>
+            </li>
+            <li>
+              <a href="/group10/album-1">
+                album page
+              </a>
+            </li>
+          </ul>
         </div>
-      </album-detail>
-      <available-groups style="display: none">
-        <!--<available-groups>-->
-        <section class="groups">
+      </nav>
+      <div class="wrapper" id="content-wrapper">
+        <p style="display: none">
+          <span>Current url is:</span>
+          <span id="current-url"></span>
+        </p>
+        <album-detail>
+          <div class="album-cover"></div>
+          <div class="album-info">
+            <div class="album-name">
+              Album name
+            </div>
+            <div class="group-name">
+              Group name
+            </div>
+            <div class="date-of-release">
+              22.03.1996
+            </div>
+          </div>
+        </album-detail>
+        <available-groups style="display: none">
+          <!--<available-groups>-->
+          <section class="groups">
+            <h3>
+              Groups:
+            </h3>
+            <div class="content">
+              <div class="loader" style="display: none"></div>
+              <ul>
+                <li>
+                  <a href="/group10">
+                    group10
+                  </a>
+                </li>
+                <li>
+                  <a href="/group11">
+                    group11
+                  </a>
+                </li>
+                <li>
+                  <a href="/group12">
+                    group12
+                  </a>
+                </li>
+                <li>
+                  <a href="/group13">
+                    group13
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </section>
+          <!--<div class="loader"></div>-->
+          <!--loading...-->
+          <!--<section class="groups">-->
+          <!--  <h3>-->
+          <!--    Groups:-->
+          <!--  </h3>-->
+          <!--  <ul>-->
+          <!--    <li>-->
+          <!--      <a href="/blablabla">-->
+          <!--        blabala group-->
+          <!--      </a>-->
+          <!--    </li>-->
+          <!--  </ul>-->
+          <!--</section>-->
+        </available-groups>
+        <!--      <available-albums style="display: none;">-->
+        <available-albums>
           <h3>
-            Groups:
+            Available albums:
           </h3>
           <div class="content">
-            <div class="loader" style="display: none"></div>
-            <ul>
-              <li>
-                <a href="/group10">
-                  group10
-                </a>
-              </li>
-              <li>
-                <a href="/group11">
-                  group11
-                </a>
-              </li>
-              <li>
-                <a href="/group12">
-                  group12
-                </a>
-              </li>
-              <li>
-                <a href="/group13">
-                  group13
-                </a>
-              </li>
-            </ul>
+            <div class="loader"></div>
+            <div class="list-wrapper">
+            </div>
           </div>
-        </section>
-        <!--<div class="loader"></div>-->
-        <!--loading...-->
-        <!--<section class="groups">-->
-        <!--  <h3>-->
-        <!--    Groups:-->
-        <!--  </h3>-->
-        <!--  <ul>-->
-        <!--    <li>-->
-        <!--      <a href="/blablabla">-->
-        <!--        blabala group-->
-        <!--      </a>-->
-        <!--    </li>-->
-        <!--  </ul>-->
-        <!--</section>-->
-      </available-groups>
-      <!--      <available-albums style="display: none;">-->
-      <available-albums>
-        <h3>
-          Available albums:
-        </h3>
-        <div class="content">
-          <div class="loader"></div>
-          <div class="list-wrapper">
-          </div>
+        </available-albums>
+        <div class="audio-player">
         </div>
-      </available-albums>
-      <div class="audio-player">
       </div>
     </div>
     <div class="funin-fixed-player">

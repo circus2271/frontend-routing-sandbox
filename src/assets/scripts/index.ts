@@ -6,7 +6,7 @@
 //
 // set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
 import './custom-elements'
-import { getData, scrollToTop, scrollUp, urlChange } from "./_helpers";
+import { findAlbum, getData, scrollToTop, scrollUp, urlChange } from "./_helpers";
 
 //document.querySelector('#current-url').innerHTML = location.pathname
 
@@ -150,42 +150,51 @@ window.addEventListener(urlChange, (e: CustomEvent) => {
 //  alert(e.detail.newLocation)
 //   highlightActiveNavLink()
 //   scrollToTop()
+//   alert(2)
   scrollUp()
 updateUi()
 })
 
-const updateUi = () => {
+const updateUi = async () => {
   const albumDetail = document.querySelector('album-detail')
   const navigation = document.querySelector('.navigation')
   const availableAlbums = document.querySelector('available-albums')
 
   const urlParts = location.pathname.split('/').filter(part => part !== '');
 
-
-  const backArrow = document.querySelector('.back-arrow')
-  if (urlParts.length === 0) {
-    backArrow.classList.remove('visible')
-    backArrow.setAttribute('href', '/')
-  } else if (urlParts.length === 1) {
-    backArrow.classList.add('visible')
-    backArrow.setAttribute('href', '/')
-  } else {
-    backArrow.classList.add('visible')
-
-    // slice returns new array (from start, to end (not included))
-    const newUrl = urlParts.slice(0, urlParts.length - 1 ).join('');
-    backArrow.setAttribute('href', '/' + newUrl)
-    // const lastUrlPart = urlParts[urlParts.length - 1]
-    // const newUrl =
-  }
-
   if (urlParts.length === 2) {
     // assume it's an album page
 
     // navigation.classList.remove('visible')
-    albumDetail.classList.add('visible')
     navigation.classList.remove('visible')
     availableAlbums.classList.remove('visible')
+
+    const groupName = urlParts[0]
+    const albumName = urlParts[1]
+
+    const album = await findAlbum(groupName, albumName)
+
+    // const albumDetail = document.querySelector('.album-detail')
+    albumDetail.innerHTML = `
+      <div class="album-cover" style="background-image: url('${album.coverImage}')"></div>
+      <div class="album-info">
+        <div class="album-name">
+<!--          Album name-->
+          ${album.albumName || 'default value album name'}
+        </div>
+        <div class="group-name">
+<!--          Group name-->
+          ${album.groupName || 'default value group name'}
+        </div>
+        <div class="date-of-release">
+<!--          22.03.1996-->
+          ${album.release || 'bay'}
+          // ${album.release || 'default release date'}
+        </div>
+      </div>
+    `
+
+    albumDetail.classList.add('visible')
 
     return
   }
