@@ -35,7 +35,7 @@ export const scrollToTop = () => {
 }
 
 export const scrollUp = () => {
-  window.scroll(0,0)
+  window.scroll({top: 0, behavior: 'smooth'})
 }
 
 export const URL_CHANGE_EVENT = 'urlChange'
