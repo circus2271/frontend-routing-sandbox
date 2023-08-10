@@ -104,6 +104,12 @@ audioPlayer.addEventListener('click', event => {
   player.togglePlaying()
 })
 
+// prevent default scroll restoration
+// https://developer.mozilla.org/en-US/docs/Web/API/History/scrollRestoration
+if (history.scrollRestoration) {
+  history.scrollRestoration = "manual";
+}
+
 // https://flaviocopes.com/history-api/
 window.addEventListener("popstate", (event) => {
   //  document.querySelector('#current-url').innerHTML = location.pathname
