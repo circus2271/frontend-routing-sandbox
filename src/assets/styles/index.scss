@@ -185,31 +185,32 @@ album-detail {
 
   .album-cover {
     width: 144px;
-    //padding-top: 144px;
     height: 144px;
-    //padding-top: 100%;
-    //background: linear-gradient(13deg, yellow 28%, #22c55e);
-    background: center / cover no-repeat linear-gradient(13deg, yellow 28%, #22c55e);
-    //--wrapper-padding: 1.25rem;
-    ////transform: translateY(calc(-50% - var(--wrapper-padding)));
-    //top: calc(-50% - var(--wrapper-padding));
-    //position: relative;
-    //border: 2px solid #121212; // dark theme dark background
+    //background: center / cover no-repeat linear-gradient(13deg, yellow 28%, #22c55e);
     border: 2px solid #000;
     border-radius: 7%;
     margin: 0 auto 1.5rem;
-    //background: center / cover no-repeat url(https://f4.bcbits.com/img/a2545099157_2.jpg);
-    //background: center / cover no-repeat url(https://f4.bcbits.com/img/a2545099157_2.jpg);
-    //background: center / cover no-repeat url(https://f4.bcbits.com/img/a2545099157_2.jpg);
-    //background-image: url(https://f4.bcbits.com/img/a2545099157_2.jpg);
+    overflow: hidden;
+    position: relative;
+
+    .placeholder {
+      background: center / cover no-repeat linear-gradient(13deg, yellow 28%, #22c55e);
+      height: 100%;
+      //filter: hue-rotate(45deg);
+      position: absolute;
+      width: 100%;
+      filter: hue-rotate(45deg) grayscale(.13);
+    }
 
     img {
       height: 100%;
       visibility: hidden;
       opacity: 0;
       transition-property: visibility, opacity;
-      transition-timing-function: linear;
+      //transition-timing-function: linear;
+      transition-timing-function: ease-in;
       transition-duration: .25s;
+      position: relative;
 
       &.visible {
         opacity: 1;

@@ -44,7 +44,14 @@ export const getGroup = async (groupName) => {
 
 export const findAlbum = async (groupName, albumName) => {
   const group = await getGroup(groupName)
+  if (group === undefined) {
+    throw new GroupNotFoundError('group not found, 404')
+  }
+
   const album = group.albums.find(album => album.albumName === albumName)
+  if (album === undefined) {
+    throw new AlbumNotFoundError('album not found, 404')
+  }
 
   return album
 }
@@ -60,8 +67,8 @@ export const scrollUp = () => {
 export const URL_CHANGE_EVENT = 'urlChange'
 export const urlChange = 'urlChange'
 //export const defaultTimeout = 1500
-export const defaultTimeout = 500
-// export const defaultTimeout = 250
+// export const defaultTimeout = 500
+export const defaultTimeout = 250
 
 type PredefinedPage = 'about' | 'home' | '404'
 //const a: PredefinedPage = 'about'
@@ -124,3 +131,24 @@ const whichPage = (): 'about' | 'home' | 'group' | 'album' | '404' => {
 whichPage()
 
 const predefinedPages: PredefinedPage[] = ['about', 'home', '404']
+
+
+class GroupNotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'GroupNotFoundError'
+  }
+}
+
+
+class AlbumNotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'AlbumNotFoundError'
+  }
+}
+
+export const errors = {
+  //  https://javascript.info/custom-errors
+  GroupNotFoundError, AlbumNotFoundError
+}

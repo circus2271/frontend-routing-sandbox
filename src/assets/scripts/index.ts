@@ -6,7 +6,7 @@
 //
 // set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
 import './custom-elements'
-import { defaultTimeout, findAlbum, getData, scrollToTop, scrollUp, urlChange } from "./_helpers";
+import { defaultTimeout, findAlbum, getData, getGroup, scrollToTop, scrollUp, urlChange, errors } from "./_helpers";
 
 //document.querySelector('#current-url').innerHTML = location.pathname
 
@@ -179,12 +179,34 @@ const updateUi = async () => {
     // onload="${() => onLoad()}"
     // onerror="${() => onError()}"
     // >
+console.log(errors)
 
-    const album = await findAlbum(groupName, albumName)
+    let album;
+    try {
+      album = await findAlbum(groupName, albumName)
+    } catch (error) {
+      if (error instanceof errors.GroupNotFoundError) {
+        // alert('g')
+        console.warn(error.message)
+        navigate('/404')
+      }
+      if (error instanceof errors.AlbumNotFoundError) {
+        // alert('album')
+        // console.log('album')
+        console.warn(error.message)
+        // console.log(error.message)
+        navigate('/404')
+
+      }
+
+      console.log('redirect to 404 page')
+      return
+    }
     const fallbackImage = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url)
 
     albumDetail.innerHTML = `
       <div class="album-cover">
+        <div class="placeholder"></div>
         <img 
           src="${album.coverImage}"
           alt="${album.albumName}'s album cover image"
