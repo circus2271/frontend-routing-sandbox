@@ -14,18 +14,34 @@ class BackButton extends HTMLElement {
     window.addEventListener(urlChange, this.onUrlChange)
   }
 
+  setCustomProperty = () => {
+    const wrapper = document.getElementById('app-bar__left-side');
+    // getComputedStyle($0).getPropertyValue('--offset-left')
+    // getComputedStyle(wrapper).getPropertyValue('--offset-left')
+    // 0.style.setProperty('--offset-left', 12)
+
+    // onResize(update)
+  }
+
   updateUi = () => {
 
     const urlParts = location.pathname.split('/').filter(part => part !== '');
 
+    const wrapper = document.getElementById('app-bar__left-side');
     if (urlParts.length === 0) {
-      this.classList.remove('visible')
+      wrapper.classList.remove('visible')
+      // document.getElementById('app-bar__left-side')
+      // this.classList.remove('visible')
       this.anchor.setAttribute('href', '/')
     } else if (urlParts.length === 1) {
-      this.classList.add('visible')
+      wrapper.classList.add('visible')
+
+      // this.classList.add('visible')
       this.anchor.setAttribute('href', '/')
     } else {
-      this.classList.add('visible')
+      wrapper.classList.add('visible')
+
+      // this.classList.add('visible')
 
       // slice returns new array (from start, to end (not included))
       const newUrl = urlParts.slice(0, urlParts.length - 1 ).join('');

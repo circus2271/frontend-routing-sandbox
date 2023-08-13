@@ -6,7 +6,7 @@
 //
 // set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
 import './custom-elements'
-import { findAlbum, getData, scrollToTop, scrollUp, urlChange } from "./_helpers";
+import { defaultTimeout, findAlbum, getData, scrollToTop, scrollUp, urlChange } from "./_helpers";
 
 //document.querySelector('#current-url').innerHTML = location.pathname
 
@@ -172,22 +172,39 @@ const updateUi = async () => {
     const groupName = urlParts[0]
     const albumName = urlParts[1]
 
-    const album = await findAlbum(groupName, albumName)
 
-    // const albumDetail = document.querySelector('.album-detail')
+    //   <img
+    // src="${album.coverImage || fallbackImage}"
+    // alt="${album.albumName}'s album cover"
+    // onload="${() => onLoad()}"
+    // onerror="${() => onError()}"
+    // >
+
+    const album = await findAlbum(groupName, albumName)
+    const fallbackImage = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url)
+
     albumDetail.innerHTML = `
-      <div class="album-cover" style="background-image: url('${album.coverImage}')"></div>
+      <div class="album-cover">
+        <img 
+          src="${album.coverImage}"
+          alt="${album.albumName}'s album cover image"
+          onload="
+            // setTimeout(() => {
+            this.classList.add('visible')
+            //   this.style.visibility = 'visible';
+            // }, ${defaultTimeout})
+          "
+          onerror="this.src = '${fallbackImage}"
+          >        
+      </div>
       <div class="album-info">
         <div class="album-name">
-<!--          Album name-->
           ${album.albumName || 'default value album name'}
         </div>
         <div class="group-name">
-<!--          Group name-->
           ${album.groupName || 'default value group name'}
         </div>
         <div class="date-of-release">
-<!--          22.03.1996-->
           ${album.release || 'bay'}
           // ${album.release || 'default release date'}
         </div>
