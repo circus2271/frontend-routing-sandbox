@@ -1,4 +1,5 @@
 import { defaultTimeout, getAllAlbums, getData } from '../_helpers';
+import { urlChange } from '../_routing';
 
 class AvailableAlbums extends HTMLElement {
   data: any;
@@ -8,6 +9,16 @@ class AvailableAlbums extends HTMLElement {
   }
 
   async connectedCallback() {
+    this.showAlbums()
+
+    window.addEventListener(urlChange, this.onUrlChange)
+  }
+
+  onUrlChange = () => {
+    this.showAlbums()
+  }
+
+  showAlbums = async () => {
     this.data = await getData()
 
     const urlParts = location.pathname.split('/').filter(part => part !== '')
@@ -39,6 +50,18 @@ class AvailableAlbums extends HTMLElement {
         listWrapper.classList.add('visible')
       }, defaultTimeout)
     }
+
+    if (urlParts.length > 0) {
+      this.hideAlbums()
+    }
+  }
+
+  hideAlbums = () => {
+    this.classList.remove('visible')
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener(urlChange, this.onUrlChange)
   }
 }
 

@@ -110,6 +110,10 @@ img {
       display: none;
     }
 
+    //.image-wrapper {
+    //  position: relative;
+    //}
+
     img {
       margin: 0 auto;
       position: relative;
@@ -117,6 +121,7 @@ img {
       object-fit: cover;
       visibility: hidden;
       // mixin hidden
+      //z-index: 1;
 
       &.visible {
         // mixin visible
@@ -129,6 +134,42 @@ img {
         transition-duration: .25s;
       }
     }
+
+    //.text-wrapper {
+    //  position: absolute;
+    //  top: 0;
+    //  left: 0;
+    //  right: 0;
+    //  bottom: 0;
+    //  display: flex;
+    //  align-items: center;
+    //  justify-content: center;
+    //  font-size: 2.75rem;
+    //  visibility: hidden;
+    //  transition: .25s visibility;
+    //
+    //  &::before {
+    //    content: '';
+    //    position: absolute;
+    //    top: 0;
+    //    left: 0;
+    //    bottom: 0;
+    //    right: 0;
+    //    //background: red;
+    //    //z-index: 1;
+    //    //background: #123;
+    //    //opacity: .4;
+    //  }
+    //
+    //  span {
+    //    position: relative;
+    //    //z-index: 2;
+    //  }
+    //}
+
+    //body[data-404] & img.visible + .text-wrapper {
+    //  visibility: visible;
+    //}
   }
 }
 

@@ -1,4 +1,5 @@
-import { defaultTimeout, getData, urlChange } from '../_helpers';
+import { defaultTimeout, getData } from '../_helpers';
+import { urlChange } from '../_routing';
 
 class ParallaxImage extends HTMLElement {
   placeholder: any;
@@ -18,7 +19,7 @@ class ParallaxImage extends HTMLElement {
     this.updateImage()
 
     window.addEventListener('scroll', this.onScroll, {passive: true})
-    window.addEventListener(urlChange, this.onUrlChange, {passive: true})
+    window.addEventListener(urlChange, this.onUrlChange)
   }
 
   onScroll = (e) => {
@@ -61,6 +62,13 @@ class ParallaxImage extends HTMLElement {
         break;
       case '/about':
         this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
+        break;
+      case '/404':
+        const src = `
+        https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2F6uGhT1O4sxpi8%2Fgiphy.gif&f=1&nofb=1&ipt=b96e0ddcdfcb38b309c35458e82657e6dc312d36f077673b6ad16486fbfca126&ipo=images
+        `
+
+        this.image.src = src
         break;
       default:
         const urlParts = location.pathname.split('/').filter(part => part !== '')

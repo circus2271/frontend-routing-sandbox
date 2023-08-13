@@ -1,4 +1,6 @@
 import { data } from './data.js'
+import { errors } from './_custom-errors';
+import { navigate } from './_routing';
 
 export const getData = async () => {
   return data
@@ -45,12 +47,12 @@ export const getGroup = async (groupName) => {
 export const findAlbum = async (groupName, albumName) => {
   const group = await getGroup(groupName)
   if (group === undefined) {
-    throw new GroupNotFoundError('group not found, 404')
+    throw new errors.GroupNotFoundError('group not found, 404')
   }
 
   const album = group.albums.find(album => album.albumName === albumName)
   if (album === undefined) {
-    throw new AlbumNotFoundError('album not found, 404')
+    throw new errors.AlbumNotFoundError('album not found, 404')
   }
 
   return album
@@ -64,91 +66,104 @@ export const scrollUp = () => {
   window.scroll({top: 0, behavior: 'smooth'})
 }
 
-export const URL_CHANGE_EVENT = 'urlChange'
-export const urlChange = 'urlChange'
+// export const URL_CHANGE_EVENT = 'urlChange';
 //export const defaultTimeout = 1500
-// export const defaultTimeout = 500
-export const defaultTimeout = 250
+export const defaultTimeout = 500;
+// export const defaultTimeout = 250
 
-type PredefinedPage = 'about' | 'home' | '404'
-//const a: PredefinedPage = 'about'
 
-//alert(typeof a)
-const whichPage = (): 'about' | 'home' | 'group' | 'album' | '404' => {
-  const urlParts = location.pathname.split('/').filter(part => part !== '')
+export const updateUi = async () => {
+  // alert(location.pathname)
+  // const is404 = location.pathname === '/404'
+  // if (is404) document.body.setAttribute('data-404', '')
+  // if (!is404) document.body.removeAttribute('data-404')
+
+
+  const albumDetail = document.querySelector('album-detail')
+  const navigation = document.querySelector('.navigation')
+  const availableAlbums = document.querySelector('available-albums')
+
+  const urlParts = location.pathname.split('/').filter(part => part !== '');
 
   if (urlParts.length === 2) {
-    // propably an album page or 404
-//    return 'album'
+    // assume it's an album page
 
-//    const possibleGroupName = urlParts[0]
-//    const possibleAlbumName = urlParts[1]
+    // navigation.classList.remove('visible')
+    navigation.classList.remove('visible')
+    availableAlbums.classList.remove('visible')
+
+    const groupName = urlParts[0]
+    const albumName = urlParts[1]
 
 
+    //   <img
+    // src="${album.coverImage || fallbackImage}"
+    // alt="${album.albumName}'s album cover"
+    // onload="${() => onLoad()}"
+    // onerror="${() => onError()}"
+    // >
+    // console.log(errors)
+
+    let album;
+    try {
+      album = await findAlbum(groupName, albumName)
+    } catch (error) {
+      if (error instanceof errors.GroupNotFoundError) {
+        // alert('g')
+        console.warn(error.message)
+        navigate('/404')
+      }
+      if (error instanceof errors.AlbumNotFoundError) {
+        // alert('album')
+        // console.log('album')
+        console.warn(error.message)
+        // console.log(error.message)
+        navigate('/404')
+
+      }
+
+      console.log('redirect to 404 page')
+      return
+    }
+    const fallbackImage = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url)
+
+    albumDetail.innerHTML = `
+      <div class="album-cover">
+        <div class="placeholder"></div>
+        <img 
+          src="${album.coverImage}"
+          alt="${album.albumName}'s album cover image"
+          onload="
+            // setTimeout(() => {
+            this.classList.add('visible')
+            //   this.style.visibility = 'visible';
+            // }, ${defaultTimeout})
+          "
+          onerror="this.src = '${fallbackImage}"
+          >        
+      </div>
+      <div class="album-info">
+        <div class="album-name">
+          ${album.albumName || 'default value album name'}
+        </div>
+        <div class="group-name">
+          ${album.groupName || 'default value group name'}
+        </div>
+        <div class="date-of-release">
+          ${album.release || 'bay'}
+          // ${album.release || 'default release date'}
+        </div>
+      </div>
+    `
+
+    albumDetail.classList.add('visible')
+
+    return
   }
- // if (urlParts.length === 1) {
- //   const part = urlParts[0]
- //
- //   if ((predefinedPages as string[]).includes(part)) {
- //     return part as PredefinedPage
- //   }
-//  }
 
-//    switch (part) {
-//      case 'about':
-//        return 'about';
-//    }
-//    if (predefinedPages.includes(part)) {
-//      return predefinedPages.find(page => page === part)
-//    }
-
-
-//    const possibleGroupName = urlParts[0]
-
-//    const data = await getData()
-
-//    const currentGroup = data.groups?.filter(group => {
-//      return group.groupName === possibleGroupName
-//    })[0]
-//
-//    if (currentGroup.coverImage) {
-//      this.image.src = currentGroup.coverImage
-//    }
-//
-//    if (!currentGroup.coverImage) {
-//      this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
-//    }
-//  }
-//
-//  if (urlParts.length > 1) {
-//    // set placeholder
-//    this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
-//  }
-
-  return 'about'
-}
-
-whichPage()
-
-const predefinedPages: PredefinedPage[] = ['about', 'home', '404']
-
-
-class GroupNotFoundError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'GroupNotFoundError'
-  }
+  navigation.classList.add('visible')
+  albumDetail.classList.remove('visible')
+  availableAlbums.classList.add('visible')
 }
 
 
-class AlbumNotFoundError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'AlbumNotFoundError'
-  }
-}
-
-export const errors = {
-  //  https://javascript.info/custom-errors
-  GroupNotFoundError, AlbumNotFoundError
-}
