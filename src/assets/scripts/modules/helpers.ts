@@ -1,6 +1,6 @@
-import { data } from './data.js'
-import { errors } from './_custom-errors';
-import { navigate } from './_routing';
+import data from '../data'
+import { GroupNotFoundError, AlbumNotFoundError } from './custom-errors';
+import { navigate } from './routing';
 
 export const getData = async () => {
   return data
@@ -15,7 +15,7 @@ export const getAllAlbums = async () => {
     if (albums) {
       albums.forEach(album => {
         // alert(group.groupName)
-        album.groupName = group.groupName             //...
+        // album.groupName = group.groupName             //...
         availableAlbums.push(album)
         // debugger
       })
@@ -35,6 +35,9 @@ export const getAllGroups = async () => {
 export const getGroup = async (groupName) => {
   const allGroups = await getAllGroups()
   const group = allGroups.find(group => group.groupName === groupName)
+  if (group === undefined) {
+    throw new GroupNotFoundError()
+  }
 
   return group
 }
@@ -47,19 +50,19 @@ export const getGroup = async (groupName) => {
 export const findAlbum = async (groupName, albumName) => {
   const group = await getGroup(groupName)
   if (group === undefined) {
-    throw new errors.GroupNotFoundError('group not found, 404')
+    throw new GroupNotFoundError()
   }
 
   const album = group.albums.find(album => album.albumName === albumName)
   if (album === undefined) {
-    throw new errors.AlbumNotFoundError('album not found, 404')
+    throw new AlbumNotFoundError()
   }
 
   return album
 }
 
 export const scrollToTop = () => {
-  window.scroll(0,0)
+  window.scroll(0, 0)
 }
 
 export const scrollUp = () => {
@@ -108,12 +111,12 @@ export const updateUi = async () => {
     try {
       album = await findAlbum(groupName, albumName)
     } catch (error) {
-      if (error instanceof errors.GroupNotFoundError) {
+      if (error instanceof GroupNotFoundError) {
         // alert('g')
         console.warn(error.message)
         navigate('/404')
       }
-      if (error instanceof errors.AlbumNotFoundError) {
+      if (error instanceof AlbumNotFoundError) {
         // alert('album')
         // console.log('album')
         console.warn(error.message)
@@ -160,6 +163,8 @@ export const updateUi = async () => {
 
     return
   }
+
+  const predefindeRoutes = ['about', '']
 
   navigation.classList.add('visible')
   albumDetail.classList.remove('visible')

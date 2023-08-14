@@ -1,4 +1,4 @@
-export const data = {
+const data = {
   groups: [
     {
       groupName: 'group10',
@@ -207,4 +207,10 @@ export const data = {
   ]
 };
 
+data.groups.forEach(group => {
+  // @ts-ignore
+  group.albums.forEach(album => album.groupName = group.groupName)
+})
 
+// export { data };
+export default data;

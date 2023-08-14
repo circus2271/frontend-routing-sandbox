@@ -1,5 +1,5 @@
-import { defaultTimeout, getAllAlbums, getData } from '../_helpers';
-import { urlChange } from '../_routing';
+import { defaultTimeout, getAllAlbums, getData } from '../modules/helpers';
+import { urlChange } from '../modules/routing';
 
 class AvailableAlbums extends HTMLElement {
   data: any;

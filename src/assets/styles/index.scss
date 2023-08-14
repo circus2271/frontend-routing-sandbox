@@ -83,7 +83,7 @@ img {
       cursor: pointer;
       padding-right: 1rem;
       transition-property: opacity, visibility;
-      transition-duration: .25 / 2 * 1s;
+      transition-duration: calc(.25 / 2 * 1s);
       //transition-timing-function: ease-out;
       transition-timing-function: linear;
       opacity: 0;

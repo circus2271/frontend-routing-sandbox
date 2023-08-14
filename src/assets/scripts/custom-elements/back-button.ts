@@ -1,4 +1,4 @@
-import { urlChange } from '../_routing';
+import { urlChange } from '../modules/routing';
 
 class BackButton extends HTMLElement {
   anchor: HTMLAnchorElement

@@ -1,5 +1,5 @@
-import { defaultTimeout, getData } from '../_helpers';
-import { urlChange } from '../_routing';
+import { defaultTimeout, getData } from '../modules/helpers';
+import { getCurrentPageInfo, urlChange } from '../modules/routing';
 
 class ParallaxImage extends HTMLElement {
   placeholder: any;
@@ -17,6 +17,7 @@ class ParallaxImage extends HTMLElement {
     this.image = this.querySelector('img')
     //    this.image.style.position = 'relative'
     this.updateImage()
+    this.logCurrentPage()
 
     window.addEventListener('scroll', this.onScroll, {passive: true})
     window.addEventListener(urlChange, this.onUrlChange)
@@ -38,8 +39,10 @@ class ParallaxImage extends HTMLElement {
     }
   }
 
-  onUrlChange = (event) => {
+  onUrlChange = async (event) => {
     this.updateImage()
+
+    this.logCurrentPage()
   }
 
   updateImage = async () => {
@@ -101,6 +104,11 @@ class ParallaxImage extends HTMLElement {
     setTimeout(() => {
       this.image.classList.add('visible')
     }, defaultTimeout)
+  }
+
+  async logCurrentPage() {
+    const {routeName} = await getCurrentPageInfo()
+    console.log('current page:', routeName)
   }
 
   disconnectedCallback() {
