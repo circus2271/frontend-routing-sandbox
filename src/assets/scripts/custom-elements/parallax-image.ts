@@ -1,10 +1,13 @@
-import { defaultTimeout, getData } from '../modules/helpers';
-import { getCurrentPageInfo, urlChange } from '../modules/routing';
+import { defaultTimeout, getData, getGroup } from '../modules/helpers';
+import { getCurrentPageInfo, RouteInfo, RouteName, urlChange } from '../modules/routing';
 
 class ParallaxImage extends HTMLElement {
   placeholder: any;
   image: any;
   gap: number;
+  currentRoute: RouteName;
+  currentPageInfo: RouteInfo;
+  placeholderImage = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
 
   constructor() {
     super();
@@ -12,15 +15,21 @@ class ParallaxImage extends HTMLElement {
     this.gap = 50;
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     this.placeholder = this.querySelector('.loader')
     this.image = this.querySelector('img')
     //    this.image.style.position = 'relative'
+    await this.getRouteInfo()
     this.updateImage()
     this.logCurrentPage()
 
     window.addEventListener('scroll', this.onScroll, {passive: true})
     window.addEventListener(urlChange, this.onUrlChange)
+  }
+
+  getRouteInfo = async () => {
+    this.currentPageInfo = await getCurrentPageInfo()
+    this.currentRoute = this.currentPageInfo.routeName
   }
 
   onScroll = (e) => {
@@ -40,6 +49,7 @@ class ParallaxImage extends HTMLElement {
   }
 
   onUrlChange = async (event) => {
+    await this.getRouteInfo()
     this.updateImage()
 
     this.logCurrentPage()
@@ -59,56 +69,44 @@ class ParallaxImage extends HTMLElement {
       this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
     }
 
-    switch (location.pathname) {
-      case '/':
+    switch (this.currentRoute) {
+      case 'home':
         this.image.src = new URL('~/src/assets/media/images/tramvai_bandcamp_header_image.png', import.meta.url);
         break;
-      case '/about':
+      case 'about':
         this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
         break;
-      case '/404':
-        const src = `
-        https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2F6uGhT1O4sxpi8%2Fgiphy.gif&f=1&nofb=1&ipt=b96e0ddcdfcb38b309c35458e82657e6dc312d36f077673b6ad16486fbfca126&ipo=images
-        `
-
-        this.image.src = src
+      case '404':
+        this.image.src = 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2F6uGhT1O4sxpi8%2Fgiphy.gif&f=1&nofb=1&ipt=b96e0ddcdfcb38b309c35458e82657e6dc312d36f077673b6ad16486fbfca126&ipo=images'
         break;
+      case 'group-page':
+        const currentGroup = this.currentPageInfo.data
+
+        if (currentGroup.coverImage) {
+          this.image.src = currentGroup.coverImage
+        }
+
+        if (!currentGroup.coverImage) {
+          this.image.src = this.placeholderImage;
+        }
+
+        break;
+      case 'album-page':
       default:
-        const urlParts = location.pathname.split('/').filter(part => part !== '')
-
-        if (urlParts.length === 1) {
-          const possibleGroupName = urlParts[0]
-
-          const data = await getData()
-
-          const currentGroup = data.groups?.filter(group => {
-            return group.groupName === possibleGroupName
-          })[0]
-
-          if (currentGroup.coverImage) {
-            this.image.src = currentGroup.coverImage
-          }
-
-          if (!currentGroup.coverImage) {
-            this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
-          }
-        }
-
-        if (urlParts.length > 1) {
-          // set placeholder
-          this.image.src = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url);
-        }
+        // set placeholder
+        this.image.src = this.placeholderImage
     }
 
 
     setTimeout(() => {
-      this.image.classList.add('visible')
-    }, defaultTimeout)
+        this.image.classList.add('visible')
+      }, defaultTimeout
+    )
   }
 
-  async logCurrentPage() {
-    const {routeName} = await getCurrentPageInfo()
-    console.log('current page:', routeName)
+  logCurrentPage = async () => {
+    // const {routeName} = await getCurrentPageInfo()
+    console.log('current page:', this.currentRoute)
   }
 
   disconnectedCallback() {

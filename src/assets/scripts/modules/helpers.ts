@@ -98,15 +98,6 @@ export const updateUi = async () => {
     const groupName = urlParts[0]
     const albumName = urlParts[1]
 
-
-    //   <img
-    // src="${album.coverImage || fallbackImage}"
-    // alt="${album.albumName}'s album cover"
-    // onload="${() => onLoad()}"
-    // onerror="${() => onError()}"
-    // >
-    // console.log(errors)
-
     let album;
     try {
       album = await findAlbum(groupName, albumName)
@@ -164,7 +155,7 @@ export const updateUi = async () => {
     return
   }
 
-  const predefindeRoutes = ['about', '']
+  // const predefindeRoutes = ['about', '']
 
   navigation.classList.add('visible')
   albumDetail.classList.remove('visible')

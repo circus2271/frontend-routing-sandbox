@@ -73,13 +73,18 @@ whichPage()
 
 const predefinedPages: PredefinedPage[] = ['about', 'home', '404']
 
-type RouteInfo = {
-  routeName: 'about' | 'home' | '404' | 'album-page' | 'group-page';
+export type RouteName = 'about' | 'home' | '404' | 'album-page' | 'group-page';
+
+export type RouteInfo = {
+  routeName: RouteName;
   data?: GroupInfo | AlbumInfo;
+  groupCoverImage?: string;
 }
 
 type GroupInfo = {
   groupName: string;
+  coverImage: string,
+  albums: AlbumInfo[]
   // albums: any
 }
 
@@ -123,7 +128,7 @@ export const getCurrentPageInfo = async (): Promise<RouteInfo> => {
 
       return {
         routeName: 'group-page',
-        data: group
+        data: group,
       }
     } catch (error) {
       if (
