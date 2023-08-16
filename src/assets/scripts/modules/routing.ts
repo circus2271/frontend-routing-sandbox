@@ -78,7 +78,6 @@ export type RouteName = 'about' | 'home' | '404' | 'album-page' | 'group-page';
 export type RouteInfo = {
   routeName: RouteName;
   data?: GroupInfo | AlbumInfo;
-  groupCoverImage?: string;
 }
 
 type GroupInfo = {
