@@ -145,10 +145,13 @@ export const getCurrentPageInfo = async (): Promise<RouteInfo> => {
     // album page or 404
     const possibleGroupName = urlParts[0]
     const possibleAlbumName = urlParts[1]
+    const normalizedAlbumName = possibleAlbumName.split('_').join(' ')
 
     try {
-      const album = await findAlbum(possibleGroupName, possibleAlbumName)
+      const album = await findAlbum(possibleGroupName, normalizedAlbumName)
+      console.log(album)
 
+      // debugger
       return {
         routeName: 'album-page',
         data: album

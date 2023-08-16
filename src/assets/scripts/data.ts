@@ -5,6 +5,22 @@ const data = {
       coverImage: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/7f60a7149564547.62ee76a7bb0dd.jpg',
       albums: [
         {
+          albumName: 'long album name (multiple words)',
+          coverImage: 'https://f4.bcbits.com/img/a2545099157_2.jpg',
+          // coverImage: 'https://i.pinimg.com/236x/71/a1/48/71a148415e045d21f6ab7a3575052a11.jpg',
+          // coverImage: 'https://i.pinimg.com/564x/cc/56/61/cc5661d57dfa8086d6a2c62087c387cd.jpg',
+          tracks: [
+            {
+              name: 'track blabla',
+              src: 'https://sfdfsf.fsdfsf'
+            },
+            {
+              name: 'track 2 babla',
+              src: 'https://track2.url.ru'
+            }
+          ]
+        },
+        {
           albumName: 'album-1',
           coverImage: 'https://f4.bcbits.com/img/a2545099157_2.jpg',
           // coverImage: 'https://i.pinimg.com/236x/71/a1/48/71a148415e045d21f6ab7a3575052a11.jpg',

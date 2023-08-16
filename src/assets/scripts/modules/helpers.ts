@@ -81,12 +81,12 @@ export const updateUi = async () => {
   // if (is404) document.body.setAttribute('data-404', '')
   // if (!is404) document.body.removeAttribute('data-404')
 
-
   const albumDetail = document.querySelector('album-detail')
   const navigation = document.querySelector('.navigation')
   const availableAlbums = document.querySelector('available-albums')
-
   const urlParts = location.pathname.split('/').filter(part => part !== '');
+
+  // debugger
 
   if (urlParts.length === 2) {
     // assume it's an album page
@@ -97,10 +97,11 @@ export const updateUi = async () => {
 
     const groupName = urlParts[0]
     const albumName = urlParts[1]
+    const normalizedAlbumName = albumName.split('_').join(' ')
 
     let album;
     try {
-      album = await findAlbum(groupName, albumName)
+      album = await findAlbum(groupName, normalizedAlbumName)
     } catch (error) {
       if (error instanceof GroupNotFoundError) {
         // alert('g')

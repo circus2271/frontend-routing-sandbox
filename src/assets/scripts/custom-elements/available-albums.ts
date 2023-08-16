@@ -55,7 +55,7 @@ class AvailableAlbums extends HTMLElement {
     } catch (error) {
       if (error instanceof GroupNotFoundError) {
         console.warn(error.message)
-        navigate('404')
+        navigate('/404')
 
         return
       }
@@ -80,7 +80,7 @@ class AvailableAlbums extends HTMLElement {
           <div class="album-cover">
             <!--<img src="">-->
           </div>
-          <a href="/${album.groupName}/${album.albumName}">
+          <a href="/${album.groupName}/${album.albumName.split(' ').join('_')}">
             ${album.albumName} wow
           </a>
         </li>

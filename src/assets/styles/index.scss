@@ -219,6 +219,7 @@ album-detail {
   top: calc(-144px / 2 - var(--wrapper-padding));
   position: relative;
   display: none;
+  text-align: center;
 
   &.visible {
     display: block;
