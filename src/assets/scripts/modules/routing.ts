@@ -81,11 +81,8 @@ export const getCurrentPageInfo = async (): Promise<RouteInfo> => {
     const normalizedAlbumName = possibleAlbumName.split('_').join(' ')
 
     try {
-      // const album = await findAlbum(possibleGroupName, normalizedAlbumName)
       const albumRelatedInfo = await getAlbumRelatedInfo(possibleGroupName, normalizedAlbumName)
-      // console.log(albumRelatedInfo)
 
-      // debugger
       return {
         routeName: 'album-page',
         data: albumRelatedInfo

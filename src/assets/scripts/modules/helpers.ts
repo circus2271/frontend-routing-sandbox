@@ -1,6 +1,6 @@
 import data from '../data'
 import { GroupNotFoundError, AlbumNotFoundError } from './custom-errors';
-import { getCurrentPageInfo, navigate } from './routing';
+import { getCurrentPageInfo } from './routing';
 
 export type GroupInfo = {
   groupName: string;
@@ -112,53 +112,47 @@ export const defaultTimeout = 500;
 
 
 export const updateUi = async () => {
-  // alert(location.pathname)
-  // const is404 = location.pathname === '/404'
-  // if (is404) document.body.setAttribute('data-404', '')
-  // if (!is404) document.body.removeAttribute('data-404')
-
   const albumDetail = document.querySelector('album-detail')
-  const navigation = document.querySelector('.navigation')
+  // const navigation = document.querySelector('.navigation')
   const availableAlbums = document.querySelector('available-albums')
 
-  // debugger
 
   const currentPage = await getCurrentPageInfo()
   const currentRoute = currentPage.routeName
 
   if (currentRoute === 'album-page') {
-    navigation.classList.remove('visible')
+    // navigation.classList.remove('visible')
     availableAlbums.classList.remove('visible')
 
     // const fallbackImage = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url)
 
-    const data = currentPage.data as AlbumRelatedInfo
-    const {albumInfo: album, groupInfo: group} = data
+    // const data = currentPage.data as AlbumRelatedInfo
+    // const {albumInfo: album, groupInfo: group} = data
 
-    albumDetail.innerHTML = `
-      <album-cover class="album-detail__album-cover" image-src="${album.coverImage}">
-      </album-cover>
-      <div class="album-info">
-        <div class="album-name">
-          ${album.albumName || 'default value album name'}
-        </div>
-        <div class="group-name">
-          ${group.groupName || 'default value group name'}
-        </div>
-        <div class="date-of-release">
-          ${album.release || 'bay'}
-          // ${album.release || 'default release date'}
-        </div>
-      </div>
-    `
-
-    albumDetail.classList.add('visible')
-
-    return
+  //   albumDetail.innerHTML = `
+  //     <album-cover class="album-detail__album-cover" image-src="${album.coverImage}">
+  //     </album-cover>
+  //     <div class="album-info">
+  //       <div class="album-name">
+  //         ${album.albumName || 'default value album name'}
+  //       </div>
+  //       <div class="group-name">
+  //         ${group.groupName || 'default value group name'}
+  //       </div>
+  //       <div class="date-of-release">
+  //         ${album.release || 'bay'}
+  //         // ${album.release || 'default release date'}
+  //       </div>
+  //     </div>
+  //   `
+  //
+  //   albumDetail.classList.add('visible')
+  //
+  //   return
   }
 
 
-  navigation.classList.add('visible')
+  // navigation.classList.add('visible')
   albumDetail.classList.remove('visible')
   availableAlbums.classList.add('visible')
 }

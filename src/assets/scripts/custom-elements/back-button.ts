@@ -30,24 +30,17 @@ class BackButton extends HTMLElement {
     const wrapper = document.getElementById('app-bar__left-side');
     if (urlParts.length === 0) {
       wrapper.classList.remove('visible')
-      // document.getElementById('app-bar__left-side')
-      // this.classList.remove('visible')
       this.anchor.setAttribute('href', '/')
     } else if (urlParts.length === 1) {
       wrapper.classList.add('visible')
 
-      // this.classList.add('visible')
       this.anchor.setAttribute('href', '/')
     } else {
       wrapper.classList.add('visible')
 
-      // this.classList.add('visible')
-
       // slice returns new array (from start, to end (not included))
       const newUrl = urlParts.slice(0, urlParts.length - 1 ).join('');
       this.anchor.setAttribute('href', '/' + newUrl)
-      // const lastUrlPart = urlParts[urlParts.length - 1]
-      // const newUrl =
     }
   }
 

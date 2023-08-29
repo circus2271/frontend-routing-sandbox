@@ -1,6 +1,7 @@
+import './main-navigation'
+import './back-button'
 import './available-albums'
 import './available-groups'
-import './back-button'
 import './parallax-image'
 import './album-cover'
 import './album-detail'

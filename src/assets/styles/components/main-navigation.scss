@@ -1,8 +1,12 @@
-.navigation {
+main-navigation {
   display: none;
+  //transition-property: opacity, visibility;
+  //transition-timing-function: ease-out;
+  //transition-duration: .25s;
 
   &.visible {
     display: block;
+    //transition-timing-function: ease-in;
   }
 
   .nav-links {
