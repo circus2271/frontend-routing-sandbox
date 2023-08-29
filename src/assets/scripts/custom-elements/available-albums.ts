@@ -41,6 +41,8 @@ class AvailableAlbums extends HTMLElement {
     const availableAlbums = await getAllAlbums()
 
     this.renderHTML(availableAlbums)
+
+    this.classList.add('visible')
   }
 
   showGroupAlbums = async () => {
@@ -67,6 +69,8 @@ class AvailableAlbums extends HTMLElement {
     }
 
     this.renderHTML(albums)
+
+    this.classList.add('visible')
   }
 
   renderHTML = (albums) => {

@@ -112,17 +112,15 @@ export const defaultTimeout = 500;
 
 
 export const updateUi = async () => {
-  const albumDetail = document.querySelector('album-detail')
-  // const navigation = document.querySelector('.navigation')
-  const availableAlbums = document.querySelector('available-albums')
-
-
-  const currentPage = await getCurrentPageInfo()
-  const currentRoute = currentPage.routeName
-
-  if (currentRoute === 'album-page') {
-    // navigation.classList.remove('visible')
-    availableAlbums.classList.remove('visible')
+  // const availableAlbums = document.querySelector('available-albums')
+  //
+  //
+  // const currentPage = await getCurrentPageInfo()
+  // const currentRoute = currentPage.routeName
+  //
+  // if (currentRoute === 'album-page') {
+  //   navigation.classList.remove('visible')
+    // availableAlbums.classList.remove('visible')
 
     // const fallbackImage = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url)
 
@@ -149,12 +147,12 @@ export const updateUi = async () => {
   //   albumDetail.classList.add('visible')
   //
   //   return
-  }
+  // }
 
 
   // navigation.classList.add('visible')
-  albumDetail.classList.remove('visible')
-  availableAlbums.classList.add('visible')
+  // albumDetail.classList.remove('visible')
+  // availableAlbums.classList.add('visible')
 }
 
 

@@ -16,17 +16,8 @@ class AlbumDetail extends HTMLElement {
     if (visible) {
       this.renderHTML()
     }
-  }
 
-  getRouteInfo = async () => {
-    this.currentPageInfo = await getCurrentPageInfo()
-    this.currentRoute = this.currentPageInfo.routeName
-
-    if (this.currentRoute === 'album-page') {
-      this.albumRelatedInfo = this.currentPageInfo.data as AlbumRelatedInfo
-    } else {
-      this.albumRelatedInfo = null
-    }
+    window.addEventListener(urlChange, this.onUrlChange)
   }
 
   onUrlChange = async () => {
@@ -47,6 +38,17 @@ class AlbumDetail extends HTMLElement {
 
     this.classList.remove('visible')
     return { visible: false }
+  }
+
+  getRouteInfo = async () => {
+    this.currentPageInfo = await getCurrentPageInfo()
+    this.currentRoute = this.currentPageInfo.routeName
+
+    if (this.currentRoute === 'album-page') {
+      this.albumRelatedInfo = this.currentPageInfo.data as AlbumRelatedInfo
+    } else {
+      this.albumRelatedInfo = null
+    }
   }
 
   renderHTML = () => {

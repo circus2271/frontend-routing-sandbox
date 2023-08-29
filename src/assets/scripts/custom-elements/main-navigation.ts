@@ -11,6 +11,8 @@ class MainNavigation extends HTMLElement {
 
   async connectedCallback() {
     await this.toggleVisibility()
+
+    window.addEventListener(urlChange, this.onUrlChange)
   }
 
   getRouteInfo = async () => {
