@@ -1,47 +1,26 @@
-import { findAlbum, getGroup, scrollUp, updateUi } from './helpers';
+import {
+  AlbumRelatedInfo,
+  getAlbumRelatedInfo,
+  getGroup,
+  GroupInfo,
+  scrollUp,
+  updateUi
+} from './helpers';
 import { AlbumNotFoundError, GroupNotFoundError } from './custom-errors';
 
 
 export const urlChange = 'urlChange';
 
-// prevent default scroll restoration
-// https://developer.mozilla.org/en-US/docs/Web/API/History/scrollRestoration
-if (history.scrollRestoration) {
-  history.scrollRestoration = "manual";
-}
-
-// https://flaviocopes.com/history-api/
-window.addEventListener("popstate", (event) => {
-  //  document.querySelector('#current-url').innerHTML = location.pathname
-
-//  console.log('popstate', event)
-//  updateUi()
-  emitUrlChangeEvent()
-});
-
 const emitUrlChangeEvent = () => {
   const event = new CustomEvent(urlChange, {
-//    detail: {
-//      newLocation: location.pathname
-//    }
+    //    detail: {
+    //      newLocation: location.pathname
+    //    }
   })
 
   window.dispatchEvent(event)
 }
 
-document.body.addEventListener('click', event => {
-  if (event.target instanceof HTMLAnchorElement) {
-    const anchor = event.target;
-    if (anchor.target === '_blank') return;
-    // https://stackoverflow.com/a/6806291/9675926
-    if (event.ctrlKey) return;
-
-    event.preventDefault()
-
-    const href = anchor.href
-    navigate(href)
-  }
-})
 
 export const navigate = async (url, state = {}) => {
   history.pushState(state, '', url)
@@ -50,59 +29,13 @@ export const navigate = async (url, state = {}) => {
 }
 
 
-
-window.addEventListener(urlChange, (e: CustomEvent) => {
-  scrollUp()
-  updateUi()
-})
-
-updateUi()
-
-
-type PredefinedPage = 'about' | 'home' | '404'
-//const a: PredefinedPage = 'about'
-
-//alert(typeof a)
-const whichPage = (): 'about' | 'home' | 'group' | 'album' | '404' => {
-  const urlParts = location.pathname.split('/').filter(part => part !== '')
-
-  return 'about'
-}
-
-whichPage()
-
-const predefinedPages: PredefinedPage[] = ['about', 'home', '404']
-
 export type RouteName = 'about' | 'home' | '404' | 'album-page' | 'group-page';
 
 export type RouteInfo = {
   routeName: RouteName;
-  data?: GroupInfo | AlbumInfo;
+  // data?: GroupInfo | AlbumRelatedInfo;
+  data?: GroupInfo | AlbumRelatedInfo;
 }
-
-type GroupInfo = {
-  groupName: string;
-  coverImage: string,
-  albums: AlbumInfo[]
-  // albums: any
-}
-
-type AlbumInfo = {
-  albumName: string,
-  // groupName?: string,
-  // groupName: string,
-  coverImage: string,
-  // release?: string,
-  tracks: {
-    name: string;
-    src: string
-  }[]
-}
-
-// type Albums = {
-//
-// }
-
 
 
 export const getCurrentPageInfo = async (): Promise<RouteInfo> => {
@@ -148,13 +81,14 @@ export const getCurrentPageInfo = async (): Promise<RouteInfo> => {
     const normalizedAlbumName = possibleAlbumName.split('_').join(' ')
 
     try {
-      const album = await findAlbum(possibleGroupName, normalizedAlbumName)
-      console.log(album)
+      // const album = await findAlbum(possibleGroupName, normalizedAlbumName)
+      const albumRelatedInfo = await getAlbumRelatedInfo(possibleGroupName, normalizedAlbumName)
+      // console.log(albumRelatedInfo)
 
       // debugger
       return {
         routeName: 'album-page',
-        data: album
+        data: albumRelatedInfo
       }
     } catch (error) {
       if (
@@ -170,3 +104,43 @@ export const getCurrentPageInfo = async (): Promise<RouteInfo> => {
 
   return {routeName: '404'}
 }
+
+const setup = () => {
+  // prevent default scroll restoration
+  // https://developer.mozilla.org/en-US/docs/Web/API/History/scrollRestoration
+  if (history.scrollRestoration) {
+    history.scrollRestoration = "manual";
+  }
+
+  // https://flaviocopes.com/history-api/
+  window.addEventListener("popstate", (event) => {
+    //  document.querySelector('#current-url').innerHTML = location.pathname
+
+    //  console.log('popstate', event)
+    //  updateUi()
+    emitUrlChangeEvent()
+  });
+
+  document.body.addEventListener('click', event => {
+    if (event.target instanceof HTMLAnchorElement) {
+      const anchor = event.target;
+      if (anchor.target === '_blank') return;
+      // https://stackoverflow.com/a/6806291/9675926
+      if (event.ctrlKey) return;
+
+      event.preventDefault()
+
+      const href = anchor.href
+      navigate(href)
+    }
+  })
+
+  window.addEventListener(urlChange, (e: CustomEvent) => {
+    scrollUp()
+    updateUi()
+  })
+
+  updateUi()
+}
+
+setup()

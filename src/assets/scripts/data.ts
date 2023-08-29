@@ -6,9 +6,9 @@ const data = {
       albums: [
         {
           albumName: 'long album name (multiple words)',
-          coverImage: 'https://f4.bcbits.com/img/a2545099157_2.jpg',
-          // coverImage: 'https://i.pinimg.com/236x/71/a1/48/71a148415e045d21f6ab7a3575052a11.jpg',
-          // coverImage: 'https://i.pinimg.com/564x/cc/56/61/cc5661d57dfa8086d6a2c62087c387cd.jpg',
+          // coverImage: 'https://f4.bcbits.com/img/a2545099157_2.jpg',
+          coverImage: 'https://avatars.yandex.net/get-music-content/114728/e31af775.a.5628505-1/200x200',
+          // coverImage: 'https://avatars.yandex.net/get-music-content/114728/e31af775.a.5628505-1/300x300',
           tracks: [
             {
               name: 'track blabla',
@@ -22,7 +22,8 @@ const data = {
         },
         {
           albumName: 'album-1',
-          coverImage: 'https://f4.bcbits.com/img/a2545099157_2.jpg',
+          coverImage: 'https://avatars.yandex.net/get-music-content/3316841/3dcb7612.a.13383336-1/200x200',
+          // coverImage: 'https://avatars.yandex.net/get-music-content/3316841/3dcb7612.a.13383336-1/300x300',
           // coverImage: 'https://i.pinimg.com/236x/71/a1/48/71a148415e045d21f6ab7a3575052a11.jpg',
           // coverImage: 'https://i.pinimg.com/564x/cc/56/61/cc5661d57dfa8086d6a2c62087c387cd.jpg',
           tracks: [
@@ -38,7 +39,8 @@ const data = {
         },
         {
           albumName: 'album_2_blabla_babla',
-          coverImage: 'https://f4.bcbits.com/img/a0125615091_2.jpg',
+          // coverImage: 'https://f4.bcbits.com/img/a0125615091_2.jpg',
+          coverImage: 'https://blablabla2.jpg',
           tracks: [
             {
               name: 'track wow',

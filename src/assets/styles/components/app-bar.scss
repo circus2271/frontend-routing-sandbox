@@ -1,0 +1,48 @@
+
+.app-bar {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .left-side {
+    --offset-left: 'from-js';
+
+    display: flex;
+    transition-property: transform;
+    transition: transform .25s ease-out;
+    transform: translateX(-84px);
+
+    &.visible {
+      transform: translateX(0);
+      transition-timing-function: ease-in;
+
+      back-button {
+        opacity: 1;
+        visibility: visible;
+        //transition-timing-function: ease-in;
+        transition-timing-function: linear;
+      }
+    }
+
+    back-button {
+      cursor: pointer;
+      padding-right: 1rem;
+      transition-property: opacity, visibility;
+      transition-duration: calc(.25 / 2 * 1s);
+      //transition-timing-function: ease-out;
+      transition-timing-function: linear;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: #fff;
+    }
+  }
+
+}

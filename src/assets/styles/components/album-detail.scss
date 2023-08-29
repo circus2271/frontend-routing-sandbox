@@ -1,0 +1,39 @@
+album-detail {
+  --wrapper-padding: 1.25rem;
+  //transform: translateY(calc(-50% - var(--wrapper-padding)));
+  //top: calc(-50% - var(--wrapper-padding));
+  top: calc(-144px / 2 - var(--wrapper-padding));
+  position: relative;
+  display: none;
+  text-align: center;
+
+  &.visible {
+    display: block;
+  }
+
+  .album-cover {
+    width: 144px;
+    height: 144px;
+
+    .placeholder {
+      background-image: linear-gradient(13deg, yellow 28%, #22c55e);
+      filter: hue-rotate(45deg) grayscale(.13);
+    }
+  }
+
+  .album-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+
+    .album-name {
+      font-size: 1.4rem;
+    }
+
+    .date-of-release {
+      //color: gray;
+      color: grey;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { defaultTimeout, getData, getGroup } from '../modules/helpers';
+import { defaultTimeout, getData, getGroup, GroupInfo } from '../modules/helpers';
 import { getCurrentPageInfo, RouteInfo, RouteName, urlChange } from '../modules/routing';
 
 class ParallaxImage extends HTMLElement {
@@ -80,7 +80,7 @@ class ParallaxImage extends HTMLElement {
         this.image.src = 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2F6uGhT1O4sxpi8%2Fgiphy.gif&f=1&nofb=1&ipt=b96e0ddcdfcb38b309c35458e82657e6dc312d36f077673b6ad16486fbfca126&ipo=images'
         break;
       case 'group-page':
-        const currentGroup = this.currentPageInfo.data
+        const currentGroup = this.currentPageInfo.data as GroupInfo
 
         if (currentGroup.coverImage) {
           this.image.src = currentGroup.coverImage

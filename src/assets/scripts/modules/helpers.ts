@@ -1,6 +1,23 @@
 import data from '../data'
 import { GroupNotFoundError, AlbumNotFoundError } from './custom-errors';
-import { navigate } from './routing';
+import { getCurrentPageInfo, navigate } from './routing';
+
+export type GroupInfo = {
+  groupName: string;
+  coverImage: string;
+  albums: AlbumInfo[];
+  // albums: any
+}
+
+export type AlbumInfo = {
+  albumName: string;
+  coverImage: string;
+  release?: string;
+  tracks: {
+    name: string;
+    src: string;
+  }[]
+}
 
 export const getData = async () => {
   return data
@@ -32,12 +49,12 @@ export const getAllGroups = async () => {
   return groups
 }
 
-export const getGroup = async (groupName) => {
+export const getGroup = async (groupName): Promise<GroupInfo> => {
   const allGroups = await getAllGroups()
   const group = allGroups.find(group => group.groupName === groupName)
-  if (group === undefined) {
-    throw new GroupNotFoundError()
-  }
+  // if (group === undefined) {
+  //   throw new GroupNotFoundError()
+  // }
 
   return group
 }
@@ -47,7 +64,7 @@ export const getGroup = async (groupName) => {
 //   return group.albums || []
 // }
 
-export const findAlbum = async (groupName, albumName) => {
+export const findAlbum = async (groupName, albumName): Promise<AlbumInfo> => {
   const group = await getGroup(groupName)
   if (group === undefined) {
     throw new GroupNotFoundError()
@@ -59,6 +76,25 @@ export const findAlbum = async (groupName, albumName) => {
   }
 
   return album
+}
+
+export type AlbumRelatedInfo = {
+  albumInfo: AlbumInfo;
+  groupInfo: GroupInfo;
+}
+
+export const getAlbumRelatedInfo = async (groupName, albumName): Promise<AlbumRelatedInfo> => {
+  const group = await getGroup(groupName)
+  if (group === undefined) {
+    throw new GroupNotFoundError()
+  }
+
+  const album = group.albums.find(album => album.albumName === albumName)
+  if (album === undefined) {
+    throw new AlbumNotFoundError()
+  }
+
+  return {groupInfo: group, albumInfo: album}
 }
 
 export const scrollToTop = () => {
@@ -84,65 +120,30 @@ export const updateUi = async () => {
   const albumDetail = document.querySelector('album-detail')
   const navigation = document.querySelector('.navigation')
   const availableAlbums = document.querySelector('available-albums')
-  const urlParts = location.pathname.split('/').filter(part => part !== '');
 
   // debugger
 
-  if (urlParts.length === 2) {
-    // assume it's an album page
+  const currentPage = await getCurrentPageInfo()
+  const currentRoute = currentPage.routeName
 
-    // navigation.classList.remove('visible')
+  if (currentRoute === 'album-page') {
     navigation.classList.remove('visible')
     availableAlbums.classList.remove('visible')
 
-    const groupName = urlParts[0]
-    const albumName = urlParts[1]
-    const normalizedAlbumName = albumName.split('_').join(' ')
+    // const fallbackImage = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url)
 
-    let album;
-    try {
-      album = await findAlbum(groupName, normalizedAlbumName)
-    } catch (error) {
-      if (error instanceof GroupNotFoundError) {
-        // alert('g')
-        console.warn(error.message)
-        navigate('/404')
-      }
-      if (error instanceof AlbumNotFoundError) {
-        // alert('album')
-        // console.log('album')
-        console.warn(error.message)
-        // console.log(error.message)
-        navigate('/404')
-
-      }
-
-      console.log('redirect to 404 page')
-      return
-    }
-    const fallbackImage = new URL('~/src/assets/media/images/about_page_image.png', import.meta.url)
+    const data = currentPage.data as AlbumRelatedInfo
+    const {albumInfo: album, groupInfo: group} = data
 
     albumDetail.innerHTML = `
-      <div class="album-cover">
-        <div class="placeholder"></div>
-        <img 
-          src="${album.coverImage}"
-          alt="${album.albumName}'s album cover image"
-          onload="
-            // setTimeout(() => {
-            this.classList.add('visible')
-            //   this.style.visibility = 'visible';
-            // }, ${defaultTimeout})
-          "
-          onerror="this.src = '${fallbackImage}"
-          >        
-      </div>
+      <album-cover class="album-detail__album-cover" image-src="${album.coverImage}">
+      </album-cover>
       <div class="album-info">
         <div class="album-name">
           ${album.albumName || 'default value album name'}
         </div>
         <div class="group-name">
-          ${album.groupName || 'default value group name'}
+          ${group.groupName || 'default value group name'}
         </div>
         <div class="date-of-release">
           ${album.release || 'bay'}
@@ -156,7 +157,6 @@ export const updateUi = async () => {
     return
   }
 
-  // const predefindeRoutes = ['about', '']
 
   navigation.classList.add('visible')
   albumDetail.classList.remove('visible')

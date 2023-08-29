@@ -4,8 +4,6 @@ import { GroupNotFoundError } from '../modules/custom-errors';
 
 class AvailableAlbums extends HTMLElement {
   data: any;
-  // header: 'Available albums' | 'Group albums:'
-  // h3: HTMLHeadingElement
   currentPageInfo: RouteInfo
   currentRoute: RouteName
 
@@ -38,7 +36,6 @@ class AvailableAlbums extends HTMLElement {
   }
 
   showAllAlbums = async () => {
-
     this.data = await getData()
 
     const availableAlbums = await getAllAlbums()
@@ -77,11 +74,10 @@ class AvailableAlbums extends HTMLElement {
     albums.forEach(album => {
       html += `
         <li>
-          <div class="album-cover">
-            <!--<img src="">-->
-          </div>
           <a href="/${album.groupName}/${album.albumName.split(' ').join('_')}">
-            ${album.albumName} wow
+            <album-cover class="available-albums__album-cover" image-src="${album.coverImage}">
+            </album-cover>
+              ${album.albumName} wow
           </a>
         </li>
       `
@@ -89,11 +85,8 @@ class AvailableAlbums extends HTMLElement {
 
     const listWrapper = this.querySelector('.content .list-wrapper')
     listWrapper.innerHTML = `<ul>${html}</ul>`
-    // listWrapper.style.display = 'block'
-    // this.querySelector('h3').innerHTML = this.header
 
     setTimeout(() => {
-      // listWrapper.style.display = 'block'
       listWrapper.classList.add('visible')
     }, defaultTimeout)
   }

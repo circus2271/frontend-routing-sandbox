@@ -1,0 +1,36 @@
+.navigation {
+  display: none;
+
+  &.visible {
+    display: block;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1rem .5rem;
+    flex-wrap: wrap;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+
+      &:hover {
+        //text-decoration: underline;
+      }
+
+      &.active {
+        //text-decoration: underline;
+        //color: grey;
+
+        //&::before {
+        //  content: '>>>'
+        //}
+      }
+    }
+  }
+}
+
+//.navigation {
+//  display: none;
+//}

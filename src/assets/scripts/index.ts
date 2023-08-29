@@ -5,7 +5,8 @@
 // keep playing song even when url changes (when navigation occurs)
 //
 // set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
-import './modules/routing'
+// import { setup } from './modules/routing';
+import './modules/routing';
 import './custom-elements'
 // import './_audio-player'
 

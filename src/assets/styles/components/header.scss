@@ -1,0 +1,38 @@
+.header {
+  overflow: hidden;
+
+  .top-image {
+    min-height: 180px; //replace with padding
+    display: grid;
+    place-items: center;
+
+    .loader {
+      display: none;
+    }
+
+    //.image-wrapper {
+    //  position: relative;
+    //}
+
+    img {
+      margin: 0 auto;
+      position: relative;
+      opacity: 0;
+      object-fit: cover;
+      visibility: hidden;
+      // mixin hidden
+      //z-index: 1;
+
+      &.visible {
+        // mixin visible
+        opacity: 1;
+        visibility: visible;
+        //transition-timing-function: ease-in;
+        transition-property: visibility, opacity;
+        transition-timing-function: linear;
+        transition-timing-function: ease-out;
+        transition-duration: .25s;
+      }
+    }
+  }
+}

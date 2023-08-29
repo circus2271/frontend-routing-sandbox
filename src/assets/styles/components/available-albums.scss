@@ -1,0 +1,36 @@
+available-albums {
+  display: none;
+
+  &.visible {
+    display: block;
+  }
+
+  //.loader {
+  //  display: none;
+  //}
+
+  .list-wrapper {
+    display: none;
+
+    &.visible {
+      display: block;
+    }
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
+    grid-column-gap: .5rem;
+    grid-row-gap: .75rem;
+  }
+
+
+  //.album-cover {
+  //  padding-top: 100%;
+  //  margin-bottom: .4rem;
+  //
+  //  .placeholder {
+  //    background: linear-gradient(13deg, yellow 28%, #22c55e);
+  //  }
+  //}
+}
