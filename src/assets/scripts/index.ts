@@ -1,25 +1,55 @@
-// check current url
-// draw page
-// remove loader
-// create player
-// keep playing song even when url changes (when navigation occurs)
-//
-// set addeventlisteners on a hrefs, and if they are external -> make prevent default if ctrl isn't pressed
-// import { setup } from './modules/routing';
-import './modules/routing';
-import './custom-elements'
-// import './_audio-player'
-
-//document.querySelector('#current-url').innerHTML = location.pathname
+// import './modules/routing';
+// import './custom-elements'
 
 
-// const backButton = document.querySelector('.back-button a')
-// const highlightActiveNavLink = () => {
-//   document.querySelector('.navigation a.active')?.classList.remove('active')
-//   document.querySelectorAll('.navigation a').forEach((a: HTMLAnchorElement) => {
-//     if (a.getAttribute('href') === location.pathname) a.classList.add('active')
-//   })
-// }
-//
-// highlightActiveNavLink()
+type Route = {
+    relativePath: string,
+    onNavigate?: () => void,
+    canNavigate: () => boolean,
+    redirectTo?: string
+}
 
+const routes: Route[] = [
+    {
+        relativePath: '/',
+        canNavigate: () => true
+    },
+    {
+        relativePath: '/group10/album-1',
+        canNavigate: () => false,
+        // redirectTo: '/',
+        redirectTo: '/login'
+    },
+]
+
+class Router {
+    routes: Route[] = routes
+
+    constructor() {
+        document.addEventListener('click', e => {
+            if (e.target instanceof HTMLAnchorElement) {
+                if (e.target.hasAttribute('custom-link')) {
+                    e.preventDefault()
+
+                    const { pathname } = e.target
+
+                    const nextRoute = this.routes.find(r => r.relativePath === pathname)
+                    const canNavigate = nextRoute.canNavigate()
+
+                    // nextRoute.redirectTo = '/about'
+                    if (!canNavigate) {
+                        const r = nextRoute.redirectTo
+                        setTimeout(() => {
+                            // location.pathname = r
+                            history.pushState({}, '', nextRoute.redirectTo)
+
+                        }, 2000)
+
+                    }
+                }
+            }
+        })
+    }
+}
+
+export const router = new Router()
