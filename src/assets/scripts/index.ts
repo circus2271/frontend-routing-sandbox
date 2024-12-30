@@ -2,6 +2,10 @@
 // import './custom-elements'
 
 
+const settings = {
+    prefersReducedAnimation: () => matchMedia('prefers-reduced-motion')
+}
+
 type Route = {
     relativePath: string,
     onNavigate?: () => void,
@@ -85,5 +89,7 @@ class Router {
 export const router = new Router()
 
 router.addFunctionToBeforeNavigateFunctionStack(async () => {
-    window.scrollTo({ top: 0, behavior: 'smooth'})
+    const scrollBehaviour = settings.prefersReducedAnimation() ? 'instant' : 'smooth'
+
+    window.scrollTo({ top: 0, behavior: scrollBehaviour})
 })
