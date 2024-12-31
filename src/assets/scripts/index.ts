@@ -2,15 +2,32 @@
 // import './custom-elements'
 
 type Theme = 'default' | 'light' | 'dark'
+
+// enum ThemeOptions {
+//     Default = 'default',
+//     Light = 'light',
+//     Dark = 'dark',
+// }
+
 type Settings = {
     prefersReducedAnimation: () => boolean,
     theme: Theme
 }
 
-const getCurrentTheme = () => localStorage.getItem('currentTheme')
+const getCurrentTheme = () => {
+    const userDefinedTheme = localStorage.getItem('currentTheme')
+
+    // const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && ThemeOptions.Dark
+    const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && 'dark'
+
+
+    return userDefinedTheme || preferredTheme
+}
+
 document.documentElement.style.setProperty('--currentTheme', getCurrentTheme())
 
 const setTheme = (theme: Theme) => {
+// const setTheme = (theme: ThemeOptions) => {
     localStorage.setItem('currentTheme', theme)
     // document.body.style.setProperty('--currentTheme', theme)
     document.documentElement.style.setProperty('--currentTheme', theme)
@@ -33,7 +50,7 @@ themeToggle.onclick = () => toggleTheme()
 
 
 const settings = {
-    prefersReducedAnimation: () => matchMedia('prefers-reduced-motion'),
+    prefersReducedAnimation: () => matchMedia('(prefers-reduced-motion)'),
     theme: getCurrentTheme()
 }
 
