@@ -1,5 +1,6 @@
 html {
   color-scheme: dark;
+  //color-scheme: var(--currentTheme);
 }
 
 body {
@@ -7,6 +8,15 @@ body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   //  overflow: hidden;
   overflow-x: hidden;
+
+  //color-scheme: var(--currentTheme);
+  //&[currentTheme="dark"] {
+  //  color-scheme: dark;
+  //}
+  //
+  //&[currentTheme="light"], &[currentTheme="default"]  {
+  //  color-scheme: light;
+  //}
 
   h1 {
     color: green;

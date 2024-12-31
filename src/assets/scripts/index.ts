@@ -1,9 +1,40 @@
 // import './modules/routing';
 // import './custom-elements'
 
+type Theme = 'default' | 'light' | 'dark'
+type Settings = {
+    prefersReducedAnimation: () => boolean,
+    theme: Theme
+}
+
+const getCurrentTheme = () => localStorage.getItem('currentTheme')
+document.documentElement.style.setProperty('--currentTheme', getCurrentTheme())
+
+const setTheme = (theme: Theme) => {
+    localStorage.setItem('currentTheme', theme)
+    // document.body.style.setProperty('--currentTheme', theme)
+    document.documentElement.style.setProperty('--currentTheme', theme)
+    // document.body.setAttribute('currentTheme', theme)
+}
+
+const toggleTheme = () => {
+    // const currentTheme
+    // const currentTheme = settings.theme()
+    const currentTheme = getCurrentTheme()
+
+    const newTheme: Theme = currentTheme === 'default' || currentTheme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+
+    return newTheme
+}
+
+const themeToggle = document.querySelector<HTMLElement>('#theme-toggle')
+themeToggle.onclick = () => toggleTheme()
+
 
 const settings = {
-    prefersReducedAnimation: () => matchMedia('prefers-reduced-motion')
+    prefersReducedAnimation: () => matchMedia('prefers-reduced-motion'),
+    theme: getCurrentTheme()
 }
 
 type Route = {
@@ -22,6 +53,10 @@ const routes: Route[] = [
     },
     {
         relativePath: '/about',
+        canNavigate: () => true
+    },
+    {
+        relativePath: '/settings',
         canNavigate: () => true
     },
     {
@@ -55,11 +90,11 @@ class Router {
                     // nextRoute.redirectTo = '/about'
                     if (!canNavigate) {
                         // const r = nextRoute.redirectTo
-                        setTimeout(() => {
+                        // setTimeout(() => {
                             // location.pathname = r
                             history.pushState({}, '', nextRoute.redirectTo)
 
-                        }, 2000)
+                        // }, 2000)
 
                         return
                     }
@@ -91,5 +126,18 @@ export const router = new Router()
 router.addFunctionToBeforeNavigateFunctionStack(async () => {
     const scrollBehaviour = settings.prefersReducedAnimation() ? 'instant' : 'smooth'
 
-    window.scrollTo({ top: 0, behavior: scrollBehaviour})
+    window.scrollTo({top: 0, behavior: scrollBehaviour})
 })
+
+router.addFunctionToBeforeNavigateFunctionStack(async () => {
+    const mobileMenu = document.querySelector('#mobile-menu')
+    // maybe it should be run if menu is open and click is inside that menu
+    mobileMenu.classList.remove('visible')
+})
+
+
+document.querySelector<HTMLElement>('#open-settings').onclick = () => {
+    // const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu')
+    const mobileMenu = document.querySelector('#mobile-menu')
+    mobileMenu.classList.add('visible')
+}

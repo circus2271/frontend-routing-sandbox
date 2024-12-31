@@ -11,4 +11,34 @@
 @import 'components/player';
 
 
+.navigation-menu {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 80%;
+  max-width: 300px;
+  background: yellow;
+  padding: 2rem 1.5rem;
+  transform: translateX(100%);
+  transition-duration: .5s;
+
+  &.visible {
+    transform: translateX(0);
+  }
+
+  .avatar {
+    --size: 75px;
+
+    background-color: #eee;
+    width: var(--size);
+    height: var(--size);
+    //margin: 0 auto;
+
+    &.round {
+      border-radius: 50%;
+    }
+  }
+}
+
 
