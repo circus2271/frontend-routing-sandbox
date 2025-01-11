@@ -5,67 +5,7 @@ const ripple = new Ripple()
 // import './modules/routing';
 // import './custom-elements'
 
-type Theme = 'default' | 'light' | 'dark'
 
-// enum ThemeOptions {
-//     Default = 'default',
-//     Light = 'light',
-//     Dark = 'dark',
-// }
-
-type Settings = {
-    prefersReducedAnimation: () => boolean,
-    // theme: () => Theme
-    theme: Theme,
-    ripplesDisabled: true | false
-}
-
-const disableRipples = () => settings.ripplesDisabled = true
-const enableRipples = () => settings.ripplesDisabled = false
-
-const getCurrentTheme = () => {
-    const userDefinedTheme = localStorage.getItem('currentTheme')
-
-    // const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && ThemeOptions.Dark
-    const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && 'dark'
-
-
-    return userDefinedTheme || preferredTheme
-}
-
-// it's set in <head> element
-// document.documentElement.style.setProperty('--currentTheme', getCurrentTheme())
-
-const setTheme = (theme: Theme) => {
-// const setTheme = (theme: ThemeOptions) => {
-    localStorage.setItem('currentTheme', theme)
-    // document.body.style.setProperty('--currentTheme', theme)
-    document.documentElement.style.setProperty('--currentTheme', theme)
-    // document.body.setAttribute('currentTheme', theme)
-    settings.theme = theme
-}
-
-const toggleTheme = () => {
-    // const currentTheme
-    // const currentTheme = settings.theme()
-    const currentTheme = getCurrentTheme()
-
-    const newTheme: Theme = currentTheme === 'default' || currentTheme === 'light' ? 'dark' : 'light'
-    setTheme(newTheme)
-
-    return newTheme
-}
-
-const themeToggle = document.querySelector<HTMLElement>('#theme-toggle')
-themeToggle.onclick = () => toggleTheme()
-
-
-const settings = {
-    prefersReducedAnimation: () => matchMedia('(prefers-reduced-motion)'),
-    // theme: () => getCurrentTheme()
-    theme: getCurrentTheme(),
-    ripplesDisabled: false
-}
 
 type Route = {
     relativePath: string,

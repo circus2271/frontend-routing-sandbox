@@ -1,0 +1,43 @@
+.tumbler-wrapper
+  margin-left: auto
+  width: 50px
+  height: 30px
+  background-color: black
+  border: darken(#aae2f1, 40)
+  border-radius: 30px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 0 6px
+  cursor: pointer
+  display: flex
+  position: relative
+
+  //svg
+  //  width: 15px
+  //  height: 15px
+
+
+.tumbler
+  position: absolute
+  height: 20px
+  width: 20px
+  border-radius: 50%
+  background-color: #fff
+  transition: transform .5s, background-color .5s
+  will-change: transform
+
+
+.settings-toggler[turned-on]
+  background-color: #222
+  color: darken(white, 15%)
+
+  .tumbler
+    transform: translateX(calc(100% - 2px))
+
+//&.night-mode
+//  background-color: #222
+//  color: darken(white, 15%)
+//
+//  .tumbler
+//    transform: translateX(calc(100% - 2px))

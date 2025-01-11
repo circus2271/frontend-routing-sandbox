@@ -1,0 +1,117 @@
+type Theme = 'default' | 'light' | 'dark'
+
+
+type Settings = {
+    prefersReducedAnimation: () => boolean,
+    // theme: () => Theme
+    theme: Theme,
+    ripplesDisabled: true | false
+}
+
+const disableRipples = () => settings.ripplesDisabled = true
+const enableRipples = () => settings.ripplesDisabled = false
+
+const getCurrentTheme = () => {
+    const userDefinedTheme = localStorage.getItem('currentTheme')
+
+    // const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && ThemeOptions.Dark
+    const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && 'dark'
+
+
+    return userDefinedTheme || preferredTheme
+}
+
+// it's set in <head> element
+// document.documentElement.style.setProperty('--currentTheme', getCurrentTheme())
+
+const setTheme = (theme: Theme) => {
+// const setTheme = (theme: ThemeOptions) => {
+    localStorage.setItem('currentTheme', theme)
+    // document.body.style.setProperty('--currentTheme', theme)
+    document.documentElement.style.setProperty('--currentTheme', theme)
+    // document.body.setAttribute('currentTheme', theme)
+    settings.theme = theme
+}
+
+const toggleTheme = () => {
+    // const currentTheme
+    // const currentTheme = settings.theme()
+    const currentTheme = getCurrentTheme()
+
+    const newTheme: Theme = currentTheme === 'default' || currentTheme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+
+    return newTheme
+}
+
+const themeToggle = document.querySelector<HTMLElement>('#theme-toggle')
+themeToggle.onclick = () => toggleTheme()
+
+
+const settings = {
+    prefersReducedAnimation: () => matchMedia('(prefers-reduced-motion)').matches,
+    // theme: () => getCurrentTheme()
+    theme: getCurrentTheme() as Theme,
+    ripplesDisabled: false
+}
+
+// const getTogglerComponentMarkup = () => {
+//
+// }
+
+class SsttingsElement extends HTMLElement {
+    state: Settings
+
+    constructor() {
+        // Always call super first in constructor
+        super();
+
+        this.state = settings
+    }
+
+    getMarkup() {
+        const markup = `
+          <div class="settings-wrapper wrapper">
+            <div class="gear-icon"></div>
+            <ul class="settings-list">
+              <li id="theme-toggle">
+                <div class="setting-name">
+                  dark theme
+                </div>
+<!--                <settings-toggler></settings-toggler>-->
+                <div class="settings-toggler" ${this.state.theme === 'dark' || 'turned-on'}>
+                  <div class="tumbler-wrapper">
+                    <div class="tumbler"></div>
+                  </div>
+                </div>
+              </li>
+              <li id="reduced-motion-setting">
+                <div class="setting-name">
+                  reduced motion (reduced animations)
+                </div>
+                <div class="settings-toggler" ${this.state.prefersReducedAnimation() || 'turned-on'}>
+                  <div class="tumbler-wrapper">
+                    <div class="tumbler"></div>
+                  </div>
+                </div>
+              </li>
+              <li id="ripple-effect-setting">
+                <div class="setting-name" ${!this.state.ripplesDisabled || 'turned-on'}>
+                  ripple effect
+                </div>
+                <div class="settings-toggler">
+<!--                  <div class="tumbler-wrapper" onclick="toggleTheme">-->
+                  <div class="tumbler-wrapper">
+                    <div class="tumbler"></div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        `
+
+    }
+}
+
+// secret component
+customElements.define("settings-component", SsttingsElement);
