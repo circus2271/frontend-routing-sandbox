@@ -10,6 +10,7 @@ type Settings = {
 
 const disableRipples = () => settings.ripplesDisabled = true
 const enableRipples = () => settings.ripplesDisabled = false
+const toggleRippleEffectSetting = () => settings.ripplesDisabled = !settings.ripplesDisabled
 
 const getCurrentTheme = () => {
     const userDefinedTheme = localStorage.getItem('currentTheme')
@@ -65,8 +66,17 @@ class SsttingsElement extends HTMLElement {
     constructor() {
         // Always call super first in constructor
         super();
+        // alert(4)
 
         this.state = settings
+    }
+
+    connectedCallback() {
+        this.innerHTML = this.getMarkup()
+// debugger
+        this.querySelector<HTMLElement>('#theme-toggle').onclick = toggleTheme
+        // this.querySelector('#reduced-motion-setting').onclick = toggleTheme
+        this.querySelector<HTMLElement>('#ripple-effect-setting').onclick = toggleRippleEffectSetting
     }
 
     getMarkup() {
@@ -110,6 +120,7 @@ class SsttingsElement extends HTMLElement {
           </div>
         `
 
+        return markup
     }
 }
 

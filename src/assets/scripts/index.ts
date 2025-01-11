@@ -1,3 +1,4 @@
+import './custom-elements'
 // import Ripple from 'material-ripple-effects'
 import Ripple from './modules/Ripple'
 
