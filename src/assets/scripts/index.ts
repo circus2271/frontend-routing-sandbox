@@ -1,4 +1,7 @@
-import 'material-ripple-effects/ripple'
+// import Ripple from 'material-ripple-effects'
+import Ripple from './modules/Ripple'
+
+const ripple = new Ripple()
 // import './modules/routing';
 // import './custom-elements'
 
@@ -12,8 +15,13 @@ type Theme = 'default' | 'light' | 'dark'
 
 type Settings = {
     prefersReducedAnimation: () => boolean,
-    theme: Theme
+    // theme: () => Theme
+    theme: Theme,
+    ripplesDisabled: true | false
 }
+
+const disableRipples = () => settings.ripplesDisabled = true
+const enableRipples = () => settings.ripplesDisabled = false
 
 const getCurrentTheme = () => {
     const userDefinedTheme = localStorage.getItem('currentTheme')
@@ -25,7 +33,8 @@ const getCurrentTheme = () => {
     return userDefinedTheme || preferredTheme
 }
 
-document.documentElement.style.setProperty('--currentTheme', getCurrentTheme())
+// it's set in <head> element
+// document.documentElement.style.setProperty('--currentTheme', getCurrentTheme())
 
 const setTheme = (theme: Theme) => {
 // const setTheme = (theme: ThemeOptions) => {
@@ -33,6 +42,7 @@ const setTheme = (theme: Theme) => {
     // document.body.style.setProperty('--currentTheme', theme)
     document.documentElement.style.setProperty('--currentTheme', theme)
     // document.body.setAttribute('currentTheme', theme)
+    settings.theme = theme
 }
 
 const toggleTheme = () => {
@@ -52,7 +62,9 @@ themeToggle.onclick = () => toggleTheme()
 
 const settings = {
     prefersReducedAnimation: () => matchMedia('(prefers-reduced-motion)'),
-    theme: getCurrentTheme()
+    // theme: () => getCurrentTheme()
+    theme: getCurrentTheme(),
+    ripplesDisabled: false
 }
 
 type Route = {
@@ -96,11 +108,25 @@ class Router {
 
     constructor() {
         document.addEventListener('click', async (e) => {
-            if (e.target instanceof HTMLAnchorElement) {
-                if (e.target.hasAttribute('custom-link')) {
-                    e.preventDefault()
+            e.preventDefault()
 
-                    const { pathname } = e.target
+            if (e.target instanceof HTMLElement && e.target.hasAttribute('ripple-effect')) {
+                if (!settings.ripplesDisabled) {
+                    // hello
+                    ripple.create(e.target, settings.theme)
+                }
+            }
+
+            if (e.target instanceof HTMLAnchorElement) {
+                const anchor = e.target
+
+                // ripple.create(anchor, settings.theme())
+                // ripple.create(anchor, settings.theme())
+
+                if (anchor.hasAttribute('custom-link')) {
+                    // debugger
+
+                    const { pathname } = anchor
 
                     const nextRoute = this.routes.find(r => r.relativePath === pathname)
                     const canNavigate = nextRoute.canNavigate()

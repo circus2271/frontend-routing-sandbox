@@ -13,6 +13,20 @@
   <!--  <link rel="preload" href="~/src/assets/media/images/icons/play.svg" as="image">-->
   <!--  <link rel="preload" href="~/src/assets/media/images/icons/pause.svg" as="image">-->
   <!--  <link rel="preload" href="~/src/assets/media/images/icons/next.svg" as="image">-->
+  <script>
+    const getCurrentTheme = () => {
+      const userDefinedTheme = localStorage.getItem('currentTheme')
+
+      // const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && ThemeOptions.Dark
+      const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && 'dark'
+
+
+      return userDefinedTheme || preferredTheme
+    }
+
+    document.documentElement.style.setProperty('--currentTheme', getCurrentTheme())
+
+  </script>
 </head>
 <body>
   <div class="page">
@@ -20,11 +34,11 @@
       <div class="wrapper">
         <div class="left-side" id="app-bar__left-side">
           <back-button>
-            <a class="back-arrow" href="#">
+            <a class="back-arrow" href="#" ripple-effect>
               ← back
             </a>
           </back-button>
-          <a href="/">
+          <a href="/" ripple-effect>
             app bar
           </a>
         </div>
@@ -59,10 +73,10 @@
           @ivan
         </div>
         <ul>
-          <li><a href="/me">profile</a></li>
-          <li><a href="/settings" custom-link="">settings</a></li>
+          <li><a href="/me" ripple-effect>profile</a></li>
+          <li><a href="/settings" custom-link ripple-effect>settings</a></li>
 <!--          <li><a href=""></a></li>-->
-          <li><div id="theme-toggle">toggle theme</div></li>
+          <li><div id="theme-toggle" ripple-effect>toggle theme</div></li>
         </ul>
       </div>
       <main-navigation class="visible">
@@ -70,18 +84,18 @@
           <div class="wrapper">
             <ul class="nav-links">
               <li>
-                <a href="/" custom-link data-ripple-dark="true">
+                <a href="/" custom-link ripple-effect>
                   home
                 </a>
               </li>
 
               <li>
-                <a href="/about" custom-link data-ripple-light="true">
+                <a href="/about" custom-link ripple-effect>
                   about
                 </a>
               </li>
               <li>
-                <a href="/with-slider" custom-link data-ripple-light="dark">
+                <a href="/with-slider" custom-link ripple-effect>
                   with-slider
                 </a>
               </li>

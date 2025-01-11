@@ -1,6 +1,13 @@
 html {
   color-scheme: dark;
-  //color-scheme: var(--currentTheme);
+  color-scheme: var(--currentTheme);
+}
+
+// TODO: add ripples only on buttons and links
+// style them separately, without this "custom hack"
+[ripple-effect] {
+  width: fit-content;
+  display: block;
 }
 
 body {
