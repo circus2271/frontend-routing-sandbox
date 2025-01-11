@@ -1,3 +1,4 @@
+import 'material-ripple-effects/ripple'
 // import './modules/routing';
 // import './custom-elements'
 
