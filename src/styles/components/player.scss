@@ -18,15 +18,15 @@
     content: '';
     width: var(--icon-size);
     height: var(--icon-size);
-    background: no-repeat center url('~/src/assets/media/images/icons/play.svg');
+    background: no-repeat center url('~/src/media/images/icons/play.svg');
   }
 
   body[data-player-state="true"] &::after {
-    background-image: url('~/src/assets/media/images/icons/pause.svg');
+    background-image: url('~/src/media/images/icons/pause.svg');
   }
 
   //&[loading]::after {
-  //  background-image: url('~/src/assets/media/images/icons/loading.svg');
+  //  background-image: url('~/src/media/images/icons/loading.svg');
   //}
 }
 
@@ -73,20 +73,20 @@
     }
 
     .prev::after {
-      //      background-image: url('~/src/assets/media/images/icons/next.svg');
+      //      background-image: url('~/src/media/images/icons/next.svg');
       transform: rotate(180deg);
     }
 
     & .play-pause::after {
-      background-image: url('~/src/assets/media/images/icons/play.svg');
+      background-image: url('~/src/media/images/icons/play.svg');
     }
 
     body[data-player-state="true"] & .play-pause::after {
-      background-image: url('~/src/assets/media/images/icons/pause.svg');
+      background-image: url('~/src/media/images/icons/pause.svg');
     }
 
     .next::after {
-      //      background-image: url('~/src/assets/media/images/icons/next.svg');
+      //      background-image: url('~/src/media/images/icons/next.svg');
     }
   }
 }
