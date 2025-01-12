@@ -4,7 +4,21 @@ type Theme = 'default' | 'light' | 'dark'
 
 const disableRipples = () => settings.ripplesDisabled = true
 const enableRipples = () => settings.ripplesDisabled = false
-const toggleRippleEffectSetting = () => settings.ripplesDisabled = !settings.ripplesDisabled
+const toggleRippleEffectSetting = () => {
+    settings.ripplesDisabled = !settings.ripplesDisabled
+
+    localStorage.setItem('ripplesDisabled', `${settings.ripplesDisabled}`)
+}
+
+const getRippleEffectStatus = (): true | false => {
+    let enabled = true
+    if (localStorage.getItem('ripplesDisabled') === 'false') {
+        enabled = false
+    }
+
+    return enabled
+}
+
 
 const getCurrentTheme = () => {
     const userDefinedTheme = localStorage.getItem('currentTheme')
@@ -57,7 +71,8 @@ export const settings: Settings = {
     prefersReducedAnimation: () => matchMedia('(prefers-reduced-motion)').matches,
     // theme: () => getCurrentTheme()
     theme: getCurrentTheme() as Theme,
-    ripplesDisabled: false,
+    // ripplesDisabled: false,
+    ripplesDisabled: getRippleEffectStatus(),
     // language: 'russian' | 'english'
     // language: 'russian' | 'english'
     language: 'english'
