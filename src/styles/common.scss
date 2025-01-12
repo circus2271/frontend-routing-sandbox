@@ -19,8 +19,10 @@ body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   //  overflow: hidden;
   overflow-x: hidden;
+  transition: background-color .5s, color .5s
 
-  //color-scheme: var(--currentTheme);
+
+          //color-scheme: var(--currentTheme);
   //&[currentTheme="dark"] {
   //  color-scheme: dark;
   //}

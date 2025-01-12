@@ -63,8 +63,40 @@ class Router {
                 }
             }
 
+            const mobileMenu = document.querySelector('#mobile-menu')
+
+            // handle sidebar appearance on click (if mobile sidebar is visible)
+            const element = e.target instanceof HTMLElement && e.target
+            if (mobileMenu.classList.contains('visible')) {
+
+                const clickedOutsideOfMobileSidebar =  element.closest('#mobile-menu') === null
+                if (clickedOutsideOfMobileSidebar) {
+                    mobileMenu.classList.remove('visible')
+                }
+
+                const clickedInsideMobileMenuSidebar = !clickedOutsideOfMobileSidebar
+                if (clickedInsideMobileMenuSidebar) {
+                    const isAnchor = element instanceof HTMLAnchorElement
+                    if (isAnchor) {
+                        mobileMenu.classList.remove('visible')
+                    }
+                }
+            } else {
+                if (element.closest('#open-sidebar')) {
+                //     // element is openSidebarButton
+                //     // show menu
+                    mobileMenu.classList.add('visible')
+                }
+            }
+
+
             if (e.target instanceof HTMLAnchorElement) {
                 const anchor = e.target
+
+                // if (anchor.closest('#mobile-menu')) {
+                //     // close mobile menu if user clicked on a link inside mobile menu sidebar
+                //     document.querySelector('#mobile-menu').classList.remove('visible')
+                // }
 
                 if (anchor.hasAttribute('custom-link')) {
 
@@ -125,22 +157,44 @@ const hideAllComponents = () => {
     contentWrappers.forEach(component => hideComponent(component))
 }
 
-router.addFunctionToBeforeNavigateFunctionStack(async () => {
-    const mobileMenu = document.querySelector('#mobile-menu')
-    // maybe it should be run if menu is open and click is inside that menu
-    mobileMenu.classList.remove('visible')
-})
+// router.addFunctionToBeforeNavigateFunctionStack(async () => {
+//     const mobileMenu = document.querySelector('#mobile-menu')
+//     // maybe it should be run if menu is open and click is inside that menu
+//     mobileMenu.classList.remove('visible')
+// })
 
 router.addFunctionToBeforeNavigateFunctionStack(async () => {
     hideAllComponents()
 })
 
 
-const sidebar = document.querySelector<HTMLElement>('#open-sidebar')
-if (sidebar) {
-    sidebar.onclick = () => {
-        // const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu')
-        const mobileMenu = document.querySelector('#mobile-menu')
-        mobileMenu.classList.add('visible')
-    }
-}
+// const sidebarButton = document.querySelector<HTMLElement>('#open-sidebar')
+// if (sidebarButton) {
+//     sidebarButton.onclick = () => {
+//         // const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu')
+//         const mobileMenu = document.querySelector('#mobile-menu')
+//         mobileMenu.classList.add('visible')
+//     }
+// }
+//
+// document.documentElement.addEventListener('click', e => {
+//     const mobileMenu = document.querySelector('#mobile-menu')
+//
+//     if (mobileMenu.classList.contains('visible')) {
+//         // ...
+//         if (!((e.target as HTMLElement).closest('#mobile-menu'))) {
+//             mobileMenu.classList.remove('visible')
+//         }
+//     }
+// })
+//
+// document.addEventListener('click', e => {
+//     const mobileMenu = document.querySelector('#mobile-menu')
+//
+//     if (mobileMenu.classList.contains('visible')) {
+//         if (e.target instanceof HTMLElement && e.target.closest('#mobile-menu') === null) {
+//             mobileMenu.classList.remove('visible')
+//         }
+//     }
+//
+// })
