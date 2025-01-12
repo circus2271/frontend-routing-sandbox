@@ -9,7 +9,7 @@
   justify-content: space-between
   align-items: center
   padding: 0 6px
-  cursor: pointer
+  //cursor: pointer
   display: flex
   position: relative
 
@@ -43,6 +43,24 @@
 //    transform: translateX(calc(100% - 2px))
 
 
-.setting-list li
+//.settings-list
+//  gap: 30px
+
+.settings-list li
   display: flex
   justify-content: space-between
+
+  &:not([disabled])
+    cursor: pointer
+
+  &[disabled]
+    opacity: .6
+    cursor: not-allowed
+
+  &:not(:last-of-type)
+    margin-bottom: 30px
+
+.settings-wrapper
+  //max-width: 875px
+  max-width: 800px
+

@@ -89,12 +89,15 @@ class SsttingsElement extends HTMLElement {
                 toggler.setAttribute('turned-on', '')
             }
         }
+        // ...
         this.querySelector<HTMLElement>('#theme-toggle').onclick = (e) => {
+            if ((e.currentTarget as HTMLElement).hasAttribute('disabled')) return
             toggleToggler(e.currentTarget)
             toggleTheme()
         }
         // this.querySelector('#reduced-motion-setting').onclick = toggleTheme
         this.querySelector<HTMLElement>('#ripple-effect-setting').onclick = (e) => {
+            if ((e.currentTarget as HTMLElement).hasAttribute('disabled')) return
             toggleToggler(e.currentTarget)
             toggleRippleEffectSetting()
         }
@@ -113,24 +116,24 @@ class SsttingsElement extends HTMLElement {
                   dark theme
                 </div>
 <!--                <settings-toggler></settings-toggler>-->
-                <div class="settings-toggler" ${this.state.theme === 'dark' || 'turned-on'}>
+                <div class="settings-toggler" ${this.state.theme === 'dark' && 'turned-on'}>
                   <div class="tumbler-wrapper">
                     <div class="tumbler"></div>
                   </div>
                 </div>
               </li>
-              <li id="reduced-motion-setting">
+              <li id="reduced-motion-setting" disabled>
                 <div class="setting-name">
                   reduced motion (reduced animations)
                 </div>
-                <div class="settings-toggler" ${this.state.prefersReducedAnimation() || 'turned-on'}>
+                <div class="settings-toggler" ${this.state.prefersReducedAnimation() && 'turned-on'}>
                   <div class="tumbler-wrapper">
                     <div class="tumbler"></div>
                   </div>
                 </div>
               </li>
               <li id="ripple-effect-setting">
-                <div class="setting-name" ${!this.state.ripplesDisabled || 'turned-on'}>
+                <div class="setting-name" ${!this.state.ripplesDisabled && 'turned-on'}>
                   ripple effect
                 </div>
                 <div class="settings-toggler">
@@ -140,18 +143,18 @@ class SsttingsElement extends HTMLElement {
                   </div>
                 </div>
               </li>
-//               <li id="language-setting-toggler">
-                   @ts-ignore
-//                 <div class="setting-name" ${!(this.state.language === 'russian') || 'turned-on'}>
-// <!--                  язык (русский/английский)-->
-// <!--                  language (russian/english)-->
-//                 </div>
-//                 <div class="settings-toggler">
-//                   <div class="tumbler-wrapper">
-//                     <div class="tumbler"></div>
-//                   </div>
-//                 </div>
-//               </li>
+                 <li id="language-setting-toggler" disabled>
+                   <div class="setting-name" ${!(this.state.language === 'russian') && 'turned-on'}>
+<!--                     язык (русский/английский)-->
+<!--                     language (russian/english)-->
+                     language (english/russian)
+                   </div>
+                   <div class="settings-toggler">
+                     <div class="tumbler-wrapper">
+                       <div class="tumbler"></div>
+                     </div>
+                   </div>
+                 </li>
             </ul>
           </div>
         `
