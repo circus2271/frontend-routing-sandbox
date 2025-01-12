@@ -1,6 +1,7 @@
 import './custom-elements'
 // import Ripple from 'material-ripple-effects'
 import Ripple from './modules/Ripple'
+import {settings} from "./custom-elements/settings-component";
 
 const ripple = new Ripple()
 // import './modules/routing';

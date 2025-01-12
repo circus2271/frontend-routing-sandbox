@@ -1,12 +1,6 @@
 type Theme = 'default' | 'light' | 'dark'
 
 
-type Settings = {
-    prefersReducedAnimation: () => boolean,
-    // theme: () => Theme
-    theme: Theme,
-    ripplesDisabled: true | false
-}
 
 const disableRipples = () => settings.ripplesDisabled = true
 const enableRipples = () => settings.ripplesDisabled = false
@@ -48,12 +42,25 @@ const toggleTheme = () => {
 const themeToggle = document.querySelector<HTMLElement>('#theme-toggle')
 themeToggle.onclick = () => toggleTheme()
 
+type Settings = {
+    prefersReducedAnimation: () => boolean,
+    // theme: () => Theme
+    theme: Theme,
+    ripplesDisabled: true | false,
+    language: 'russian' | 'english'
+    // language: Language
+}
 
-const settings = {
+// type Language = 'russian' | 'english'
+
+export const settings: Settings = {
     prefersReducedAnimation: () => matchMedia('(prefers-reduced-motion)').matches,
     // theme: () => getCurrentTheme()
     theme: getCurrentTheme() as Theme,
-    ripplesDisabled: false
+    ripplesDisabled: false,
+    // language: 'russian' | 'english'
+    // language: 'russian' | 'english'
+    language: 'english'
 }
 
 // const getTogglerComponentMarkup = () => {
@@ -74,12 +81,29 @@ class SsttingsElement extends HTMLElement {
     connectedCallback() {
         this.innerHTML = this.getMarkup()
 // debugger
-        this.querySelector<HTMLElement>('#theme-toggle').onclick = toggleTheme
+        const toggleToggler = togglerParent => {
+            const toggler = togglerParent.querySelector('.settings-toggler')
+            if (toggler.hasAttribute('turned-on')) {
+                toggler.removeAttribute('turned-on')
+            } else {
+                toggler.setAttribute('turned-on', '')
+            }
+        }
+        this.querySelector<HTMLElement>('#theme-toggle').onclick = (e) => {
+            toggleToggler(e.currentTarget)
+            toggleTheme()
+        }
         // this.querySelector('#reduced-motion-setting').onclick = toggleTheme
-        this.querySelector<HTMLElement>('#ripple-effect-setting').onclick = toggleRippleEffectSetting
+        this.querySelector<HTMLElement>('#ripple-effect-setting').onclick = (e) => {
+            toggleToggler(e.currentTarget)
+            toggleRippleEffectSetting()
+        }
+
     }
 
     getMarkup() {
+        // @ts-ignore
+        // @ts-ignore
         const markup = `
           <div class="settings-wrapper wrapper">
             <div class="gear-icon"></div>
@@ -116,6 +140,18 @@ class SsttingsElement extends HTMLElement {
                   </div>
                 </div>
               </li>
+//               <li id="language-setting-toggler">
+                   @ts-ignore
+//                 <div class="setting-name" ${!(this.state.language === 'russian') || 'turned-on'}>
+// <!--                  язык (русский/английский)-->
+// <!--                  language (russian/english)-->
+//                 </div>
+//                 <div class="settings-toggler">
+//                   <div class="tumbler-wrapper">
+//                     <div class="tumbler"></div>
+//                   </div>
+//                 </div>
+//               </li>
             </ul>
           </div>
         `
