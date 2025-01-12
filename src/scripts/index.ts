@@ -133,10 +133,10 @@ class Router {
         })
     }
 
-    beforeNavigate() {
-        this.beforeNavigateFunctionsStack.forEach(f => f())
-        // this.routes.forEach(route => route.beforeNavigate())
-    }
+    // beforeNavigate() {
+    //     this.beforeNavigateFunctionsStack.forEach(f => f())
+    //     // this.routes.forEach(route => route.beforeNavigate())
+    // }
 
     // register before navigation callbacks
     addFunctionToBeforeNavigateFunctionStack(func: () => Promise<void>) {
