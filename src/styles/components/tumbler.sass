@@ -61,9 +61,19 @@
     cursor: not-allowed
 
   &:not(:last-of-type)
-    margin-bottom: 30px
+    margin-bottom: 24px
+
+    @include medium
+      margin-bottom: 30px
 
 .settings-wrapper
   //max-width: 875px
   max-width: 800px
 
+
+
+settings-component
+  display: none
+
+  &[visible]
+    display: block

@@ -2,10 +2,18 @@
 //:root {
 //    --desktop-start: 1200px;
 //}
+$tablet-start: 768px;
 $desktop-start: 1200px;
 
 @mixin big() {
     @media only screen and (min-width: $desktop-start) {
+        @content;
+    }
+}
+
+
+@mixin medium() {
+    @media only screen and (min-width: $tablet-start) {
         @content;
     }
 }

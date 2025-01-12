@@ -79,16 +79,6 @@
           <li><div id="theme-toggle" ripple-effect>toggle theme</div></li>
         </ul>
       </div>
-<!--      <div class="section settings" style="display: none">-->
-<!--      <div class="section settings">-->
-<!--&lt;!&ndash;        иконка шестеренки слева (иконка прозрачная с серой линией)&ndash;&gt;-->
-<!--&lt;!&ndash;        под иконкой туиблеры переключения настройки справа (зеленые и серые (как на афйноне) справа, текст слева&ndash;&gt;-->
-<!--&lt;!&ndash;        если название настройки не помещается на одной строке, переносим название вниз...&ndash;&gt;-->
-<!--        <settings-component></settings-component>-->
-<!--      </div>-->
-      <section class="section post">
-        <post-component></post-component>
-      </section>
 
       <main-navigation class="visible">
         <nav class="navigation">
@@ -106,45 +96,44 @@
                 </a>
               </li>
               <li>
-                <a href="/with-slider" custom-link ripple-effect>
-                  with-slider
+                <a href="/settings" custom-link ripple-effect>
+                  settings
                 </a>
               </li>
-<!--
-     <li>-->
-<!--                <a href="/555/555">-->
-<!--                  555/555-->
+<!--              <li>-->
+<!--                <a href="/with-slider" custom-link ripple-effect>-->
+<!--                  with-slider-->
 <!--                </a>-->
 <!--              </li>-->
 <!--              <li>-->
-<!--                <a href="/about">-->
-<!--                  about-->
+<!--                <a href="/group10/album-1" custom-link>-->
+<!--                  album page-->
 <!--                </a>-->
 <!--              </li>-->
 <!--              <li>-->
-<!--                <a href="/group10">-->
-<!--                  groupName (group10)-->
-<!--                </a>-->
+<!--                <div id="open-settings">-->
+<!--                  open settings-->
+<!--                </div>-->
 <!--              </li>-->
-              <li>
-                <a href="/group10/album-1" custom-link>
-                  album page
-                </a>
-              </li>
-              <li>
-                <div id="open-settings">
-                  open settings
-                </div>
-              </li>
             </ul>
           </div>
         </nav>
       </main-navigation>
-      <div class="wrapper" id="content-wrapper">
-        <p style="display: none">
-          <span>Current url is:</span>
-          <span id="current-url"></span>
-        </p>
+<!--      <div class="wrapper" id="content-wrapper">-->
+      <div id="content-wrapper">
+        <!--&lt;!&ndash;        иконка шестеренки слева (иконка прозрачная с серой линией)&ndash;&gt;-->
+        <!--&lt;!&ndash;        под иконкой туиблеры переключения настройки справа (зеленые и серые (как на афйноне) справа, текст слева&ndash;&gt;-->
+        <!--&lt;!&ndash;        если название настройки не помещается на одной строке, переносим название вниз...&ndash;&gt;-->
+        <settings-component></settings-component>
+        <!--      </div>-->
+        <section class="section post">
+          <post-component></post-component>
+        </section>
+
+<!--        <p style="display: none">-->
+<!--          <span>Current url is:</span>-->
+<!--          <span id="current-url"></span>-->
+<!--        </p>-->
       </div>
     </div>
   </div>

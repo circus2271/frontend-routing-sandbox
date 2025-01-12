@@ -1,12 +1,9 @@
 import './custom-elements'
-// import Ripple from 'material-ripple-effects'
 import Ripple from './modules/Ripple'
 import {settings} from "./custom-elements/settings-component";
+import {contentWrappers} from "./custom-elements";
 
 const ripple = new Ripple()
-// import './modules/routing';
-// import './custom-elements'
-
 
 
 type Route = {
@@ -29,7 +26,10 @@ const routes: Route[] = [
     },
     {
         relativePath: '/settings',
-        canNavigate: () => true
+        canNavigate: () => true,
+        beforeNavigate: async () => {
+            document.querySelector('settings-component').setAttribute('visible', '')
+        }
     },
     {
         relativePath: '/with-slider',
@@ -43,6 +43,10 @@ const routes: Route[] = [
         redirectTo: '/login'
     },
 ]
+
+// const handleComponentsVisibility = co
+const showComponent = componentSelector => document.querySelector(componentSelector).setAttribute('visible', '')
+const hideComponent = componentSelector => document.querySelector(componentSelector).removeAttribute('visible')
 
 class Router {
     routes: Route[] = routes
@@ -62,11 +66,7 @@ class Router {
             if (e.target instanceof HTMLAnchorElement) {
                 const anchor = e.target
 
-                // ripple.create(anchor, settings.theme())
-                // ripple.create(anchor, settings.theme())
-
                 if (anchor.hasAttribute('custom-link')) {
-                    // debugger
 
                     const { pathname } = anchor
 
@@ -119,6 +119,20 @@ router.addFunctionToBeforeNavigateFunctionStack(async () => {
     const mobileMenu = document.querySelector('#mobile-menu')
     // maybe it should be run if menu is open and click is inside that menu
     mobileMenu.classList.remove('visible')
+})
+
+const hideAllComponents = () => {
+    contentWrappers.forEach(component => hideComponent(component))
+}
+
+router.addFunctionToBeforeNavigateFunctionStack(async () => {
+    const mobileMenu = document.querySelector('#mobile-menu')
+    // maybe it should be run if menu is open and click is inside that menu
+    mobileMenu.classList.remove('visible')
+})
+
+router.addFunctionToBeforeNavigateFunctionStack(async () => {
+    hideAllComponents()
 })
 
 
