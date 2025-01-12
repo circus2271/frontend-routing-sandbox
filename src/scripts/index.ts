@@ -69,8 +69,13 @@ class Router {
             const element = e.target instanceof HTMLElement && e.target
             if (mobileMenu.classList.contains('visible')) {
 
+                // now because of adding an overlay this is barely possible
                 const clickedOutsideOfMobileSidebar =  element.closest('#mobile-menu') === null
                 if (clickedOutsideOfMobileSidebar) {
+                    mobileMenu.classList.remove('visible')
+                }
+                // so
+                if (element.classList.contains('overlay')) {
                     mobileMenu.classList.remove('visible')
                 }
 

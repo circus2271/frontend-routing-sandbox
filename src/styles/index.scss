@@ -13,20 +13,41 @@
 
 
 .navigation-menu {
-  position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 1;
-  width: 80%;
-  max-width: 300px;
-  background: yellow;
-  padding: 2rem 1.5rem;
-  transform: translateX(100%);
-  transition-duration: .5s;
 
   &.visible {
-    transform: translateX(0);
+    .sidebar {
+      transform: translateX(0);
+    }
+
+    .overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(grey, .6);
+    transition-duration: .5s;
+    transition-property: opacity, visibility;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+  }
+
+  .sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 80%;
+    max-width: 300px;
+    background: yellow;
+    padding: 2rem 1.5rem;
+    transform: translateX(100%);
+    transition-duration: .5s;
   }
 
   .avatar {
