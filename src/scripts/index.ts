@@ -136,8 +136,11 @@ router.addFunctionToBeforeNavigateFunctionStack(async () => {
 })
 
 
-document.querySelector<HTMLElement>('#open-settings').onclick = () => {
-    // const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu')
-    const mobileMenu = document.querySelector('#mobile-menu')
-    mobileMenu.classList.add('visible')
+const sidebar = document.querySelector<HTMLElement>('#open-sidebar')
+if (sidebar) {
+    sidebar.onclick = () => {
+        // const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu')
+        const mobileMenu = document.querySelector('#mobile-menu')
+        mobileMenu.classList.add('visible')
+    }
 }
