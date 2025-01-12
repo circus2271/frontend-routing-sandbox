@@ -111,6 +111,7 @@ class SsttingsElement extends HTMLElement {
           <div class="settings-wrapper wrapper">
             <div class="gear-icon"></div>
             <ul class="settings-list">
+              <h2 class="setting-list__header">Settings</h2>
               <li id="theme-toggle">
                 <div class="setting-name">
                   dark theme
@@ -133,18 +134,18 @@ class SsttingsElement extends HTMLElement {
                 </div>
               </li>
               <li id="ripple-effect-setting">
-                <div class="setting-name" ${!this.state.ripplesDisabled && 'turned-on'}>
+                <div class="setting-name">
                   ripple effect
                 </div>
-                <div class="settings-toggler">
+                <div class="settings-toggler" ${!this.state.ripplesDisabled && 'turned-on'}>
 <!--                  <div class="tumbler-wrapper" onclick="toggleTheme">-->
                   <div class="tumbler-wrapper">
                     <div class="tumbler"></div>
                   </div>
                 </div>
               </li>
-                 <li id="language-setting-toggler" disabled>
-                   <div class="setting-name" ${!(this.state.language === 'russian') && 'turned-on'}>
+                 <li id="language-setting-toggler" ${!(this.state.language === 'russian') && 'turned-on'} disabled>
+                   <div class="setting-name">
 <!--                     язык (русский/английский)-->
 <!--                     language (russian/english)-->
                      language (english/russian)
