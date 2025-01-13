@@ -53,6 +53,23 @@ class Router {
     beforeNavigateFunctionsStack: (() => Promise<void>)[] = []
 
     constructor() {
+        // document.addEventListener('popstate', (e: PopStateEvent) => {
+        addEventListener('popstate', async () => {
+            // debugger
+            // const currentUrl = window.location.href
+            const mobileMenu = document.querySelector('#mobile-menu')
+            if (mobileMenu.classList.contains('visible')) {
+                mobileMenu.classList.remove('visible')
+            }
+
+            const { pathname } = window.location
+
+            const nextRoute = this.routes.find(r => r.relativePath === pathname)
+            const canNavigate = nextRoute.canNavigate()
+
+            await nextRoute.beforeNavigate?.()
+        })
+
         document.addEventListener('click', async (e) => {
             e.preventDefault()
 
@@ -133,11 +150,6 @@ class Router {
         })
     }
 
-    // beforeNavigate() {
-    //     this.beforeNavigateFunctionsStack.forEach(f => f())
-    //     // this.routes.forEach(route => route.beforeNavigate())
-    // }
-
     // register before navigation callbacks
     addFunctionToBeforeNavigateFunctionStack(func: () => Promise<void>) {
         this.beforeNavigateFunctionsStack.push(func)
@@ -162,44 +174,7 @@ const hideAllComponents = () => {
     contentWrappers.forEach(component => hideComponent(component))
 }
 
-// router.addFunctionToBeforeNavigateFunctionStack(async () => {
-//     const mobileMenu = document.querySelector('#mobile-menu')
-//     // maybe it should be run if menu is open and click is inside that menu
-//     mobileMenu.classList.remove('visible')
-// })
-
 router.addFunctionToBeforeNavigateFunctionStack(async () => {
     hideAllComponents()
 })
 
-
-// const sidebarButton = document.querySelector<HTMLElement>('#open-sidebar')
-// if (sidebarButton) {
-//     sidebarButton.onclick = () => {
-//         // const mobileMenu = document.querySelector<HTMLElement>('#mobile-menu')
-//         const mobileMenu = document.querySelector('#mobile-menu')
-//         mobileMenu.classList.add('visible')
-//     }
-// }
-//
-// document.documentElement.addEventListener('click', e => {
-//     const mobileMenu = document.querySelector('#mobile-menu')
-//
-//     if (mobileMenu.classList.contains('visible')) {
-//         // ...
-//         if (!((e.target as HTMLElement).closest('#mobile-menu'))) {
-//             mobileMenu.classList.remove('visible')
-//         }
-//     }
-// })
-//
-// document.addEventListener('click', e => {
-//     const mobileMenu = document.querySelector('#mobile-menu')
-//
-//     if (mobileMenu.classList.contains('visible')) {
-//         if (e.target instanceof HTMLElement && e.target.closest('#mobile-menu') === null) {
-//             mobileMenu.classList.remove('visible')
-//         }
-//     }
-//
-// })
