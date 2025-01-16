@@ -181,7 +181,7 @@ class Router {
                                     // maybe it's too verbose
                                     if (urlParts[0] === user.username) {
                                         nextRoute = {
-                                            relativePath: `/${user.username}`,
+                                            relativePath: user.loggedIn ? '/me' : `/${user.username}`,
                                             canNavigate: () => true,
                                             beforeNavigate: async () => {
                                                 const userComponent = document.querySelector('user-profile-component')
