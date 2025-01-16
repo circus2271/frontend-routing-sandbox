@@ -1,7 +1,8 @@
-.user-profile-page {
+//user-profile-page {
+user-profile-component {
     display: none;
 
     &[visible] {
         display: block
-        }
     }
+}

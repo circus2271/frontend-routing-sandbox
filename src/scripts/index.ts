@@ -16,10 +16,13 @@ type Route = {
     // maybe "canNavigate" can solve this
 //     shouldRedirect? () => boolean,
     beforeNavigate?: () => Promise<void>,
-    beforeLeave?: () => void
+    beforeLeave?: () => void,
+
+    component?: string,
+    // 'dynamic-route': boolean
 }
 
-const routes: Route[] = [
+const staticRoutes: Route[] = [
     {
         relativePath: '/',
         canNavigate: () => true
@@ -79,7 +82,7 @@ const showComponent = componentSelector => document.querySelector(componentSelec
 const hideComponent = componentSelector => document.querySelector(componentSelector).removeAttribute('visible')
 
 class Router {
-    routes: Route[] = routes
+    staticRoutes: Route[] = staticRoutes
     beforeNavigateFunctionsStack: (() => Promise<void>)[] = []
 
     constructor() {
@@ -94,7 +97,7 @@ class Router {
 
             const { pathname } = window.location
 
-            const nextRoute = this.routes.find(r => r.relativePath === pathname)
+            const nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
             const canNavigate = nextRoute.canNavigate()
 
             await nextRoute.beforeNavigate?.()
@@ -151,14 +154,17 @@ class Router {
                 // }
 
                 if (anchor.hasAttribute('custom-link')) {
+                    let dynamicRoute = false;
+                    let userProfilePage = false;
+                    let userPostPage = false
 
                     const { pathname } = anchor
 
-                    let nextRoute = this.routes.find(r => r.relativePath === pathname)
+                    let nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
                     if (!nextRoute) {
                         // check if it's user profile page
-//                         const urlParts = location.pathname.split('/').filter(l !== '')
-                        const urlParts = location.pathname.split('/').filter(l => l !== '');
+                        // const urlParts = location.pathname.split('/').filter(l !== '')
+                        const urlParts = pathname.split('/').filter(l => l !== '');
                         if (urlParts[0].startsWith('@')) {
                             // it's user based page
                             const user = users.find(user => user.username === urlParts[0])
@@ -167,6 +173,34 @@ class Router {
                                 // maybe check if user is current logged in user
                                 // if so, maybe redirect to /me page url
                                 // .. for now, just open page of this user
+
+                                if (user) {
+                                    dynamicRoute = true
+                                    userProfilePage = true
+
+                                    // maybe it's too verbose
+                                    if (urlParts[0] === user.username) {
+                                        nextRoute = {
+                                            relativePath: `/${user.username}`,
+                                            canNavigate: () => true,
+                                            beforeNavigate: async () => {
+                                                const userComponent = document.querySelector('user-profile-component')
+                                                // userComponent.setAttribute('user',)
+                                                // maybe it's better to use some js object to store current state,
+                                                // for example: state = {currentActivePage: 'userProfilePage', profile: user }
+                                                userComponent.setAttribute('username', user.username)
+                                                userComponent.setAttribute('email', user.email)
+                                                userComponent.setAttribute('name', user.name)
+
+                                                userComponent.setAttribute('visible', '')
+                                            }
+
+                                        }
+                                        // debugger
+
+                                    }
+                                }
+
 
                             }
 
@@ -180,6 +214,7 @@ class Router {
                                 }
                             }
                     }
+
                     const canNavigate = nextRoute.canNavigate()
 
                     // nextRoute.redirectTo = '/about'
