@@ -2,6 +2,7 @@ import './custom-elements'
 import Ripple from './modules/Ripple'
 import {settings} from "./custom-elements/settings-component";
 import {contentWrappers} from "./custom-elements";
+import {users} from './mock-data'
 
 const ripple = new Ripple()
 
@@ -11,6 +12,9 @@ type Route = {
     onNavigate?: () => void,
     canNavigate: () => boolean,
     redirectTo?: string,
+    // don't know if it's needed
+    // maybe "canNavigate" can solve this
+//     shouldRedirect? () => boolean,
     beforeNavigate?: () => Promise<void>,
     beforeLeave?: () => void
 }
@@ -23,6 +27,32 @@ const routes: Route[] = [
     {
         relativePath: '/about',
         canNavigate: () => true
+    },
+    {
+        // user profile page
+        // relativePath: '/@ivan',
+        // startsWith: '/@',
+        relativePath: '',
+        component: 'user-page',
+        canNavigate: () => {
+            // if user is logged in and if user navigates his profile page
+            // if (currentUser === username) {
+            //     // redirectTo /me page
+            //     return false
+            //  }
+
+            return true
+        },
+        // redirectTo: '/me',
+        beforeNavigate: async () => {
+            document.querySelector('user-profile-component').setAttribute('visible', '')
+        }
+    },
+    {
+        relativePath: '',
+        component: 'user-post',
+        canNavigate: () => true,
+        beforeNavigate: async () => {}
     },
     {
         relativePath: '/settings',
@@ -124,7 +154,32 @@ class Router {
 
                     const { pathname } = anchor
 
-                    const nextRoute = this.routes.find(r => r.relativePath === pathname)
+                    let nextRoute = this.routes.find(r => r.relativePath === pathname)
+                    if (!nextRoute) {
+                        // check if it's user profile page
+//                         const urlParts = location.pathname.split('/').filter(l !== '')
+                        const urlParts = location.pathname.split('/').filter(l => l !== '');
+                        if (urlParts[0].startsWith('@')) {
+                            // it's user based page
+                            const user = users.find(user => user.username === urlParts[0])
+
+                            if (urlParts.length === 1) {
+                                // maybe check if user is current logged in user
+                                // if so, maybe redirect to /me page url
+                                // .. for now, just open page of this user
+
+                            }
+
+                            if (urlParts.length === 2) {
+                                // it's probably a user's post component
+                                // find user and find users post
+                                if (user) {
+                                    // get users post data
+                                    const post = user.posts.find(post => post.slug === urlParts[1])
+                                }
+                                }
+                            }
+                    }
                     const canNavigate = nextRoute.canNavigate()
 
                     // nextRoute.redirectTo = '/about'
