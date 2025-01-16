@@ -1,5 +1,6 @@
 //user-profile-page {
-user-profile-component {
+user-profile-component,
+post-component {
     display: none;
 
     &[visible] {

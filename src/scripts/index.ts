@@ -3,6 +3,7 @@ import Ripple from './modules/Ripple'
 import {settings} from "./custom-elements/settings-component";
 import {contentWrappers} from "./custom-elements";
 import {users} from './mock-data'
+import {Post} from "./custom-elements/PostComponent";
 
 const ripple = new Ripple()
 
@@ -145,8 +146,9 @@ class Router {
             }
 
 
-            if (e.target instanceof HTMLAnchorElement) {
-                const anchor = e.target
+            // ...
+            if (e.target instanceof HTMLAnchorElement || (e.target as HTMLElement).closest('a')) {
+                const anchor = e.target instanceof HTMLAnchorElement ? e.target : (e.target as HTMLElement).closest('a')
 
                 // if (anchor.closest('#mobile-menu')) {
                 //     // close mobile menu if user clicked on a link inside mobile menu sidebar
@@ -177,11 +179,13 @@ class Router {
                                 if (user) {
                                     dynamicRoute = true
                                     userProfilePage = true
+                                    // debugger
 
                                     // maybe it's too verbose
                                     if (urlParts[0] === user.username) {
                                         nextRoute = {
-                                            relativePath: user.loggedIn ? '/me' : `/${user.username}`,
+                                            // relativePath: user.loggedIn ? '/me' : `/${user.username}`,
+                                            relativePath: `/${user.username}`,
                                             canNavigate: () => true,
                                             beforeNavigate: async () => {
                                                 const userComponent = document.querySelector('user-profile-component')
@@ -194,14 +198,9 @@ class Router {
 
                                                 userComponent.setAttribute('visible', '')
                                             }
-
                                         }
-                                        // debugger
-
                                     }
                                 }
-
-
                             }
 
                             if (urlParts.length === 2) {
@@ -209,10 +208,29 @@ class Router {
                                 // find user and find users post
                                 if (user) {
                                     // get users post data
-                                    const post = user.posts.find(post => post.slug === urlParts[1])
-                                }
+                                    // const post = user.posts.find((post: Post) => post.slug === urlParts[1])
+                                    const post = user.posts.find(p => p.slug === urlParts[1])
+
+                                    nextRoute = {
+                                        // relativePath: user.loggedIn ? '/me' : `/${user.username}`,
+                                        relativePath: `/${user.username}/${post.slug}`,
+                                        canNavigate: () => true,
+                                        beforeNavigate: async () => {
+                                            const singlePostComponent = document.querySelector('post-component')
+
+                                            // TODO: maybe add a state object, so you don't have to pass this values as attributes
+                                            singlePostComponent.setAttribute('slug', post.slug)
+                                            singlePostComponent.setAttribute('title', post.title)
+                                            singlePostComponent.setAttribute('description', post.description)
+                                            singlePostComponent.setAttribute('date', post.date)
+                                            // make this component visible
+                                            singlePostComponent.setAttribute('visible', '')
+                                        }
+
+                                    }
                                 }
                             }
+                        }
                     }
 
                     const canNavigate = nextRoute.canNavigate()

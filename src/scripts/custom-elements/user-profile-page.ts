@@ -1,12 +1,15 @@
 import {settings} from "./settings-component";
+import {Post} from "./PostComponent";
+import {users} from "../mock-data";
 
 // profile detail page
 class ProfilePageComponent extends HTMLElement {
-    static observedAttributes = ['username', 'name', 'email'];
+    static observedAttributes = ['visible'];
 
     username: string
     name: string
     email?: string
+    posts: Post[] | []
 
     constructor() {
         // Always call super first in constructor
@@ -15,29 +18,57 @@ class ProfilePageComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        // console.log(`Attribute ${name} has changed.`);
-        // this.username = this.getAttribute('username')
-        // this.name = this.getAttribute('name')
-        // this.email = this.getAttribute('email')
-        // maybe it's not 100% correct to do it like this
-        this[name] = newValue
-
-        this.innerHTML = this.getMarkup()
-    }
-
-    connectedCallback() {
-//         this.image = this.getAttribute('img')
         this.username = this.getAttribute('username')
         this.name = this.getAttribute('name')
         this.email = this.getAttribute('email')
 
-        //
-        // const user = {
-        //     username: this.username
-        // }
+        this.posts = this.getPosts({preview: true})
 
         this.innerHTML = this.getMarkup()
-        // debugger
+
+        let loadMoreButton = this.querySelector<HTMLElement>('#load-more-button')
+        loadMoreButton.onclick = (e) => {
+            // load some more posts
+            this.posts = this.getPosts()
+
+            // TODO: update only posts markup
+            // TODO: make pagination (show groups of 4 or 5 posts, then this button fetches some more (if any))
+            this.innerHTML = this.getMarkup()
+
+            // const button = e.currentTarget
+            // button.style.display = 'none' // hide button
+            // loadMoreButton is rewrite due to new markup.. so find it again and then disable
+            loadMoreButton = this.querySelector<HTMLElement>('#load-more-button')
+            loadMoreButton.style.display = 'none' // hide button
+        }
+    }
+
+    connectedCallback() {
+        // this.username = this.getAttribute('username')
+        // this.name = this.getAttribute('name')
+        // this.email = this.getAttribute('email')
+        //
+        // this.innerHTML = this.getMarkup()
+    }
+
+    // maybe it's better to have this method in some external "getter" class
+    // getPosts(preview?: boolean, range?: {from: number, to: number}) {
+    // getPosts({preview, range}: {preview?: boolean, range?: {from: number, to: number}}) {
+    // wow
+    getPosts({preview, range}: {preview?: boolean, range?: {from: number, to: number}} = {}): Post[] | [] {
+        if (preview) {
+            // return only first 3 recent posts...
+            // not the most efficient way obviously..
+            return users.find(user => user.username === this.username).posts.slice(0, 3)
+        }
+
+        // maybe useful for pagination or for 'load more' button
+        if (range) {
+            const { from, to } = range
+            return users.find(user => user.username === this.username).posts.slice(from, to)
+        }
+
+        return users.find(user => user.username === this.username).posts || []
     }
 
     getMarkup() {
@@ -58,83 +89,38 @@ class ProfilePageComponent extends HTMLElement {
            </div>
            
            <div class="recent-posts wrapper">
-             <ul>
-               <li>
-                 <a href="/@ivan/post-1">
-                   <h2 class="post-header">
-                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure, maiores?
-                   </h2>
-                 </a>
-                 <p class="post-short-description">
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci debitis dolorem iste obcaecati, provident quidem quos reiciendis ullam veritatis!
-                 </p>
-                 <div class="author">
-                   <div class="author__avatar"></div>
-                   <div class="author__name">
-                     @ivan
-                   </div>
-                   <div class="date">
-                     01.04.17
-                   </div>
-                 </div>
-               </li>
-               <li>
-                 <h2 class="post-header">
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure, maiores?
-                 </h2>
-                 <p class="post-short-description">
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci debitis dolorem iste obcaecati, provident quidem quos reiciendis ullam veritatis!
-                 </p>
-                 <div class="author">
-                   <div class="author__avatar"></div>
-                   <div class="author__name">
-                     @ivan
-                   </div>
-                   <div class="date">
-                     01.04.17
-                   </div>
-                 </div>
-               </li>
-               <li>
-                 <h2 class="post-header">
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure, maiores?
-                 </h2>
-                 <p class="post-short-description">
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci debitis dolorem iste obcaecati, provident quidem quos reiciendis ullam veritatis!
-                 </p>
-                 <div class="author">
-                   <div class="author__avatar"></div>
-                   <div class="author__name">
-                     @ivan
-                   </div>
-                   <div class="date">
-                     01.04.17
-                   </div>
-                 </div>
-               </li>
-               <li>
-                 <h2 class="post-header">
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure, maiores?
-                 </h2>
-                 <p class="post-short-description">
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci debitis dolorem iste obcaecati, provident quidem quos reiciendis ullam veritatis!
-                 </p>
-                 <div class="author">
-                   <div class="author__avatar"></div>
-                   <div class="author__name">
-                     @ivan
-                   </div>
-                   <div class="date">
-                     01.04.17
-                   </div>
-                 </div>
-               </li>
-             </ul>
+             ${this.posts.length === 0 ? `
+               <h2>no posts yet...</h2>
+             ` : `  
+               <ul>
+                 ${this.posts.map(post => `
+                   <li>
+                     <a href="/${this.username}/${post.slug}" custom-link ripple-effect">
+                       <h2 class="post-header">
+                         ${post.title}
+                       </h2>
+                     </a>
+                     <p class="post-short-description">
+                       ${post.description}
+                     </p>
+<!--                     <div class="author">-->
+<!--                       <div class="author__avatar"></div>-->
+<!--                       <div class="author__name">-->
+<!--                         @ivan-->
+<!--                       </div>-->
+<!--                       <div class="date">-->
+<!--                         01.04.17-->
+<!--                       </div>-->
+<!--                     </div>-->
+                   </li>
+                 `).join('')}
+               </ul>
 
-             <div class="load-more-button">
-               load more sh..
+               <div class="load-more-button" id="load-more-button">
+                 load more sh..
+               </div>
              </div>
-           </div>
+           `}
         `
 
         return markup
