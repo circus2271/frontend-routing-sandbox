@@ -86,12 +86,15 @@ const hideComponent = componentSelector => document.querySelector(componentSelec
 //
 // }
 
+
 class Router {
     staticRoutes: Route[] = staticRoutes
     beforeNavigateFunctionsStack: (() => Promise<void>)[] = []
+    currentUrl: string
 
     constructor() {
         //... this function is async but is used without an await here
+        // TODO: remove flickering when loading page the first time
         this.navigate({pathname: location.pathname})
 
         addEventListener('popstate', async () => {
@@ -168,8 +171,14 @@ class Router {
 
     // update ui, and do some stuff actually. not only naviagte
     async navigate({pathname, triggeredViaPopstate = false}: {pathname: string, triggeredViaPopstate?: boolean}) {
-        // alert(triggeredViaPopstate)
-        // TODO: don't do anything if previous url === current url
+        // don't do anything if current url is already opened
+        if (this.currentUrl === pathname) {
+            return
+        }
+
+        // use this to not trigger a route navigation if this route is already opened
+        this.currentUrl = pathname
+
         let nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
         if (!nextRoute) {
             // check if it's user profile page
