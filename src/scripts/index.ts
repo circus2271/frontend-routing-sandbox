@@ -82,14 +82,23 @@ const staticRoutes: Route[] = [
 const showComponent = componentSelector => document.querySelector(componentSelector).setAttribute('visible', '')
 const hideComponent = componentSelector => document.querySelector(componentSelector).removeAttribute('visible')
 
+// const navigate = () => {
+//
+// }
+
 class Router {
     staticRoutes: Route[] = staticRoutes
     beforeNavigateFunctionsStack: (() => Promise<void>)[] = []
 
     constructor() {
+        // addEventListener('urlChangeEvent', () => {
+        //
+        // })
+
         // document.addEventListener('popstate', (e: PopStateEvent) => {
         addEventListener('popstate', async () => {
             // debugger
+            // alert(location.pathname)
             // const currentUrl = window.location.href
             const mobileMenu = document.querySelector('#mobile-menu')
             if (mobileMenu.classList.contains('visible')) {
@@ -98,10 +107,12 @@ class Router {
 
             const { pathname } = window.location
 
-            const nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
-            const canNavigate = nextRoute.canNavigate()
+            await this.navigate(pathname)
 
-            await nextRoute.beforeNavigate?.()
+            // const nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
+            // const canNavigate = nextRoute.canNavigate()
+            //
+            // await nextRoute.beforeNavigate?.()
         })
 
         document.addEventListener('click', async (e) => {
@@ -156,106 +167,111 @@ class Router {
                 // }
 
                 if (anchor.hasAttribute('custom-link')) {
-                    let dynamicRoute = false;
-                    let userProfilePage = false;
-                    let userPostPage = false
+                    // let dynamicRoute = false;
+                    // let userProfilePage = false;
+                    // let userPostPage = false
 
                     const { pathname } = anchor
 
-                    let nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
-                    if (!nextRoute) {
-                        // check if it's user profile page
-                        // const urlParts = location.pathname.split('/').filter(l !== '')
-                        const urlParts = pathname.split('/').filter(l => l !== '');
-                        if (urlParts[0].startsWith('@')) {
-                            // it's user based page
-                            const user = users.find(user => user.username === urlParts[0])
+                    await this.navigate(pathname)
+                }
+            }
+        })
+    }
 
-                            if (urlParts.length === 1) {
-                                // maybe check if user is current logged in user
-                                // if so, maybe redirect to /me page url
-                                // .. for now, just open page of this user
+    // update ui, and do some stuff actually. not only naviagte
+    async navigate(pathname: string) {
+        let nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
+        if (!nextRoute) {
+            // check if it's user profile page
+            // const urlParts = location.pathname.split('/').filter(l !== '')
+            const urlParts = pathname.split('/').filter(l => l !== '');
+            if (urlParts[0].startsWith('@')) {
+                // it's user based page
+                const user = users.find(user => user.username === urlParts[0])
 
-                                if (user) {
-                                    dynamicRoute = true
-                                    userProfilePage = true
-                                    // debugger
+                if (urlParts.length === 1) {
+                    // maybe check if user is current logged in user
+                    // if so, maybe redirect to /me page url
+                    // .. for now, just open page of this user
 
-                                    // maybe it's too verbose
-                                    if (urlParts[0] === user.username) {
-                                        nextRoute = {
-                                            // relativePath: user.loggedIn ? '/me' : `/${user.username}`,
-                                            relativePath: `/${user.username}`,
-                                            canNavigate: () => true,
-                                            beforeNavigate: async () => {
-                                                const userComponent = document.querySelector('user-profile-component')
-                                                // userComponent.setAttribute('user',)
-                                                // maybe it's better to use some js object to store current state,
-                                                // for example: state = {currentActivePage: 'userProfilePage', profile: user }
-                                                userComponent.setAttribute('username', user.username)
-                                                userComponent.setAttribute('email', user.email)
-                                                userComponent.setAttribute('name', user.name)
+                    if (user) {
+                        // dynamicRoute = true
+                        // userProfilePage = true
+                        // debugger
 
-                                                userComponent.setAttribute('visible', '')
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                        // maybe it's too verbose
+                        if (urlParts[0] === user.username) {
+                            nextRoute = {
+                                // relativePath: user.loggedIn ? '/me' : `/${user.username}`,
+                                relativePath: `/${user.username}`,
+                                canNavigate: () => true,
+                                beforeNavigate: async () => {
+                                    const userComponent = document.querySelector('user-profile-component')
+                                    // userComponent.setAttribute('user',)
+                                    // maybe it's better to use some js object to store current state,
+                                    // for example: state = {currentActivePage: 'userProfilePage', profile: user }
+                                    userComponent.setAttribute('username', user.username)
+                                    userComponent.setAttribute('email', user.email)
+                                    userComponent.setAttribute('name', user.name)
 
-                            if (urlParts.length === 2) {
-                                // it's probably a user's post component
-                                // find user and find users post
-                                if (user) {
-                                    // get users post data
-                                    // const post = user.posts.find((post: Post) => post.slug === urlParts[1])
-                                    const post = user.posts.find(p => p.slug === urlParts[1])
-
-                                    nextRoute = {
-                                        // relativePath: user.loggedIn ? '/me' : `/${user.username}`,
-                                        relativePath: `/${user.username}/${post.slug}`,
-                                        canNavigate: () => true,
-                                        beforeNavigate: async () => {
-                                            const singlePostComponent = document.querySelector('post-component')
-
-                                            // TODO: maybe add a state object, so you don't have to pass this values as attributes
-                                            singlePostComponent.setAttribute('slug', post.slug)
-                                            singlePostComponent.setAttribute('title', post.title)
-                                            singlePostComponent.setAttribute('description', post.description)
-                                            singlePostComponent.setAttribute('date', post.date)
-                                            // make this component visible
-                                            singlePostComponent.setAttribute('visible', '')
-                                        }
-
-                                    }
+                                    userComponent.setAttribute('visible', '')
                                 }
                             }
                         }
                     }
+                }
 
-                    const canNavigate = nextRoute.canNavigate()
+                if (urlParts.length === 2) {
+                    // it's probably a user's post component
+                    // find user and find users post
+                    if (user) {
+                        // get users post data
+                        // const post = user.posts.find((post: Post) => post.slug === urlParts[1])
+                        const post = user.posts.find(p => p.slug === urlParts[1])
 
-                    // nextRoute.redirectTo = '/about'
-                    if (!canNavigate) {
-                        // const r = nextRoute.redirectTo
-                        // setTimeout(() => {
-                            // location.pathname = r
-                            history.pushState({}, '', nextRoute.redirectTo)
+                        nextRoute = {
+                            // relativePath: user.loggedIn ? '/me' : `/${user.username}`,
+                            relativePath: `/${user.username}/${post.slug}`,
+                            canNavigate: () => true,
+                            beforeNavigate: async () => {
+                                const singlePostComponent = document.querySelector('post-component')
 
-                        // }, 2000)
+                                // TODO: maybe add a state object, so you don't have to pass this values as attributes
+                                singlePostComponent.setAttribute('slug', post.slug)
+                                singlePostComponent.setAttribute('title', post.title)
+                                singlePostComponent.setAttribute('description', post.description)
+                                singlePostComponent.setAttribute('date', post.date)
+                                // make this component visible
+                                singlePostComponent.setAttribute('visible', '')
+                            }
 
-                        return
+                        }
                     }
-
-                    // this.beforeNavigateFunctionsStack.forEach(f => f())
-                    for await (const callback of this.beforeNavigateFunctionsStack) {
-                        await callback()
-                    }
-                    await nextRoute.beforeNavigate?.()
-                    history.pushState({}, '', nextRoute.relativePath)
                 }
             }
-        })
+        }
+
+        const canNavigate = nextRoute.canNavigate()
+
+        // nextRoute.redirectTo = '/about'
+        if (!canNavigate) {
+            // const r = nextRoute.redirectTo
+            // setTimeout(() => {
+            // location.pathname = r
+            history.pushState({}, '', nextRoute.redirectTo)
+
+            // }, 2000)
+
+            return
+        }
+
+        // this.beforeNavigateFunctionsStack.forEach(f => f())
+        for await (const callback of this.beforeNavigateFunctionsStack) {
+            await callback()
+        }
+        await nextRoute.beforeNavigate?.()
+        history.pushState({}, '', nextRoute.relativePath)
     }
 
     // register before navigation callbacks
