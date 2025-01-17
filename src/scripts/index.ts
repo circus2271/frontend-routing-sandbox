@@ -91,15 +91,20 @@ class Router {
     beforeNavigateFunctionsStack: (() => Promise<void>)[] = []
 
     constructor() {
+        //... this function is async but is used without an await here
+        this.navigate({pathname: location.pathname})
+
         addEventListener('popstate', async () => {
             const mobileMenu = document.querySelector('#mobile-menu')
             if (mobileMenu.classList.contains('visible')) {
                 mobileMenu.classList.remove('visible')
+                //
+                // return
             }
 
             const { pathname } = window.location
 
-            await this.navigate(pathname)
+            await this.navigate({pathname, triggeredViaPopstate: true})
         })
 
         document.addEventListener('click', async (e) => {
@@ -155,14 +160,16 @@ class Router {
 
                     const { pathname } = anchor
 
-                    await this.navigate(pathname)
+                    await this.navigate({pathname})
                 }
             }
         })
     }
 
     // update ui, and do some stuff actually. not only naviagte
-    async navigate(pathname: string) {
+    async navigate({pathname, triggeredViaPopstate = false}: {pathname: string, triggeredViaPopstate?: boolean}) {
+        // alert(triggeredViaPopstate)
+        // TODO: don't do anything if previous url === current url
         let nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
         if (!nextRoute) {
             // check if it's user profile page
@@ -236,7 +243,8 @@ class Router {
 
         const canNavigate = nextRoute.canNavigate()
 
-        if (!canNavigate) {
+        // if this url change is triggered via popstate event, don't update the url twice
+        if (!canNavigate && !triggeredViaPopstate) {
             // const r = nextRoute.redirectTo
             // setTimeout(() => {
             // location.pathname = r
@@ -251,7 +259,11 @@ class Router {
             await callback()
         }
         await nextRoute.beforeNavigate?.()
-        history.pushState({}, '', nextRoute.relativePath)
+
+        // if this url change is triggered via to popstate event, don't update the url twice
+        if (!triggeredViaPopstate) {
+            history.pushState({}, '', nextRoute.relativePath)
+        }
     }
 
     // register before navigation callbacks
