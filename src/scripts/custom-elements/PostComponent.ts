@@ -34,8 +34,6 @@ class PostComponent extends HTMLElement {
     constructor() {
         // Always call super first in constructor
         super();
-        // alert(4)
-
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

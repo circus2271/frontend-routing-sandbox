@@ -91,15 +91,7 @@ class Router {
     beforeNavigateFunctionsStack: (() => Promise<void>)[] = []
 
     constructor() {
-        // addEventListener('urlChangeEvent', () => {
-        //
-        // })
-
-        // document.addEventListener('popstate', (e: PopStateEvent) => {
         addEventListener('popstate', async () => {
-            // debugger
-            // alert(location.pathname)
-            // const currentUrl = window.location.href
             const mobileMenu = document.querySelector('#mobile-menu')
             if (mobileMenu.classList.contains('visible')) {
                 mobileMenu.classList.remove('visible')
@@ -108,11 +100,6 @@ class Router {
             const { pathname } = window.location
 
             await this.navigate(pathname)
-
-            // const nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
-            // const canNavigate = nextRoute.canNavigate()
-            //
-            // await nextRoute.beforeNavigate?.()
         })
 
         document.addEventListener('click', async (e) => {
@@ -161,11 +148,6 @@ class Router {
             if (e.target instanceof HTMLAnchorElement || (e.target as HTMLElement).closest('a')) {
                 const anchor = e.target instanceof HTMLAnchorElement ? e.target : (e.target as HTMLElement).closest('a')
 
-                // if (anchor.closest('#mobile-menu')) {
-                //     // close mobile menu if user clicked on a link inside mobile menu sidebar
-                //     document.querySelector('#mobile-menu').classList.remove('visible')
-                // }
-
                 if (anchor.hasAttribute('custom-link')) {
                     // let dynamicRoute = false;
                     // let userProfilePage = false;
@@ -208,7 +190,7 @@ class Router {
                                 canNavigate: () => true,
                                 beforeNavigate: async () => {
                                     const userComponent = document.querySelector('user-profile-component')
-                                    // userComponent.setAttribute('user',)
+
                                     // maybe it's better to use some js object to store current state,
                                     // for example: state = {currentActivePage: 'userProfilePage', profile: user }
                                     userComponent.setAttribute('username', user.username)
@@ -254,7 +236,6 @@ class Router {
 
         const canNavigate = nextRoute.canNavigate()
 
-        // nextRoute.redirectTo = '/about'
         if (!canNavigate) {
             // const r = nextRoute.redirectTo
             // setTimeout(() => {
@@ -266,7 +247,6 @@ class Router {
             return
         }
 
-        // this.beforeNavigateFunctionsStack.forEach(f => f())
         for await (const callback of this.beforeNavigateFunctionsStack) {
             await callback()
         }

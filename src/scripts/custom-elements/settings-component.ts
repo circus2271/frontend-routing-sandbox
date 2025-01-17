@@ -78,9 +78,6 @@ export const settings: Settings = {
     language: 'english'
 }
 
-// const getTogglerComponentMarkup = () => {
-//
-// }
 
 class SsttingsElement extends HTMLElement {
     state: Settings
@@ -88,14 +85,13 @@ class SsttingsElement extends HTMLElement {
     constructor() {
         // Always call super first in constructor
         super();
-        // alert(4)
 
         this.state = settings
     }
 
     connectedCallback() {
         this.innerHTML = this.getMarkup()
-// debugger
+
         const toggleToggler = togglerParent => {
             const toggler = togglerParent.querySelector('.settings-toggler')
             if (toggler.hasAttribute('turned-on')) {
@@ -116,12 +112,9 @@ class SsttingsElement extends HTMLElement {
             toggleToggler(e.currentTarget)
             toggleRippleEffectSetting()
         }
-
     }
 
     getMarkup() {
-        // @ts-ignore
-        // @ts-ignore
         const markup = `
           <div class="settings-wrapper wrapper">
             <div class="gear-icon"></div>
@@ -131,7 +124,6 @@ class SsttingsElement extends HTMLElement {
                 <div class="setting-name">
                   dark theme
                 </div>
-<!--                <settings-toggler></settings-toggler>-->
                 <div class="settings-toggler" ${this.state.theme === 'dark' && 'turned-on'}>
                   <div class="tumbler-wrapper">
                     <div class="tumbler"></div>
@@ -153,7 +145,6 @@ class SsttingsElement extends HTMLElement {
                   ripple effect
                 </div>
                 <div class="settings-toggler" ${!this.state.ripplesDisabled && 'turned-on'}>
-<!--                  <div class="tumbler-wrapper" onclick="toggleTheme">-->
                   <div class="tumbler-wrapper">
                     <div class="tumbler"></div>
                   </div>
