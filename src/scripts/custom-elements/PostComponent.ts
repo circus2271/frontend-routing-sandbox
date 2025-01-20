@@ -1,4 +1,5 @@
 import {settings} from "./settings-component";
+import {cleanUpAttributes} from "../modules/helpers";
 
 export type Post = {
     slug: string,
@@ -37,6 +38,12 @@ class PostComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
+        // if (newValue === 'false') {
+        //     cleanUpAttributes(this, ['slug', 'title', 'description', 'date'])
+        //
+        //     return
+        // }
+
         this.slug = this.getAttribute('slug')
         this.title = this.getAttribute('title')
         this.description = this.getAttribute('description')

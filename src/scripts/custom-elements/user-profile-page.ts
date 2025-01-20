@@ -5,6 +5,7 @@ import {users} from "../mock-data";
 // profile detail page
 class ProfilePageComponent extends HTMLElement {
     static observedAttributes = ['visible'];
+    paginateBy: number = 3
 
     username: string
     name: string
@@ -55,20 +56,33 @@ class ProfilePageComponent extends HTMLElement {
     // getPosts(preview?: boolean, range?: {from: number, to: number}) {
     // getPosts({preview, range}: {preview?: boolean, range?: {from: number, to: number}}) {
     // wow
-    getPosts({preview, range}: {preview?: boolean, range?: {from: number, to: number}} = {}): Post[] | [] {
-        if (preview) {
-            // return only first 3 recent posts...
-            // not the most efficient way obviously..
-            return users.find(user => user.username === this.username).posts.slice(0, 3)
+    // getPosts({preview, range}: {preview?: boolean, range?: {from: number, to: number}} = {}): Post[] | [] {
+    getPosts(range?: {from: number, to: number}): Post[] | [] {
+        const posts = users.find(user => user.username === this.username).posts
+        const postsAmount = posts.length
+
+        if (this.paginateBy > postsAmount) {
+            return posts
         }
 
-        // maybe useful for pagination or for 'load more' button
         if (range) {
-            const { from, to } = range
-            return users.find(user => user.username === this.username).posts.slice(from, to)
+            const startIndex = range.from
+            const endIndex = range.to
+
+            
         }
 
-        return users.find(user => user.username === this.username).posts || []
+        // if (preview) {
+        //     return posts.slice(0, this.paginateBy)
+        // }
+        //
+        // // maybe useful for pagination or for 'load more' button
+        // if (range) {
+        //     const { from, to } = range
+        //     return posts.slice(from, to)
+        // }
+        //
+        // return posts || []
     }
 
     getMarkup() {
