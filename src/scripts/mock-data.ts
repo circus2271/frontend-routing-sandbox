@@ -39,6 +39,24 @@ export const users: User[] = [
                 title: 'bla bla',
                 description: 'sfddf',
                 date: '22.07.99',
+            },
+            {
+                slug: 'post-4',
+                title: 'bla bla',
+                description: 'sfddf',
+                date: '22.07.99',
+            },
+            {
+                slug: 'post-4',
+                title: 'bla bla',
+                description: 'sfddf',
+                date: '22.07.99',
+            },
+            {
+                slug: 'post-4',
+                title: 'bla bla',
+                description: 'sfddf',
+                date: '22.07.99',
             }
         ],
         loggedIn: true

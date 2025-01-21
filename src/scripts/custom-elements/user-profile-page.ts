@@ -5,7 +5,20 @@ import {users} from "../mock-data";
 // profile detail page
 class ProfilePageComponent extends HTMLElement {
     static observedAttributes = ['visible'];
+
     paginateBy: number = 3
+    startIndex: number = 0
+    endIndex: number = this.paginateBy
+    // nextPage: boolean;
+    // nextPage: boolean;
+    hasNextPage: boolean;
+    postsAmount: number;
+    currentPage: 1;
+    flat: true;//
+
+    // get hasNextPage() {
+    //     this.endIndex >= this.postsAmount
+    // }
 
     username: string
     name: string
@@ -23,66 +36,62 @@ class ProfilePageComponent extends HTMLElement {
         this.name = this.getAttribute('name')
         this.email = this.getAttribute('email')
 
-        this.posts = this.getPosts({preview: true})
+        this.posts = this.getPosts({from: this.startIndex, to: this.endIndex})
 
         this.innerHTML = this.getMarkup()
 
         let loadMoreButton = this.querySelector<HTMLElement>('#load-more-button')
+        const postsWrapper = this.querySelector('#posts-wrapper')
         loadMoreButton.onclick = (e) => {
             // load some more posts
-            this.posts = this.getPosts()
+            this.currentPage++
+            // this.startIndex += this.paginateBy
+            // this.endIndex += this.paginateBy
+            this.startIndex = this.endIndex
+            this.endIndex += this.paginateBy
 
-            // TODO: update only posts markup
-            // TODO: make pagination (show groups of 4 or 5 posts, then this button fetches some more (if any))
-            this.innerHTML = this.getMarkup()
+            const newPosts = this.getPosts({from: this.startIndex, to: this.endIndex})
+            // this.posts.push(...newPosts)
+            this.posts = [...this.posts, ...newPosts]
 
-            // const button = e.currentTarget
-            // button.style.display = 'none' // hide button
-            // loadMoreButton is rewrite due to new markup.. so find it again and then disable
-            loadMoreButton = this.querySelector<HTMLElement>('#load-more-button')
-            loadMoreButton.style.display = 'none' // hide button
+            this.hasNextPage = this.endIndex <= this.postsAmount
+
+            postsWrapper.innerHTML += newPosts.map(post => this.getPostMarkup(post)).join('')
+
+            if (!this.hasNextPage) {
+                loadMoreButton.style.display = 'none'
+            }
         }
     }
 
-    connectedCallback() {
-        // this.username = this.getAttribute('username')
-        // this.name = this.getAttribute('name')
-        // this.email = this.getAttribute('email')
-        //
-        // this.innerHTML = this.getMarkup()
-    }
-
-    // maybe it's better to have this method in some external "getter" class
-    // getPosts(preview?: boolean, range?: {from: number, to: number}) {
-    // getPosts({preview, range}: {preview?: boolean, range?: {from: number, to: number}}) {
-    // wow
-    // getPosts({preview, range}: {preview?: boolean, range?: {from: number, to: number}} = {}): Post[] | [] {
-    getPosts(range?: {from: number, to: number}): Post[] | [] {
+    getPosts(range: {from: number, to: number}): Post[] | [] {
+        // get all posts and then return some of them is not perfect realisation, but fro now let's try assume that it's ok
         const posts = users.find(user => user.username === this.username).posts
-        const postsAmount = posts.length
+        this.postsAmount = posts.length
 
-        if (this.paginateBy > postsAmount) {
-            return posts
-        }
 
-        if (range) {
-            const startIndex = range.from
-            const endIndex = range.to
+        const startIndex = range.from
+        const endIndex = range.to
 
-            
-        }
+        return posts.slice(startIndex, endIndex)
+    }
 
-        // if (preview) {
-        //     return posts.slice(0, this.paginateBy)
-        // }
-        //
-        // // maybe useful for pagination or for 'load more' button
-        // if (range) {
-        //     const { from, to } = range
-        //     return posts.slice(from, to)
-        // }
-        //
-        // return posts || []
+
+    getPostMarkup(postData: Post): string {
+        const post = postData
+
+        return `
+          <li>
+            <a href="/${this.username}/${post.slug}" custom-link ripple-effect">
+              <h2 class="post-header">
+                ${post.title}
+              </h2>
+            </a>
+            <p class="post-short-description">
+              ${post.description}
+            </p>
+          </li>
+        `
     }
 
     getMarkup() {
@@ -106,28 +115,8 @@ class ProfilePageComponent extends HTMLElement {
              ${this.posts.length === 0 ? `
                <h2>no posts yet...</h2>
              ` : `  
-               <ul>
-                 ${this.posts.map(post => `
-                   <li>
-                     <a href="/${this.username}/${post.slug}" custom-link ripple-effect">
-                       <h2 class="post-header">
-                         ${post.title}
-                       </h2>
-                     </a>
-                     <p class="post-short-description">
-                       ${post.description}
-                     </p>
-<!--                     <div class="author">-->
-<!--                       <div class="author__avatar"></div>-->
-<!--                       <div class="author__name">-->
-<!--                         @ivan-->
-<!--                       </div>-->
-<!--                       <div class="date">-->
-<!--                         01.04.17-->
-<!--                       </div>-->
-<!--                     </div>-->
-                   </li>
-                 `).join('')}
+               <ul id="posts-wrapper">
+                 ${this.posts.map(post => this.getPostMarkup(post)).join('')}
                </ul>
 
                <div class="load-more-button" id="load-more-button">

@@ -226,7 +226,7 @@ class Router {
                     if (user) {
                         // get users post data
                         // const post = user.posts.find((post: Post) => post.slug === urlParts[1])
-                        const post = user.posts.find(p => p.slug === urlParts[1])
+                        const post = user.posts.find((p: Post) => p.slug === urlParts[1])
 
                         nextRoute = {
                             // relativePath: user.loggedIn ? '/me' : `/${user.username}`,
