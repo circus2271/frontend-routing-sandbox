@@ -11,8 +11,14 @@ export type Post = {
         avatar?: string,
         username: string
     }
+    comments?: Comments[],
     content?: PostContent | null | undefined
     // maybe extract some part of this to PostDetail type
+}
+
+type Comments = {
+    author: string, // author's username
+    'text-content': string
 }
 
 type PostContent = {
@@ -85,6 +91,27 @@ class PostComponent extends HTMLElement {
             <p class="post__date">
               ${this.date}
             </p>
+            <div class="comments">
+    <div class="new-comment-form-wrapper">
+      <form id="new-comment-form">
+        <label for="new-comment-field"></label>
+        <textarea id="new-comment-field"></textarea>
+        <button type="submit">
+          submit a comment
+        </button>
+      </form>
+    </div>
+    <ul>
+      <li>
+        <span>
+          comment author:
+        </span>
+        <span>
+          comment text
+        </span>
+      </li>
+    </ul>
+  </div>
 <!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, labore!</p>-->
 <!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil perspiciatis sit vero. Aliquid autem delectus dolorem fuga repellendus similique sunt?</p>-->
 <!--          </div>-->

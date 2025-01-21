@@ -7,6 +7,7 @@ class ProfilePageComponent extends HTMLElement {
     static observedAttributes = ['visible'];
 
     paginateBy: number = 3
+    // paginateBy: number = 30
     startIndex: number = 0
     endIndex: number = this.paginateBy
     // nextPage: boolean;
@@ -37,6 +38,7 @@ class ProfilePageComponent extends HTMLElement {
         this.email = this.getAttribute('email')
 
         this.posts = this.getPosts({from: this.startIndex, to: this.endIndex})
+        this.hasNextPage = this.endIndex <= this.postsAmount
 
         this.innerHTML = this.getMarkup()
 
@@ -119,9 +121,11 @@ class ProfilePageComponent extends HTMLElement {
                  ${this.posts.map(post => this.getPostMarkup(post)).join('')}
                </ul>
 
-               <div class="load-more-button" id="load-more-button">
-                 load more sh..
-               </div>
+               ${this.hasNextPage && `
+                 <div class="load-more-button" id="load-more-button">
+                   load more sh..
+                 </div>
+               `}
              </div>
            `}
         `

@@ -21,6 +21,18 @@ export const users: User[] = [
                 title: 'bla bla 1',
                 description: 'sfddf',
                 date: '22.07.99',
+                comments: [
+                    {
+                        author: '@user-john',
+                        // 'text-content': 'fdsfsdf',
+                        'text-content': 'fdsfsdf'
+                    },
+                    {
+                        author: '@mamba',
+                        // 'text-content': 'fdsfsdf',
+                        'text-content': 'fdsfsdf'
+                    }
+                ]
             },
             {
                 slug: 'post-2',
@@ -61,4 +73,60 @@ export const users: User[] = [
         ],
         loggedIn: true
     },
+    {
+        username: '@john',
+        name: 'john',
+        email: 'example@john.example.com',
+        posts: [
+            {
+                slug: 'john-1',
+                title: 'fdfdsf',
+                description: 'sfddf',
+                date: '22.07.99',
+                comments: [
+                    {
+                        author: '@mamba',
+                        // 'text-content': 'fdsfsdf',
+                        'text-content': 'fdsfsdf'
+                    }
+                ]
+            },
+            {
+                slug: 'john-post2',
+                title: 'john posts again',
+                description: 'sfddf',
+                date: '22.07.99',
+            },
+        ],
+        // loggedIn: true
+    },
+    {
+        username: '@mamba',
+        name: 'mamba',
+        email: 'example@mamba.example.com',
+        posts: [
+            {
+                slug: 'mamba rules',
+                title: 'mamba rules everything',
+                description: 'sfddf',
+                date: '22.07.99',
+                comments: [
+                    {
+                        author: '@ivan',
+                        // 'text-content': 'fdsfsdf',
+                        'text-content': 'hm..'
+                    }
+                ]
+            },
+            {
+                slug: 'john-post2',
+                title: 'john posts again',
+                description: 'sfddf',
+                date: '22.07.99',
+            },
+        ],
+        // loggedIn: true
+    },
 ]
+
+const currentUser = users[0]
