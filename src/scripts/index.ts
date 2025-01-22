@@ -21,17 +21,26 @@ type Route = {
 
     component?: string,
     // 'dynamic-route': boolean
+    name?: string
 }
 
 const staticRoutes: Route[] = [
     {
         relativePath: '/',
-        canNavigate: () => true
+        canNavigate: () => true,
+        beforeNavigate: async () => {
+            document.querySelector('homepage-component').setAttribute('visible', '')
+        }
     },
     {
         relativePath: '/about',
         canNavigate: () => true
     },
+    // {
+    //     relativePath: '/404',
+    //     canNavigate: () => true,
+    //     name: 'fallback-route'
+    // },
     {
         // user profile page
         // relativePath: '/@ivan',
@@ -77,6 +86,13 @@ const staticRoutes: Route[] = [
         redirectTo: '/login'
     },
 ]
+
+const route404 = {
+    relativePath: '/404',
+    canNavigate: () => true,
+}
+
+staticRoutes.push(route404)
 
 // const handleComponentsVisibility = co
 const showComponent = componentSelector => document.querySelector(componentSelector).setAttribute('visible', '')
@@ -217,6 +233,12 @@ class Router {
                                 }
                             }
                         }
+                    }
+
+                    if (!user) {
+                        // navigate to 404 page (probably show "user not found" message)
+                        // nextRoute = staticRoutes.find(r => r.name === 'fallback')
+                        nextRoute = route404 // // show notFound page
                     }
                 }
 

@@ -12,7 +12,8 @@ export type Post = {
         avatar?: string,
         username: string
     }
-    comments?: Comments[] | [],
+    // comments?: Comments[] | [],
+    comments?: Comment[] | [],
     content?: PostContent | null | undefined
     // maybe extract some part of this to PostDetail type
 }
@@ -22,7 +23,11 @@ type Comment = Pick<Post, 'author'> & {
     'text-content': string
 }
 
-type Comments = Comment[]
+// type Comments = (Pick<Post, 'author'> & {
+//     'text-content': string
+// })[]
+
+// type Comments = Comment[]
 
 // type Comments = {
 //     author: string, // author's username
