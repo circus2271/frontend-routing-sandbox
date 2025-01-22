@@ -23,12 +23,16 @@ export const users: User[] = [
                 date: '22.07.99',
                 comments: [
                     {
-                        author: '@user-john',
+                        author: {
+                            username: '@user-john'
+                        },
                         // 'text-content': 'fdsfsdf',
                         'text-content': 'fdsfsdf'
                     },
                     {
-                        author: '@mamba',
+                        author: {
+                            username: '@mamba'
+                        },
                         // 'text-content': 'fdsfsdf',
                         'text-content': 'fdsfsdf'
                     }
@@ -85,7 +89,9 @@ export const users: User[] = [
                 date: '22.07.99',
                 comments: [
                     {
-                        author: '@mamba',
+                        author: {
+                            username: '@mamba'
+                        },
                         // 'text-content': 'fdsfsdf',
                         'text-content': 'fdsfsdf'
                     }
@@ -112,7 +118,9 @@ export const users: User[] = [
                 date: '22.07.99',
                 comments: [
                     {
-                        author: '@ivan',
+                        author: {
+                            username: '@ivan'
+                        },
                         // 'text-content': 'fdsfsdf',
                         'text-content': 'hm..'
                     }
@@ -129,4 +137,4 @@ export const users: User[] = [
     },
 ]
 
-const currentUser = users[0]
+export const currentUser = users[0]

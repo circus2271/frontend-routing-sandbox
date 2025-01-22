@@ -1,5 +1,6 @@
 import {settings} from "./settings-component";
 import {cleanUpAttributes} from "../modules/helpers";
+import {users} from "../mock-data";
 
 export type Post = {
     slug: string,
@@ -11,15 +12,22 @@ export type Post = {
         avatar?: string,
         username: string
     }
-    comments?: Comments[],
+    comments?: Comments[] | [],
     content?: PostContent | null | undefined
     // maybe extract some part of this to PostDetail type
 }
 
-type Comments = {
-    author: string, // author's username
+// https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys
+type Comment = Pick<Post, 'author'> & {
     'text-content': string
 }
+
+type Comments = Comment[]
+
+// type Comments = {
+//     author: string, // author's username
+//     'text-content': string
+// }
 
 type PostContent = {
     content: 'string'
@@ -37,6 +45,9 @@ class PostComponent extends HTMLElement {
     description: string
     date: string
     image: string
+    post: Post
+    // comments: Pick<Post, 'comments'> = []
+    comments = []
 
     constructor() {
         // Always call super first in constructor
@@ -55,8 +66,23 @@ class PostComponent extends HTMLElement {
         this.description = this.getAttribute('description')
         this.date = this.getAttribute('date')
 
+        let currentPost;
+        for (let user of users) {
+            const post = user.posts.find((p: Post) => p.slug === this.slug)
+            if (post) {
+                currentPost = post
+
+                break;
+            }
+        }
+
+        if (currentPost) {
+            this.comments = currentPost.comments
+        }
+
         this.innerHTML = this.getMarkup()
     }
+
 
     // connectedCallback() {
     //     // this.image = this.getAttribute('img')
@@ -101,15 +127,20 @@ class PostComponent extends HTMLElement {
         </button>
       </form>
     </div>
+    ${this.comments.length > 0 && this.comments.map(comment => {
+        return `
+          <li>
+            <span>
+              comment author: <span><a href="/${comment.author.username}" custom-link ripple-effect>${comment.author.username}</a></span>
+            </span>
+            <span>
+              comment text: <span>${comment['text-content']}</span>
+            </span>
+          </li>
+        `
+    }).join('')}
     <ul>
-      <li>
-        <span>
-          comment author:
-        </span>
-        <span>
-          comment text
-        </span>
-      </li>
+      
     </ul>
   </div>
 <!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, labore!</p>-->
