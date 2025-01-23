@@ -44,24 +44,26 @@ class ProfilePageComponent extends HTMLElement {
 
         let loadMoreButton = this.querySelector<HTMLElement>('#load-more-button')
         const postsWrapper = this.querySelector('#posts-wrapper')
-        loadMoreButton.onclick = (e) => {
-            // load some more posts
-            this.currentPage++
-            // this.startIndex += this.paginateBy
-            // this.endIndex += this.paginateBy
-            this.startIndex = this.endIndex
-            this.endIndex += this.paginateBy
+        if (loadMoreButton) {
+            loadMoreButton.onclick = (e) => {
+                // load some more posts
+                this.currentPage++
+                // this.startIndex += this.paginateBy
+                // this.endIndex += this.paginateBy
+                this.startIndex = this.endIndex
+                this.endIndex += this.paginateBy
 
-            const newPosts = this.getPosts({from: this.startIndex, to: this.endIndex})
-            // this.posts.push(...newPosts)
-            this.posts = [...this.posts, ...newPosts]
+                const newPosts = this.getPosts({from: this.startIndex, to: this.endIndex})
+                // this.posts.push(...newPosts)
+                this.posts = [...this.posts, ...newPosts]
 
-            this.hasNextPage = this.endIndex <= this.postsAmount
+                this.hasNextPage = this.endIndex <= this.postsAmount
 
-            postsWrapper.innerHTML += newPosts.map(post => this.getPostMarkup(post)).join('')
+                postsWrapper.innerHTML += newPosts.map(post => this.getPostMarkup(post)).join('')
 
-            if (!this.hasNextPage) {
-                loadMoreButton.style.display = 'none'
+                if (!this.hasNextPage) {
+                    loadMoreButton.style.display = 'none'
+                }
             }
         }
     }

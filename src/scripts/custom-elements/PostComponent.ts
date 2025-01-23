@@ -88,17 +88,6 @@ class PostComponent extends HTMLElement {
         this.innerHTML = this.getMarkup()
     }
 
-
-    // connectedCallback() {
-    //     // this.image = this.getAttribute('img')
-    //     this.slug = this.getAttribute('slug')
-    //     this.title = this.getAttribute('title')
-    //     this.description = this.getAttribute('description')
-    //     this.date = this.getAttribute('date')
-    //
-    //     this.innerHTML = this.getMarkup()
-    // }
-
     getMarkup() {
         const markup = `
           <div class="wrapper">
