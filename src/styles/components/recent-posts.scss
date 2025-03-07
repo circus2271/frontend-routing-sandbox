@@ -2,6 +2,15 @@
   --gradient-color: #121212;
 }
 
+// a component itself
+recent-posts {
+  display: none;
+
+  &[visible] {
+    display: block;
+  }
+}
+
 .recent-posts {
   position: relative;
 

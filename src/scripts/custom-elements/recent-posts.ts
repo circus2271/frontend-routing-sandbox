@@ -7,12 +7,6 @@ class RecentPosts extends HTMLElement {
         // Always call super first in constructor
         super();
 
-    }
-
-    // attributeChangedCallback() {
-    //     alert(7)
-    // }
-    connectedCallback() {
         this.placeholderPosts = [
             {
                 title: 'Lorem ipsum dolor sit amet, consectetur adipisicing.',
@@ -30,7 +24,6 @@ class RecentPosts extends HTMLElement {
                 tags: ['#wow', '#tag', '#hello']
             },
         ]
-// alert(10)
         this.innerHTML = this.getMarkup()
     }
 
@@ -73,7 +66,6 @@ class RecentPosts extends HTMLElement {
           </div>
         `
 
-        alert(markup)
         return markup
     }
 }
