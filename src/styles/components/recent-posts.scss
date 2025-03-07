@@ -47,22 +47,42 @@ recent-posts {
 
 }
 
+
+@mixin clamp($lines) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  //-webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-line-clamp: $lines; /* Number of lines to show */
+  overflow: hidden;
+
+}
+
 .recent-post {
   border-radius: 16px;
   //border: 1px solid green;
   border: 1px solid #eee;
   flex: 1 0 300px;
+  position: relative;
+
+  .wrapper {
+    //padding: 2rem 1rem calc(2.75rem + 16px); // padding bottom + margin bottom of a "p" tag...
+    //padding: 2rem 1rem calc(2.5rem + 32px); // padding bottom + margin bottom of a "p" tag...
+    padding: 2rem 1rem calc(2.5rem + 32px); // padding bottom + margin bottom of a "p" tag...
+  }
 
   h2 {
     margin-top: 0;
+    @include clamp(2);
   }
 
   p {
     /* chatgpt solutiion for showing elipsis if text overflows specified amount of lines */
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3; /* Number of lines to show */
-    overflow: hidden;
+    @include clamp(3);
+  }
+
+  .tags {
+    position: absolute;
+    //bottom: 2.75rem;
+    bottom: 2.5rem;
   }
 }
-
