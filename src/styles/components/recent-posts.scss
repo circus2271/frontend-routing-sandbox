@@ -1,0 +1,54 @@
+:root {
+  --gradient-color: #121212;
+}
+
+.recent-posts {
+  position: relative;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    /*background: yellow;*/
+    height: 100%;
+    top: 0;
+    transition: opacity .5s;
+    /*opacity: 0;*/
+    /*opacity: 1;*/
+    width: 30px;
+  }
+
+  &::before {
+    left: 0;
+    /*#121212*/
+    /*background: linear-gradient(to right, black, transparent);*/
+    background: linear-gradient(to right, var(--gradient-color), transparent);
+  }
+
+  &::after {
+    right: 0;
+    /*background: linear-gradient(to right, transparent, black);*/
+    background: linear-gradient(to right, transparent, var(--gradient-color));
+  }
+
+  & > .wrapper {
+    display: flex;
+    overflow-x: auto;
+    gap:30px;
+  }
+
+}
+
+.recent-post {
+  border-radius: 16px;
+  border: 1px solid green;
+  flex: 1 0 300px;
+
+  p {
+    /* chatgpt solutiion for showing elipsis if text overflows specified amount of lines */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* Number of lines to show */
+    overflow: hidden;
+  }
+}
+
