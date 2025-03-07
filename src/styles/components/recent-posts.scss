@@ -49,8 +49,13 @@ recent-posts {
 
 .recent-post {
   border-radius: 16px;
-  border: 1px solid green;
+  //border: 1px solid green;
+  border: 1px solid #eee;
   flex: 1 0 300px;
+
+  h2 {
+    margin-top: 0;
+  }
 
   p {
     /* chatgpt solutiion for showing elipsis if text overflows specified amount of lines */
