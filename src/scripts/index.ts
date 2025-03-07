@@ -29,7 +29,8 @@ const staticRoutes: Route[] = [
         relativePath: '/',
         canNavigate: () => true,
         beforeNavigate: async () => {
-            document.querySelector('homepage-component').setAttribute('visible', '')
+            // document.querySelector('homepage-component').setAttribute('visible', '')
+            document.querySelector('recent-posts').setAttribute('visible', '')
         }
     },
     {
