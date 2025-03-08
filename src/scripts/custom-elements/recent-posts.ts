@@ -40,6 +40,7 @@ class RecentPosts extends HTMLElement {
 
         // setTimeout(() => this.onScroll(), 1000)
 
+        window.addEventListener('resize', this.onScroll)
         setTimeout(() => {
             this.onScroll()
         }, 0)
@@ -47,6 +48,7 @@ class RecentPosts extends HTMLElement {
 
     disconnectedCallback() {
         this.scrollableElement.removeEventListener('scroll', this.onScroll)
+        window.removeEventListener('resize', this.onScroll)
     }
 
     onScroll() {
