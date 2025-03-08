@@ -14,37 +14,46 @@ recent-posts {
 .recent-posts {
   position: relative;
 
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    /*background: yellow;*/
-    height: 100%;
-    top: 0;
-    transition: opacity .5s;
-    /*opacity: 0;*/
-    /*opacity: 1;*/
-    width: 30px;
-  }
-
-  &::before {
-    left: 0;
-    /*#121212*/
-    /*background: linear-gradient(to right, black, transparent);*/
-    background: linear-gradient(to right, var(--gradient-color), transparent);
-  }
-
-  &::after {
-    right: 0;
-    /*background: linear-gradient(to right, transparent, black);*/
-    background: linear-gradient(to right, transparent, var(--gradient-color));
-  }
-
   & > .wrapper {
     display: flex;
     overflow-x: auto;
-    gap:30px;
-  }
+    gap: 30px;
 
+    &.has-scroll {
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        //background: yellow;
+        height: 100%;
+        top: 0;
+        transition: opacity .5s;
+        /*opacity: 0;*/
+        /*opacity: 1;*/
+        width: 30px;
+      }
+
+      &.scrolled::before {
+        left: 0;
+        /*#121212*/
+        /*background: linear-gradient(to right, black, transparent);*/
+        background: linear-gradient(to right, var(--gradient-color), transparent);
+        //background: yellow;
+        opacity: 1;
+        z-index: 1;
+
+
+        width: 15px;
+      }
+
+      &:not(.scrolled-to-an-end)::after {
+        right: 0;
+        /*background: linear-gradient(to right, transparent, black);*/
+        background: linear-gradient(to right, transparent, var(--gradient-color));
+        //background: yellow;
+        opacity: 1;
+      }
+    }
+  }
 }
 
 
@@ -59,6 +68,7 @@ recent-posts {
 
 .recent-post {
   border-radius: 16px;
+  //border-radius: 37px;;
   //border: 1px solid green;
   border: 1px solid #eee;
   flex: 1 0 300px;

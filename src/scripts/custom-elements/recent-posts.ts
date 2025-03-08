@@ -2,6 +2,7 @@
 class RecentPosts extends HTMLElement {
     static observedAttributes = ['visible'];
     placeholderPosts: Array<{'title': string, description: string, tags: string[]}>
+    scrollableElement;
 
     constructor() {
         // Always call super first in constructor
@@ -25,6 +26,55 @@ class RecentPosts extends HTMLElement {
             },
         ]
         this.innerHTML = this.getMarkup()
+
+        // this.scrollableElement = document.querySelector('.recent-posts .wrapper');
+        // this.scrollableElement.addEventListener('scroll', this.onScroll)
+    }
+
+    connectedCallback() {
+        // ...
+        this.onScroll = this.onScroll.bind(this);
+
+        this.scrollableElement = document.querySelector('.recent-posts .wrapper');
+        this.scrollableElement.addEventListener('scroll', this.onScroll)
+
+        // setTimeout(() => this.onScroll(), 1000)
+
+        setTimeout(() => {
+            this.onScroll()
+        }, 0)
+    }
+
+    disconnectedCallback() {
+        this.scrollableElement.removeEventListener('scroll', this.onScroll)
+    }
+
+    onScroll() {
+        const isScrollable = this.scrollableElement.clientWidth < this.scrollableElement.scrollWidth
+        // debugger
+        //.. it could be moved to a different place in a code
+        this.scrollableElement.classList.toggle('has-scroll', isScrollable)
+
+        if (isScrollable) {
+            // //.. it could be moved to a different place in a code
+            // this.scrollableElement.classList.add('has-scroll')
+            // // this.scrollableElement.toggleAttribute('has-scroll', isScrollable)
+
+            const scrolled = this.scrollableElement.scrollLeft > 0
+            const scrolledToAnEnd = Math.ceil(this.scrollableElement.scrollLeft + this.scrollableElement.clientWidth) >= this.scrollableElement.scrollWidth
+            console.log({a: Math.ceil(this.scrollableElement.scrollLeft + this.scrollableElement.clientWidth) >= this.scrollableElement.scrollWidth, l: this.scrollableElement.scrollLeft, cw: this.scrollableElement.clientWidth, sw: this.scrollableElement.scrollWidth})
+            // if (scrolledToAnEnd) this.scrollableElement.classList.add('scrolled-to-an-end')
+            // if (!scrolledToAnEnd) this.scrollableElement.classList.remove('scrolled-to-an-end')
+            //
+            // if (scrolled) this.scrollableElement.classList.add('scrolled')
+            // if (!scrolled) this.scrollableElement.classList.remove('scrolled')
+
+            this.scrollableElement.classList.toggle('scrolled', scrolled)
+            this.scrollableElement.classList.toggle('scrolled-to-an-end', scrolledToAnEnd)
+            // this.scrollableElement.toggleAttribute('scrolled', scrolled)
+            // this.scrollableElement.toggleAttribute('scrolled-to-an-end', scrolledToAnEnd)
+
+        }
     }
 
     getTagsMarkup(tags) {
