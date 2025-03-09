@@ -53,6 +53,7 @@ class PostComponent extends HTMLElement {
     post: Post
     // comments: Pick<Post, 'comments'> = []
     comments = []
+    tags?: string[]
 
     constructor() {
         // Always call super first in constructor

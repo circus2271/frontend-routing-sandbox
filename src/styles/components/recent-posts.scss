@@ -5,6 +5,7 @@
 // a component itself
 recent-posts {
   display: none;
+  //opacity: 0;
 
   &[visible] {
     display: block;

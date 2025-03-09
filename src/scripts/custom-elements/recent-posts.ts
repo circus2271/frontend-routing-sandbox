@@ -1,3 +1,4 @@
+import {posts} from "../mock-data";
 
 class RecentPosts extends HTMLElement {
     static observedAttributes = ['visible'];
@@ -8,23 +9,24 @@ class RecentPosts extends HTMLElement {
         // Always call super first in constructor
         super();
 
-        this.placeholderPosts = [
-            {
-                title: 'Lorem ipsum dolor sit amet, consectetur adipisicing.',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci aperiam architecto asperiores at, cumque, doloribus ducimus eligendi, error exercitationem expedita explicabo illo laboriosam molestiae obcaecati odio officia optio perspiciatis provident quae ratione repellendus vitae voluptates? Doloremque ea eum itaque maxime nulla numquam quia ratione repellendus saepe voluptates. Dicta, sed.',
-                tags: ['#wow', '#tag', '#hello']
-            },
-            {
-                title: 'Lorem ipsum.',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti facere impedit mollitia nihil qui? A dicta earum eos ex ipsa neque nostrum nulla obcaecati odio optio quaerat, reprehenderit sunt unde?',
-                tags: ['#wow', '#tag', '#hello']
-            },
-            {
-                title: 'Lorem ipsum dolor.',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi hic impedit magnam vero? Accusamus adipisci, assumenda consequatur debitis deleniti distinctio eaque inventore magnam magni minus officiis quia, quidem quo reprehenderit sunt velit vero, voluptatem. Cumque ea mollitia, nam repudiandae sint vero voluptatem.',
-                tags: ['#wow', '#tag', '#hello']
-            },
-        ]
+        // this.placeholderPosts = [
+        //     {
+        //         title: 'Lorem ipsum dolor sit amet, consectetur adipisicing.',
+        //         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci aperiam architecto asperiores at, cumque, doloribus ducimus eligendi, error exercitationem expedita explicabo illo laboriosam molestiae obcaecati odio officia optio perspiciatis provident quae ratione repellendus vitae voluptates? Doloremque ea eum itaque maxime nulla numquam quia ratione repellendus saepe voluptates. Dicta, sed.',
+        //         tags: ['#wow', '#tag', '#hello']
+        //     },
+        //     {
+        //         title: 'Lorem ipsum.',
+        //         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti facere impedit mollitia nihil qui? A dicta earum eos ex ipsa neque nostrum nulla obcaecati odio optio quaerat, reprehenderit sunt unde?',
+        //         tags: ['#wow', '#tag', '#hello']
+        //     },
+        //     {
+        //         title: 'Lorem ipsum dolor.',
+        //         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi hic impedit magnam vero? Accusamus adipisci, assumenda consequatur debitis deleniti distinctio eaque inventore magnam magni minus officiis quia, quidem quo reprehenderit sunt velit vero, voluptatem. Cumque ea mollitia, nam repudiandae sint vero voluptatem.',
+        //         tags: ['#wow', '#tag', '#hello']
+        //     },
+        // ]
+        this.placeholderPosts = posts.slice(0, 4)
         this.innerHTML = this.getMarkup()
 
         // this.scrollableElement = document.querySelector('.recent-posts .wrapper');
@@ -43,6 +45,7 @@ class RecentPosts extends HTMLElement {
         window.addEventListener('resize', this.onScroll)
         setTimeout(() => {
             this.onScroll()
+            // this.style.opacity=1//...
         }, 0)
     }
 
@@ -82,7 +85,7 @@ class RecentPosts extends HTMLElement {
     getTagsMarkup(tags) {
         let tagsMarkup = ``
 
-        if (tags.length) {
+        if (tags && tags.length) {
             tagsMarkup = `
               <div class="tags">
                 ${tags.map(t => `
