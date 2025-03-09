@@ -2,7 +2,8 @@ import {posts} from "../mock-data";
 
 class RecentPosts extends HTMLElement {
     static observedAttributes = ['visible'];
-    placeholderPosts: Array<{'title': string, description: string, tags: string[]}>
+    placeholderPosts: Array<{'title': string, description: string, tags?: string[]}>
+    // placeholderPosts: Post[]
     scrollableElement;
 
     constructor() {
