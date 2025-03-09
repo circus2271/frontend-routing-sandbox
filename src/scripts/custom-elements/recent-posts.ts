@@ -2,7 +2,7 @@ import {posts} from "../mock-data";
 
 class RecentPosts extends HTMLElement {
     static observedAttributes = ['visible'];
-    placeholderPosts: Array<{'title': string, description: string, tags?: string[]}>
+    placeholderPosts: Array<{'title': string, description?: string, tags?: string[]}>
     // placeholderPosts: Post[]
     scrollableElement;
 
@@ -111,9 +111,11 @@ class RecentPosts extends HTMLElement {
                       <h2>
                         ${p.title}
                       </h2>
-                      <p>
-                        ${p.description}                      
-                      </p>
+                      ${p.description && `
+                        <p>
+                          ${p.description}                      
+                        </p>
+                      `}
                       ${this.getTagsMarkup(p.tags)}
                     </div>
                   </article>
