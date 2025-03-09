@@ -14,7 +14,8 @@ export type Post = {
     }
     // comments?: Comments[] | [],
     comments?: Comment[] | [],
-    content?: PostContent | null | undefined
+    content?: PostContent | null | undefined,
+    tags?: string[]
     // maybe extract some part of this to PostDetail type
 }
 
@@ -53,7 +54,6 @@ class PostComponent extends HTMLElement {
     post: Post
     // comments: Pick<Post, 'comments'> = []
     comments = []
-    tags?: string[]
 
     constructor() {
         // Always call super first in constructor
