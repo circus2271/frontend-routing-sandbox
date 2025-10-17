@@ -26,3 +26,7 @@ when not logged in user leaves a comment, a comment saves in local memory and a 
 a user may have his own page, where it will be a feed of posts, and also a comments tab. with a comments from this user accordingly
 
 it may also have an edit section, where an user could delete his profile, edit his name or avatar
+
+
+
+maybe a post may have tags and there maybe will be a tags page. but it seems like a redundant page by now
