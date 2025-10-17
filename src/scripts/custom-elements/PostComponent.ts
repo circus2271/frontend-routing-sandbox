@@ -1,6 +1,7 @@
 import {settings} from "./settings-component";
 import {cleanUpAttributes} from "../modules/helpers";
 import {users} from "../mock-data";
+import {currentUser} from "../modules/user";
 
 export type Post = {
     slug: string,
@@ -87,6 +88,28 @@ class PostComponent extends HTMLElement {
         }
 
         this.innerHTML = this.getMarkup()
+        // setTimeout(() => {
+            // alert(document.querySelector('form').addEventListener)
+        // document.querySelector('form').addEventListener('submit', (e) => {
+        const form = this.querySelector('form')
+        form.onsubmit = function(e) {
+            e.preventDefault()
+
+            if (currentUser) {
+              const textarea = form.querySelector<HTMLElement>('textarea')
+              textarea.innerText = '12'    
+            } else {
+                // redirect to login screen
+                            // history.pushState({}, '', nextRoute.redirectTo)
+                            history.pushState({}, '', '/about')
+
+            }
+            
+        }    
+    // },1000)
+        
+
+        
     }
 
     getMarkup() {

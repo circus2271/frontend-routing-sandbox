@@ -4,6 +4,7 @@ import {settings} from "./custom-elements/settings-component";
 import {contentWrappers} from "./custom-elements";
 import {users} from './mock-data'
 import {Post} from "./custom-elements/PostComponent";
+import {currentUser, login, logout} from "./modules/user";
 
 const ripple = new Ripple()
 
@@ -23,6 +24,8 @@ type Route = {
     // 'dynamic-route': boolean
     name?: string
 }
+// alert(window['login-button'])
+// alert(11)
 
 const staticRoutes: Route[] = [
     {
@@ -30,7 +33,46 @@ const staticRoutes: Route[] = [
         canNavigate: () => true,
         beforeNavigate: async () => {
             // document.querySelector('homepage-component').setAttribute('visible', '')
-            document.querySelector('recent-posts').setAttribute('visible', '')
+            // document.querySelector('recent-posts').setAttribute('visible', '')
+            // document.querySelector('recent-posts').setAttribute('visible', '')
+        }
+    },
+    {
+        relativePath: '/sign-in',
+        canNavigate: () => true,
+        beforeNavigate: async () => {
+            // const user = currenUser
+                // alert('12')
+            login()
+            // alert(currentUser?.email)
+                // localStorage.setItem('isLoggedIn', true)
+                // localStorage.getItem('isLoggedIn')
+            if (currentUser) {
+                document.querySelector<HTMLElement>('#login-button').style.display = 'none'
+                document.querySelector<HTMLElement>('#logout-button').style.display = 'block'
+
+            }
+        },
+        // beforeLeave: () => {
+        //     alert('l')
+        // }
+    },
+    {
+        relativePath: '/sign-out',
+        canNavigate: () => true,
+        beforeNavigate: async () => {
+            // const user = currenUser
+                // alert('12')
+            logout()
+            // alert(currentUser?.email)
+                // localStorage.setItem('isLoggedIn', false)
+                // wow
+                document.querySelector<HTMLElement>('#login-button').style.display = 'block'
+                document.querySelector<HTMLElement>('#logout-button').style.display = 'none'
+
+            if (currentUser) {
+                // document.querySelector('')
+            }
         }
     },
     {
@@ -128,7 +170,13 @@ class Router {
         })
 
         document.addEventListener('click', async (e) => {
-            e.preventDefault()
+            const isSubmitButton = e.target instanceof HTMLButtonElement && e.target.type === 'submit'
+
+            if (!isSubmitButton) {
+                e.preventDefault()
+            }
+
+            // if ((e.target as HTMLButtonElement).type !== 'submit') e.preventDefault()
 
             if (e.target instanceof HTMLElement && e.target.hasAttribute('ripple-effect')) {
                 if (!settings.ripplesDisabled) {
