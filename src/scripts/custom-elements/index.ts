@@ -7,5 +7,10 @@ export const contentWrappers = [
     'settings-component',
     'user-profile-component',
     'post-component',
-    'recent-posts'
+    'recent-posts',
+
+
+    
+    'login-component',
+    'signup-component'
 ]

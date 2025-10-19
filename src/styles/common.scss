@@ -2,6 +2,22 @@
   box-sizing: border-box;
 }
 
+
+login-component, signup-component {
+// signin-component, signup-component {
+  display: none;
+  //transition-property: opacity, visibility;
+  //transition-timing-function: ease-out;
+  //transition-duration: .25s;
+
+  // &.visible {
+  &[visible] {
+    display: block;
+    //transition-timing-function: ease-in;
+  }
+}
+
+
 html {
   color-scheme: dark;
   color-scheme: var(--currentTheme);

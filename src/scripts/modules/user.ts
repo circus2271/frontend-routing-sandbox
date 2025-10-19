@@ -21,6 +21,10 @@ function getUserInfo() {
 }
 
 export const logout = () => {
+		localStorage.setItem('name', 'b')
+	localStorage.setItem('email', 'example@example.com')
+	localStorage.setItem('avatarSrc', 'https:///')
+
 	currentUser = null
 }
 

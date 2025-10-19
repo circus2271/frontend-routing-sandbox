@@ -5,6 +5,39 @@ import {contentWrappers} from "./custom-elements";
 import {users} from './mock-data'
 import {Post} from "./custom-elements/PostComponent";
 import {currentUser, login, logout} from "./modules/user";
+import './firebase-setup'
+
+
+// async function signIn() {
+async function logIn() {
+            const email = document.querySelector('login-component .email-input').value;
+            const password = document.querySelector('login-component .password-input').value;
+            try {
+                await window.fbauthFunctions.signInWithEmailAndPassword(window.fbauth, email, password);
+            } catch (error) {
+                alert('❌ Ошибка входа: ' + error.message);
+            }
+        }
+
+
+        async function signOut() {
+            try {
+                await window.fbauthFunctions.signOut(window.fbauth);
+            } catch (error) {
+                console.error('Ошибка выхода:', error);
+            }
+        }
+
+        async function signUp() {
+            const email = document.querySelector('signup-component .email-input').value;
+            const password = document.querySelector('signup-component .password-input').value;
+            try {
+                await window.fbauthFunctions.createUserWithEmailAndPassword(window.fbauth, email, password);
+                alert(' Аккаунт создан! Теперь вы можете войти.');
+            } catch (error) {
+                alert('❌ Ошибка: ' + error.message);
+            }
+        }
 
 const ripple = new Ripple()
 
@@ -24,66 +57,41 @@ type Route = {
     // 'dynamic-route': boolean
     name?: string
 }
-// alert(window['login-button'])
-// alert(11)
 
 const staticRoutes: Route[] = [
     {
         relativePath: '/',
         canNavigate: () => true,
         beforeNavigate: async () => {
-            // document.querySelector('homepage-component').setAttribute('visible', '')
-            // document.querySelector('recent-posts').setAttribute('visible', '')
-            // document.querySelector('recent-posts').setAttribute('visible', '')
         }
     },
     {
         relativePath: '/sign-in',
         canNavigate: () => true,
         beforeNavigate: async () => {
-            // const user = currenUser
-                // alert('12')
-            login()
-            // alert(currentUser?.email)
-                // localStorage.setItem('isLoggedIn', true)
-                // localStorage.getItem('isLoggedIn')
-            if (currentUser) {
-                document.querySelector<HTMLElement>('#login-button').style.display = 'none'
-                document.querySelector<HTMLElement>('#logout-button').style.display = 'block'
-
-            }
+            showComponent('login-component')
         },
-        // beforeLeave: () => {
-        //     alert('l')
-        // }
+    },
+    {
+        relativePath: '/sign-up',
+        canNavigate: () => true,
+        beforeNavigate: async () => {
+            // showComponent('signout-component')
+            showComponent('signup-component')
+        },
     },
     {
         relativePath: '/sign-out',
         canNavigate: () => true,
         beforeNavigate: async () => {
-            // const user = currenUser
-                // alert('12')
-            logout()
-            // alert(currentUser?.email)
-                // localStorage.setItem('isLoggedIn', false)
-                // wow
-                document.querySelector<HTMLElement>('#login-button').style.display = 'block'
-                document.querySelector<HTMLElement>('#logout-button').style.display = 'none'
-
-            if (currentUser) {
-                // document.querySelector('')
-            }
-        }
+            alert('cock')
+            // showComponent('signout-component')
+        },
     },
     {
         relativePath: '/about',
         canNavigate: () => true
     },
-    // {
-    //     relativePath: '/404',
-    //     canNavigate: () => true,
-    //     name: 'fallback-route'
-    // },
     {
         // user profile page
         // relativePath: '/@ivan',
@@ -101,7 +109,7 @@ const staticRoutes: Route[] = [
         },
         // redirectTo: '/me',
         beforeNavigate: async () => {
-            document.querySelector('user-profile-component').setAttribute('visible', '')
+            // showComponent('user-profile-component')
         }
     },
     {
@@ -114,7 +122,8 @@ const staticRoutes: Route[] = [
         relativePath: '/settings',
         canNavigate: () => true,
         beforeNavigate: async () => {
-            document.querySelector('settings-component').setAttribute('visible', '')
+            showComponent('settings-component')
+            // document.querySelector('settings-component').setAttribute('visible', '')
         }
     },
     {
@@ -137,14 +146,45 @@ const route404 = {
 
 staticRoutes.push(route404)
 
+
 // const handleComponentsVisibility = co
-const showComponent = componentSelector => document.querySelector(componentSelector).setAttribute('visible', '')
-const hideComponent = componentSelector => document.querySelector(componentSelector).removeAttribute('visible')
+function showComponent(value) {
+    const component = typeof value === 'string' ? document.querySelector(value) : value
 
-// const navigate = () => {
-//
-// }
+    component.setAttribute('visible', '')
+}
 
+function hideComponent(value) {
+    const component = typeof value === 'string' ? document.querySelector(value) : value
+
+    component.removeAttribute('visible')
+}
+
+function isVisible(value) {
+    const component = typeof value === 'string' ? document.querySelector(value) : value
+
+    return component.hasAttribute('visible')
+}
+
+function triggerNavigation(relativePath) {
+    history.pushState({}, '', relativePath)
+}
+
+    
+const signupForm = document.querySelector('signup-component form')
+signupForm.addEventListener('submit', e => {
+    e.preventDefault()
+
+    signUp()
+})
+
+const loginForm = document.querySelector('login-component form')
+loginForm.addEventListener('submit', e => {
+    e.preventDefault()
+
+    // signIn()
+    logIn()
+})
 
 class Router {
     staticRoutes: Route[] = staticRoutes
@@ -160,9 +200,13 @@ class Router {
             const mobileMenu = document.querySelector('#mobile-menu')
             if (mobileMenu.classList.contains('visible')) {
                 mobileMenu.classList.remove('visible')
-                //
-                // return
             }
+            // хорошо бы иметь это как метод компонента, чтобы можно было бы вызывать это как comopnent.isVisible()
+            // if (isVisible(mobileMenu)) {
+            //     hideComponent(mobileMenu)
+            // }
+            // if visible, hide
+            // hideComponent(mobileMenu)
 
             const { pathname } = window.location
 
@@ -278,7 +322,7 @@ class Router {
                                     userComponent.setAttribute('email', user.email)
                                     userComponent.setAttribute('name', user.name)
 
-                                    userComponent.setAttribute('visible', '')
+                                    showComponent(userComponent)
                                 }
                             }
                         }
@@ -312,7 +356,9 @@ class Router {
                                 singlePostComponent.setAttribute('description', post.description)
                                 singlePostComponent.setAttribute('date', post.date)
                                 // make this component visible
-                                singlePostComponent.setAttribute('visible', '')
+                                // singlePostComponent.setAttribute('visible', '')
+                                // singlePostComponent.setAttribute('visible', '')
+                                showComponent(singlePostComponent)
                             }
 
                         }

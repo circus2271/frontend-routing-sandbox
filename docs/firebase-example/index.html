@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Умный список покупок</title>
+    <script type="module">
+        // Импортируем нужные модули Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        
+        // ВАШ firebaseConfig
+        const firebaseConfig = {
+            apiKey: "AIzaSyC5YF0PVuFaADucXXkpuMJexABXgf8v0AU",
+            authDomain: "shoping-de115.firebaseapp.com",
+            projectId: "shoping-de115",
+            storageBucket: "shoping-de115.firebasestorage.app",
+            messagingSenderId: "861754687557",
+            appId: "1:861754687557:web:c0608c8b43bda654d3632c",
+            measurementId: "G-J9BFS0PM58"
+        };
+
+        // Инициализация Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // Делаем глобальными для использования в функциях
+        window.fbauth = auth;
+        window.fbdb = db;
+        window.fbauthFunctions = {
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword, 
+            signOut,
+            onAuthStateChanged
+        };
+        window.fbfirestoreFunctions = {
+            collection,
+            addDoc,
+            query,
+            where,
+            orderBy,
+            onSnapshot
+        };
+        
+        console.log("✅ Firebase готов к работе!");
+    </script>
+    
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f5f5f5; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #4285f4; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { background: #4285f4; color: white; border: none; padding: 12px 20px; margin: 5px; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #3367d6; }
+        .section { margin: 25px 0; padding: 20px; border: 2px solid #e0e0e0; border-radius: 8px; }
+        #items-list { list-style: none; padding: 0; }
+        #items-list li { background: #f8f9fa; padding: 10px; margin: 5px 0; border-radius: 5px; border-left: 4px solid #4285f4; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛒 Умный список покупок</h1>
+        
+        <div class="section" id="auth-section">
+            <h3>Вход / Регистрация</h3>
+            <input type="email" id="email" placeholder="Ваш email">
+            <input type="password" id="password" placeholder="Пароль">
+            <button onclick="signUp()">Создать аккаунт</button>
+            <button onclick="signIn()">Войти</button>
+        </div>
+
+        <div class="section hidden" id="app-section">
+            <h3>Добро пожаловать, <span id="user-email"></span>! </h3>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="item-input" placeholder="Что нужно купить?" style="flex: 1;">
+                <button onclick="addItem()">Добавить</button>
+            </div>
+            <h4>Мой список:</h4>
+            <ul id="items-list"></ul>
+            <button onclick="signOut()" style="background: #ea4335;">Выйти</button>
+        </div>
+    </div>
+
+    <script>
+        // Функции для работы с приложением
+        async function signUp() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            try {
+                await window.fbauthFunctions.createUserWithEmailAndPassword(window.fbauth, email, password);
+                alert(' Аккаунт создан! Теперь вы можете войти.');
+            } catch (error) {
+                alert('❌ Ошибка: ' + error.message);
+            }
+        }
+
+        async function signIn() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            try {
+                await window.fbauthFunctions.signInWithEmailAndPassword(window.fbauth, email, password);
+            } catch (error) {
+                alert('❌ Ошибка входа: ' + error.message);
+            }
+        }
+
+        async function signOut() {
+            try {
+                await window.fbauthFunctions.signOut(window.fbauth);
+            } catch (error) {
+                console.error('Ошибка выхода:', error);
+            }
+        }
+
+        async function addItem() {
+            const itemInput = document.getElementById('item-input');
+            const item = itemInput.value.trim();
+            const user = window.fbauth.currentUser;
+            
+            if (item && user) {
+                try {
+                    await window.fbfirestoreFunctions.addDoc(
+                        window.fbfirestoreFunctions.collection(window.fbdb, 'shoppingItems'), 
+                        {
+                            text: item,
+                            userId: user.uid,
+                            createdAt: new Date(),
+                            completed: false
+                        }
+                    );
+                    itemInput.value = '';
+                    itemInput.focus();
+                } catch (error) {
+                    alert('❌ Ошибка добавления: ' + error.message);
+                }
+            } else if (!item) {
+                alert(' Введите название товара!');
+            }
+        }
+
+        // Отслеживание состояния аутентификации
+        window.fbauthFunctions.onAuthStateChanged(window.fbauth, (user) => {
+            const authSection = document.getElementById('auth-section');
+            const appSection = document.getElementById('app-section');
+            
+            if (user) {
+                authSection.classList.add('hidden');
+                appSection.classList.remove('hidden');
+                document.getElementById('user-email').textContent = user.email;
+                loadItems(user);
+            } else {
+                authSection.classList.remove('hidden');
+                appSection.classList.add('hidden');
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+            }
+        });
+
+        // Загрузка items из базы данных
+        function loadItems(user) {
+            const itemsList = document.getElementById('items-list');
+            
+            const q = window.fbfirestoreFunctions.query(
+                window.fbfirestoreFunctions.collection(window.fbdb, 'shoppingItems'),
+                window.fbfirestoreFunctions.where('userId', '==', user.uid),
+                window.fbfirestoreFunctions.orderBy('createdAt', 'desc')
+            );
+            
+            window.fbfirestoreFunctions.onSnapshot(q, (snapshot) => {
+                itemsList.innerHTML = '';
+                
+                snapshot.forEach((doc) => {
+                    const item = doc.data();
+                    const li = document.createElement('li');
+                    li.textContent = item.text;
+                    itemsList.appendChild(li);
+                });
+                
+                if (snapshot.empty) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Список покупок пуст. Добавьте первый товар!';
+                    li.style.color = '#666';
+                    li.style.fontStyle = 'italic';
+                    itemsList.appendChild(li);
+                }
+            });
+        }
+
+        // Быстрый ввод по Enter
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') signIn();
+        });
+        
+        document.getElementById('item-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addItem();
+        });
+    </script>
+</body>
+</html>
+Сохраняем файл. Готово. Теперь тестируйте. Если всё работает, мы можем переходить к следующему этапу.
