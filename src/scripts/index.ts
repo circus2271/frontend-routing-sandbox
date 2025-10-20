@@ -5,39 +5,9 @@ import {contentWrappers} from "./custom-elements";
 import {users} from './mock-data'
 import {Post} from "./custom-elements/PostComponent";
 import {currentUser, login, logout} from "./modules/user";
-import './firebase-setup'
+import {logIn, signUp, signOut} from "./modules/auth"
 
 
-// async function signIn() {
-async function logIn() {
-            const email = document.querySelector('login-component .email-input').value;
-            const password = document.querySelector('login-component .password-input').value;
-            try {
-                await window.fbauthFunctions.signInWithEmailAndPassword(window.fbauth, email, password);
-            } catch (error) {
-                alert('❌ Ошибка входа: ' + error.message);
-            }
-        }
-
-
-        async function signOut() {
-            try {
-                await window.fbauthFunctions.signOut(window.fbauth);
-            } catch (error) {
-                console.error('Ошибка выхода:', error);
-            }
-        }
-
-        async function signUp() {
-            const email = document.querySelector('signup-component .email-input').value;
-            const password = document.querySelector('signup-component .password-input').value;
-            try {
-                await window.fbauthFunctions.createUserWithEmailAndPassword(window.fbauth, email, password);
-                alert(' Аккаунт создан! Теперь вы можете войти.');
-            } catch (error) {
-                alert('❌ Ошибка: ' + error.message);
-            }
-        }
 
 const ripple = new Ripple()
 
@@ -70,6 +40,7 @@ const staticRoutes: Route[] = [
         canNavigate: () => true,
         beforeNavigate: async () => {
             showComponent('login-component')
+            // logIn()
         },
     },
     {
@@ -166,10 +137,12 @@ function isVisible(value) {
     return component.hasAttribute('visible')
 }
 
-function triggerNavigation(relativePath) {
+export function triggerNavigation(relativePath) {
     history.pushState({}, '', relativePath)
 }
 
+const signinButton = document.querySelector('#sign-in-button')
+signinButton.addEventListener('click', logIn)
     
 const signupForm = document.querySelector('signup-component form')
 signupForm.addEventListener('submit', e => {
@@ -178,13 +151,13 @@ signupForm.addEventListener('submit', e => {
     signUp()
 })
 
-const loginForm = document.querySelector('login-component form')
-loginForm.addEventListener('submit', e => {
-    e.preventDefault()
+// const loginForm = document.querySelector('login-component form')
+// loginForm.addEventListener('submit', e => {
+//     e.preventDefault()
 
-    // signIn()
-    logIn()
-})
+//     // signIn()
+//     // logIn()
+// })
 
 class Router {
     staticRoutes: Route[] = staticRoutes
@@ -214,11 +187,14 @@ class Router {
         })
 
         document.addEventListener('click', async (e) => {
-            const isSubmitButton = e.target instanceof HTMLButtonElement && e.target.type === 'submit'
+            const isCustomLink = e.target instanceof HTMLAnchorElement && e.target.hasAttribute('custom-link')
 
-            if (!isSubmitButton) {
-                e.preventDefault()
-            }
+            if (isCustomLink) e.preventDefault()
+            // const isSubmitButton = e.target instanceof HTMLButtonElement && e.target.type === 'submit'
+
+            // if (!isSubmitButton) {
+            //     e.preventDefault()
+            // }
 
             // if ((e.target as HTMLButtonElement).type !== 'submit') e.preventDefault()
 
