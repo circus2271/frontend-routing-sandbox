@@ -1,12 +1,14 @@
 import {contentWrappers} from './custom-elements'
+// import {contentWrappers} from '@custom-elements'
 
 // export const components = {
 export const htmlNodes = {
 	...contentWrappers,
 
 
-     signinButton = document.querySelector('#sign-in-button'),
-     signupForm = document.querySelector('signup-component form')
+     signinButton: document.querySelector('#sign-in-button'),
+     signupForm: document.querySelector('signup-component form'),
+     mobileMenu: document.querySelector('#mobile-menu'),
 }
 
 

@@ -1,9 +1,9 @@
-import Ripple from '../Ripple'
-import {settings} from '../../custom-elements/settings-component'
-import {hideAllComponents, showComponent} from './utils'
+import Ripple from '@modules/Ripple'
+import {settings} from '@custom-elements/settings-component'
+import {hideAllComponents, showComponent} from '@modules/utils'
 import {Route} from './types'
 import {staticRoutes, route404} from './routes'
-import {Post} from "../../custom-elements/PostComponent";
+import {Post} from "@custom-elements/PostComponent";
 import {users} from '../../mock-data'
 
 const ripple = new Ripple()

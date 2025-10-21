@@ -2,8 +2,9 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot } from "firebase/firestore";
 
-import { triggerNavigation } from '../index'        
-        export const provider = new GoogleAuthProvider();
+import { triggerNavigation } from '@routing/utils'        
+        
+export const provider = new GoogleAuthProvider();
         
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional

@@ -1,4 +1,4 @@
-import {posts} from "../mock-data";
+import {posts} from "../../mock-data";
 
 class RecentPosts extends HTMLElement {
     static observedAttributes = ['visible'];

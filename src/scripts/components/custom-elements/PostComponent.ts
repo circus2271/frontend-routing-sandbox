@@ -1,7 +1,7 @@
 import {settings} from "./settings-component";
-import {cleanUpAttributes} from "../modules/helpers";
-import {users} from "../mock-data";
-import {currentUser} from "../modules/user";
+import {cleanUpAttributes} from "@modules/helpers";
+import {users} from "../../mock-data";
+import {currentUser} from "@modules/user";
 
 export type Post = {
     slug: string,

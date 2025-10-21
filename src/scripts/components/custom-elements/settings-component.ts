@@ -79,7 +79,7 @@ export const settings: Settings = {
 }
 
 
-class SsttingsElement extends HTMLElement {
+class SettingsElement extends HTMLElement {
     state: Settings
 
     constructor() {
@@ -171,4 +171,4 @@ class SsttingsElement extends HTMLElement {
 }
 
 // secret component
-customElements.define("settings-component", SsttingsElement);
+customElements.define("settings-component", SettingsElement);
