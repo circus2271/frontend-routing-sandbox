@@ -1,6 +1,6 @@
-import {settings} from "./settings-component";
-import {Post} from "./PostComponent";
-import {users} from "../../mock-data";
+import {settings} from "@custom-elements/settings-component";
+import {Post} from "@custom-elements/PostComponent";
+import {users} from "@mock-data";
 
 // profile detail page
 class ProfilePageComponent extends HTMLElement {

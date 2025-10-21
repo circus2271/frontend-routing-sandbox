@@ -19,4 +19,5 @@ export const contentWrappers = {
     recentPostsComponent: document.querySelector('recent-posts'),
     loginComponent: document.querySelector('login-component'),
     signupComponent: document.querySelector('signup-component'),
+    
 }

@@ -1,4 +1,4 @@
-import {contentWrappers} from './custom-elements'
+import {contentWrappers} from '@custom-elements'
 // import {contentWrappers} from '@custom-elements'
 
 // export const components = {

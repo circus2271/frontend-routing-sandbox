@@ -1,4 +1,4 @@
-import {contentWrappers} from '../../custom-elements'
+import {contentWrappers} from '@custom-elements'
 
 export function showComponent(value) {
     const component = typeof value === 'string' ? document.querySelector(value) : value
