@@ -12,9 +12,9 @@ export const htmlNodes = {
 }
 
 
-components.signinButton.addEventListener('click', logIn)
+htmlNodes.signinButton.addEventListener('click', logIn)
     
-components.signupForm.addEventListener('submit', e => {
+htmlNodes.signupForm.addEventListener('submit', e => {
     e.preventDefault()
 
     signUp()

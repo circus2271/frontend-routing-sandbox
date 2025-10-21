@@ -140,15 +140,15 @@ class Router {
                                 relativePath: `/${user.username}`,
                                 canNavigate: () => true,
                                 beforeNavigate: async () => {
-                                    const userComponent = document.querySelector('user-profile-component')
+                                    // const userComponent = htmlNodes.userProfileComponent
 
                                     // maybe it's better to use some js object to store current state,
                                     // for example: state = {currentActivePage: 'userProfilePage', profile: user }
-                                    userComponent.setAttribute('username', user.username)
-                                    userComponent.setAttribute('email', user.email)
-                                    userComponent.setAttribute('name', user.name)
+                                    htmlNodes.userProfileComponent.setAttribute('username', user.username)
+                                    htmlNodes.userProfileComponent.setAttribute('email', user.email)
+                                    htmlNodes.userProfileComponent.setAttribute('name', user.name)
 
-                                    showComponent(userComponent)
+                                    showComponent(userProfileComponent)
                                 }
                             }
                         }
@@ -174,17 +174,15 @@ class Router {
                             relativePath: `/${user.username}/${post.slug}`,
                             canNavigate: () => true,
                             beforeNavigate: async () => {
-                                const singlePostComponent = document.querySelector('post-component')
-
                                 // TODO: maybe add a state object, so you don't have to pass this values as attributes
-                                singlePostComponent.setAttribute('slug', post.slug)
-                                singlePostComponent.setAttribute('title', post.title)
-                                singlePostComponent.setAttribute('description', post.description)
-                                singlePostComponent.setAttribute('date', post.date)
+                                htmlNodes.postComponent.setAttribute('slug', post.slug)
+                                htmlNodes.postComponent.setAttribute('title', post.title)
+                                htmlNodes.postComponent.setAttribute('description', post.description)
+                                htmlNodes.postComponent.setAttribute('date', post.date)
                                 // make this component visible
                                 // singlePostComponent.setAttribute('visible', '')
                                 // singlePostComponent.setAttribute('visible', '')
-                                showComponent(singlePostComponent)
+                                showComponent(htmlNodes.postComponent)
                             }
 
                         }
