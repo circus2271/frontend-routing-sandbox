@@ -1,4 +1,4 @@
-import {Post} from "./custom-elements/PostComponent";
+import {Post} from "@custom-elements/PostComponent";
 
 type User = {
     username: string,
