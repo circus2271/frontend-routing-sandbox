@@ -3,7 +3,7 @@ import { getAuth, signInWithRedirect, getRedirectResult, createUserWithEmailAndP
 import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot } from "firebase/firestore";
 
 import { triggerNavigation } from '../index'        
-        // export const provider = new GoogleAuthProvider();
+        export const provider = new GoogleAuthProvider();
         
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -29,31 +29,20 @@ console.log("✅ Firebase готов к работе!");
 // async function signIn() {
 export async function logIn() {
 	try {
-    	signInWithRedirect(auth, new GoogleAuthProvider())
-    	// .then(() => triggerNavigation('/about'))
-
-		// triggerNavigation('/settings')
-
-	} catch(error) {
-		console.error(error)
-		// triggerNavigation('/about')
-	}
-
-}
-getRedirectResult(auth)
+        signInWithPopup(auth, provider)
   .then((result) => {
-    // This gives you a Google Access Token. You can use it to access Google APIs.
+    // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
-
     // The signed-in user info.
     const user = result.user;
+    const photoSrc = user.photoURL
+debugger
+    document.querySelector('.avatar.round').innerHTML = `<img src="${photoSrc}">`
     // IdP data available using getAdditionalUserInfo(result)
     // ...
-    console.log(user)
   }).catch((error) => {
-  	console.error(error)
-  	debugger
+    console.error(error)
     // Handle Errors here.
     // const errorCode = error.code;
     // const errorMessage = error.message;
@@ -62,23 +51,59 @@ getRedirectResult(auth)
     // // The AuthCredential type that was used.
     // const credential = GoogleAuthProvider.credentialFromError(error);
     // ...
-  });	
+  });
+    	// signInWithRedirect(auth, new GoogleAuthProvider())
 
-        export async function signOut() {
-            try {
-                await signOut(fbauth);
-            } catch (error) {
-                console.error('Ошибка выхода:', error);
-            }
-        }
+	} catch(error) {
+		console.error(error)
+		// triggerNavigation('/about')
+	}
 
-        export async function signUp() {
-            const email = document.querySelector('signup-component .email-input').value;
-            const password = document.querySelector('signup-component .password-input').value;
-            try {
-                await createUserWithEmailAndPassword(fbauth, email, password);
-                alert(' Аккаунт создан! Теперь вы можете войти.');
-            } catch (error) {
-                alert('❌ Ошибка: ' + error.message);
-            }
-        }
+}
+// getRedirectResult(auth)
+//   .then((result) => {
+//     debugger
+
+
+//     // This gives you a Google Access Token. You can use it to access Google APIs.
+//     const credential = GoogleAuthProvider.credentialFromResult(result);
+//     const token = credential.accessToken;
+
+//     // The signed-in user info.
+//     const user = result.user;
+//     // IdP data available using getAdditionalUserInfo(result)
+//     // ...
+//     console.log(user)
+//   }).catch((error) => {
+//   	console.error(error)
+//   	// debugger
+//     // Handle Errors here.
+//     // const errorCode = error.code;
+//     // const errorMessage = error.message;
+//     // // The email of the user's account used.
+//     // const email = error.customData.email;
+//     // // The AuthCredential type that was used.
+//     // const credential = GoogleAuthProvider.credentialFromError(error);
+//     // ...
+//   });	
+
+//         export async function signOut() {
+//             try {
+//                 await signOut(fbauth);
+//             } catch (error) {
+//                 console.error('Ошибка выхода:', error);
+//             }
+//         }
+
+//         export async function signUp() {
+//             const email = document.querySelector('signup-component .email-input').value;
+//             const password = document.querySelector('signup-component .password-input').value;
+//             try {
+//                 await createUserWithEmailAndPassword(fbauth, email, password);
+//                 alert(' Аккаунт создан! Теперь вы можете войти.');
+//             } catch (error) {
+//                 alert('❌ Ошибка: ' + error.message);
+//             }
+//         }
+
+export async function signUp() {}
