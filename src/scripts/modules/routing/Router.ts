@@ -20,7 +20,7 @@ class Router {
         this.navigate({pathname: location.pathname})
 
         addEventListener('popstate', async () => {
-            const mobileMenu = document.querySelector('#mobile-menu')
+            // const mobileMenu = document.querySelector('#mobile-menu')
             if (mobileMenu.classList.contains('visible')) {
                 mobileMenu.classList.remove('visible')
             }

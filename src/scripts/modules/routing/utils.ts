@@ -23,5 +23,7 @@ export function triggerNavigation(relativePath) {
 }
 
 export const hideAllComponents = () => {
-    contentWrappers.forEach(component => hideComponent(component))
+    // get html nodes
+    const nodes = Object.keys(contentWrappers)
+    nodes.forEach(component => hideComponent(component))
 }
