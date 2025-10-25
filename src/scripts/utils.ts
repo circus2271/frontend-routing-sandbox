@@ -14,7 +14,7 @@ export function registerEvent(event) {
 	// return function addCallback(cb) {
 	// 	callbacks.push(cb)
 	// }
-	return registerCallback(callback) {
+	return function registerCallback(callback) {
 		callbacks.push(callback)
 	}
 }
