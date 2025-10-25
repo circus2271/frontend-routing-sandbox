@@ -14,7 +14,15 @@ export function registerEvent(event) {
 	// return function addCallback(cb) {
 	// 	callbacks.push(cb)
 	// }
-	return function registerCallback(callback) {
-		callbacks.push(callback)
+	// return function registerCallback(callback) {
+	// 	callbacks.push(callback)
+	// }
+	return {
+		registerCallback(callback) {
+   		    callbacks.push(callback)
+   		}
 	}
 }
+
+export const themeSwitchEvent = registerEvent('themeSwitchEvent')
+
