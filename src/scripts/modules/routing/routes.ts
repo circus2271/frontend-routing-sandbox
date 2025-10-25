@@ -1,5 +1,5 @@
-import {showComponent} from '@routing/utils'
-import {Route} from '@routing/types'
+import {showComponent} from './utils'
+import {Route} from './types'
 
 // export const staticRoutes: Route[] = [
 export const staticRoutes: Route[] = [

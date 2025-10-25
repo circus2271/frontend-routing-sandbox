@@ -1,8 +1,9 @@
 import Ripple from '@modules/Ripple'
-import {settings} from '@custom-elements/settings-component'
-import {hideAllComponents, showComponent} from '@modules/utils'
-import {Route} from '@routing/types'
-import {staticRoutes, route404} from '@routing/routes'
+// import {settings} from '@custom-elements/settings-component'
+import {settings} from '@modules/settings'
+import {hideAllComponents, showComponent} from './utils'
+import {Route} from './types'
+import {staticRoutes, route404} from './routes'
 import {Post} from "@custom-elements/PostComponent";
 import {users} from '@mock-data'
 

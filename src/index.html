@@ -32,18 +32,16 @@
 <!--  <link rel="preload" href="~/src/media/images/icons/note-icon.svg" as="image">-->
 <!--  <link rel="preload" href="~/src/media/images/icons/loading.svg" as="image">-->
   <script>
-    const getCurrentTheme = () => {
-      const userDefinedTheme = localStorage.getItem('currentTheme')
+    const userDefinedTheme = localStorage.getItem('currentTheme')
+    const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches ? 'dark' :                     matchMedia('(prefers-color-scheme: light').matches ? 'light' : null
 
-      // const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && ThemeOptions.Dark
-      const preferredTheme = matchMedia('(prefers-color-scheme: dark').matches && 'dark'
-
-
-      return userDefinedTheme || preferredTheme
+    const currentTheme = userDefinedTheme || preferredTheme || 'dark' // (as default theme...)
+    if (currentTheme !== userDefinedTheme) {
+      localStorage.setItem('currentTheme', currentTheme)
     }
 
-    document.documentElement.style.setProperty('--currentTheme', getCurrentTheme())
-
+    document.documentElement.style.setProperty('--currentTheme', currentTheme)
+   
   </script>
 </head>
 <body>
