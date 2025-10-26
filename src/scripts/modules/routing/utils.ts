@@ -1,4 +1,6 @@
-import {contentWrappers} from '@custom-elements'
+// import {contentWrappers} from '@custom-elements/index'
+// import {contentWrappers} from '~/src/scripts/components/custom-elements/index'
+import {contentWrappers} from '../../components/custom-elements'
 
 export function showComponent(value) {
     const component = typeof value === 'string' ? document.querySelector(value) : value
@@ -8,7 +10,7 @@ export function showComponent(value) {
 
 export function hideComponent(value) {
     const component = typeof value === 'string' ? document.querySelector(value) : value
-
+// debugger
     component.removeAttribute('visible')
 }
 
@@ -24,6 +26,7 @@ export function triggerNavigation(relativePath) {
 
 export const hideAllComponents = () => {
     // get html nodes
-    const nodes = Object.keys(contentWrappers)
+    // const nodes = Object.keys(contentWrappers)
+    const nodes = Object.values(contentWrappers)
     nodes.forEach(component => hideComponent(component))
 }

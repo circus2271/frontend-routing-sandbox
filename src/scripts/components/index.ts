@@ -1,7 +1,8 @@
-import {contentWrappers} from '@custom-elements'
+import {contentWrappers} from './custom-elements'
 // import {contentWrappers} from '@custom-elements'
-
 // export const components = {
+import {logIn, signUp} from '@modules/auth'
+
 export const htmlNodes = {
 	...contentWrappers,
 

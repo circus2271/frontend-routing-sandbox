@@ -4,8 +4,11 @@ import {settings} from '@modules/settings'
 import {hideAllComponents, showComponent} from './utils'
 import {Route} from './types'
 import {staticRoutes, route404} from './routes'
-import {Post} from "@custom-elements/PostComponent";
-import {users} from '@mock-data'
+// import {Post} from "@custom-elements/PostComponent";
+import {Post} from "../../components/custom-elements/PostComponent";
+// import {users} from '@mock-data'
+import {users} from '../../mock-data'
+import {htmlNodes} from '../../components'
 
 const ripple = new Ripple()
 
@@ -22,8 +25,8 @@ class Router {
 
         addEventListener('popstate', async () => {
             // const mobileMenu = document.querySelector('#mobile-menu')
-            if (mobileMenu.classList.contains('visible')) {
-                mobileMenu.classList.remove('visible')
+            if (htmlNodes.mobileMenu.classList.contains('visible')) {
+                htmlNodes.mobileMenu.classList.remove('visible')
             }
             // хорошо бы иметь это как метод компонента, чтобы можно было бы вызывать это как comopnent.isVisible()
             // if (isVisible(mobileMenu)) {
@@ -56,34 +59,34 @@ class Router {
                 }
             }
 
-            const mobileMenu = document.querySelector('#mobile-menu')
+            // const mobileMenu = document.querySelector('#mobile-menu')
 
             // handle sidebar appearance on click (if mobile sidebar is visible)
             const element = e.target instanceof HTMLElement && e.target
-            if (mobileMenu.classList.contains('visible')) {
+            if (htmlNodes.mobileMenu.classList.contains('visible')) {
 
                 // now because of adding an overlay this is barely possible
                 const clickedOutsideOfMobileSidebar =  element.closest('#mobile-menu') === null
                 if (clickedOutsideOfMobileSidebar) {
-                    mobileMenu.classList.remove('visible')
+                    htmlNodes.mobileMenu.classList.remove('visible')
                 }
                 // so
                 if (element.classList.contains('overlay')) {
-                    mobileMenu.classList.remove('visible')
+                    htmlNodes.mobileMenu.classList.remove('visible')
                 }
 
                 const clickedInsideMobileMenuSidebar = !clickedOutsideOfMobileSidebar
                 if (clickedInsideMobileMenuSidebar) {
                     const isAnchor = element instanceof HTMLAnchorElement
                     if (isAnchor) {
-                        mobileMenu.classList.remove('visible')
+                        htmlNodes.mobileMenu.classList.remove('visible')
                     }
                 }
             } else {
                 if (element.closest('#open-sidebar')) {
                 //     // element is openSidebarButton
                 //     // show menu
-                    mobileMenu.classList.add('visible')
+                    htmlNodes.mobileMenu.classList.add('visible')
                 }
             }
 
@@ -149,7 +152,7 @@ class Router {
                                     htmlNodes.userProfileComponent.setAttribute('email', user.email)
                                     htmlNodes.userProfileComponent.setAttribute('name', user.name)
 
-                                    showComponent(userProfileComponent)
+                                    showComponent(htmlNodes.userProfileComponent)
                                 }
                             }
                         }
@@ -226,15 +229,15 @@ class Router {
 export const router = new Router()
 
 router.addFunctionToBeforeNavigateFunctionStack(async () => {
-    const scrollBehaviour = settings.prefersReducedAnimation() ? 'instant' : 'smooth'
+    const scrollBehaviour = settings.prefersReducedAnimation ? 'instant' : 'smooth'
 
     window.scrollTo({top: 0, behavior: scrollBehaviour})
 })
 
 router.addFunctionToBeforeNavigateFunctionStack(async () => {
-    const mobileMenu = document.querySelector('#mobile-menu')
+    // const mobileMenu = document.querySelector('#mobile-menu')
     // maybe it should be run if menu is open and click is inside that menu
-    mobileMenu.classList.remove('visible')
+    htmlNodes.mobileMenu.classList.remove('visible')
 })
 
 
