@@ -6,14 +6,7 @@
     "build": "rimraf ./dist && parcel build src/index.html",
     "check": "tsc --noEmit --watch"
   },
-  "alias": {
-    "@components/*": "./src/scripts/components/$1",
-    "@modules/*": "./src/scripts/modules/$1",
-    "@custom-elements/*": "./src/scripts/components/custom-elements/$1",
-    "@routing/*": "./src/scripts/modules/routing/$1",
-    "@types111/": "./src/scripts/types.ts",
-    "@mock-data111/": "./src/scripts/mock-data.ts"
-  },
+  
   "browserslist": "> 0.5%, last 2 versions, not dead, iOS 13",
   "devDependencies": {
     "@parcel/resolver-glob": "^2.9.3",

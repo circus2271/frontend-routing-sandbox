@@ -1,4 +1,4 @@
-import {settings} from "@custom-elements/settings-component";
+import {settings} from "@modules/settings";
 import {Post} from "@custom-elements/PostComponent";
 // import {users} from "@mock-data";
 import {users} from "../../mock-data";

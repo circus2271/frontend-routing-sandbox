@@ -1,9 +1,9 @@
-// import {settings} from "@custom-elements/settings-component";
+import {settings} from "@modules/settings";
 // import {cleanUpAttributes} from "@modules/helpers";
 // /**/import {users} from "@mock-data";
 import {users} from "../../mock-data";
 // import {currentUser} from "@modules/user";
-
+let currentUser = null
 export type Post = {
     slug: string,
     title: string,
@@ -120,7 +120,7 @@ class PostComponent extends HTMLElement {
               <header>
     <!--            <header-parallax-image></header-parallax-image>-->
     <!--            if image -->
-                <div class="image-wrapper" ${settings.prefersReducedAnimation() && 'no-parallax'}>
+                <div class="image-wrapper" ${settings.prefersReducedAnimation && 'no-parallax'}>
                   <img src="#" alt="">
                 </div>
               </header>

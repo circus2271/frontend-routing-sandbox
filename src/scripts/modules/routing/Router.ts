@@ -53,9 +53,9 @@ class Router {
             // if ((e.target as HTMLButtonElement).type !== 'submit') e.preventDefault()
 
             if (e.target instanceof HTMLElement && e.target.hasAttribute('ripple-effect')) {
-                if (!settings.ripplesDisabled) {
+                if (settings.ripplesEnabled) {
                     // hello
-                    ripple.create(e.target, settings.theme)
+                    ripple.create(e.target, settings.currentTheme)
                 }
             }
 
