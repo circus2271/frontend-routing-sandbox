@@ -1,5 +1,6 @@
-import {themeSwitchEvent} from '@modules/utils'
-
+// import {themeSwitchEvent} from '@modules/utils'
+import {themeSwitchEvent} from './utils'
+ 
 class SidebarComponent extends HTMLElement {
 
     constructor() {
@@ -10,14 +11,14 @@ class SidebarComponent extends HTMLElement {
     connectedCallback() {
         themeSwitchEvent.registerCallback((event) => {
 
-            const themeToggler = this.querySelector('#theme-toggle')
+            const themeToggler = this.querySelector<HTMLElement>('#theme-toggle')
             const newTheme = event.detail.newTheme
 
-            if (theme === 'light') {
+            if (newTheme === 'light') {
                 themeToggler.style.color = 'yellow'
             }
 
-            if (theme === 'dark') {
+            if (newTheme === 'dark') {
                 themeToggler.style.color = 'red'
             }
         })

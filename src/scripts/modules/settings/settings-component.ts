@@ -34,7 +34,7 @@ class SettingsElement extends HTMLElement {
             if ((e.currentTarget as HTMLElement).hasAttribute('disabled')) return
             toggleToggler(e.currentTarget)
             // toggleRippleEffectSetting()
-            this.state.toggleRippleEffectSetting()
+            this.state.toggleRipples()
         }
     }
 
@@ -48,7 +48,7 @@ class SettingsElement extends HTMLElement {
                 <div class="setting-name">
                   dark theme
                 </div>
-                <div class="settings-toggler" ${this.state.theme === 'dark' && 'turned-on'}>
+                <div class="settings-toggler" ${this.state.currentTheme === 'dark' && 'turned-on'}>
                   <div class="tumbler-wrapper">
                     <div class="tumbler"></div>
                   </div>
@@ -58,7 +58,7 @@ class SettingsElement extends HTMLElement {
                 <div class="setting-name">
                   reduced motion (reduced animations)
                 </div>
-                <div class="settings-toggler" ${this.state.prefersReducedAnimation() && 'turned-on'}>
+                <div class="settings-toggler" ${this.state.prefersReducedAnimation && 'turned-on'}>
                   <div class="tumbler-wrapper">
                     <div class="tumbler"></div>
                   </div>
@@ -68,7 +68,7 @@ class SettingsElement extends HTMLElement {
                 <div class="setting-name">
                   ripple effect
                 </div>
-                <div class="settings-toggler" ${!this.state.ripplesDisabled && 'turned-on'}>
+                <div class="settings-toggler" ${!this.state.ripplesEnabled && 'turned-on'}>
                   <div class="tumbler-wrapper">
                     <div class="tumbler"></div>
                   </div>

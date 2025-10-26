@@ -4,19 +4,24 @@
 export default class Settings {
     // theme is set in a head tag...
     private _currentTheme = localStorage.getItem('currentTheme')
-    private _ripplesEnabled = localStorage.getItem('ripplesEnabled') === 'true' ,
+    private _ripplesEnabled = localStorage.getItem('ripplesEnabled') === 'true'
     // language: 'russian' | 'english'
-    private _language: 'english',
+    private _language: 'english' | 'russian' = 'english'
 
     get prefersReducedAnimation() {
         return matchMedia('(prefers-reduced-motion)').matches
+    }
+
+    get language() {
+        return this._language
     }
 
     get currentTheme() {
         return this._currentTheme
     }
 
-    set currentTheme(theme: 'light' | 'dark') {
+    // set currentTheme(theme: 'light' | 'dark') {
+    set currentTheme(theme: string) {
         localStorage.setItem('currentTheme', theme)
         document.documentElement.style.setProperty('--currentTheme', theme)
         this._currentTheme = theme
@@ -29,24 +34,29 @@ export default class Settings {
 
     disableRipples() {
         this._ripplesEnabled = false
-        localStorage.setItem('ripplesDisabled', `${this._ripplesDisabled}`)
+        localStorage.setItem('_ripplesEnabled', `${this._ripplesEnabled}`)
     }
 
     enableRipples() {
         this._ripplesEnabled = true
-        localStorage.setItem('ripplesDisabled', `${this._ripplesDisabled}`)
+        localStorage.setItem('_ripplesEnabled', `${this._ripplesEnabled}`)
 
     }
 
     toggleRipples() {
+    // toggleRippleEffectSetting() {    
         this._ripplesEnabled = !this._ripplesEnabled
 
         localStorage.setItem('ripplesEnabled', `${this._ripplesEnabled}`)
     }
 
-    get areRipplesEnabled() {
+    get ripplesEnabled() {
         return this._ripplesEnabled || (localStorage.getItem('ripplesEnabled') === 'true')
     }
+
+    // get areRipplesEnabled() {
+    //     return this._ripplesEnabled || (localStorage.getItem('ripplesEnabled') === 'true')
+    // }
 
 
 
