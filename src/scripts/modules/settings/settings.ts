@@ -30,6 +30,7 @@ export default class Settings {
     toggleTheme() {
         // it should trigger a set method
         this._currentTheme = this._currentTheme === 'light' ? 'dark' : 'light'
+        document.documentElement.style.setProperty('--currentTheme', this._currentTheme)
     }
 
     disableRipples() {

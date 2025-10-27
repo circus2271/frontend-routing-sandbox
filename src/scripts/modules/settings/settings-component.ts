@@ -1,4 +1,5 @@
 import {settings} from './settings'
+import {themeSwitchEvent} from '@modules/utils'
 
 class SettingsElement extends HTMLElement {
     // state = new Settings()
@@ -22,12 +23,26 @@ class SettingsElement extends HTMLElement {
                 toggler.setAttribute('turned-on', '')
             }
         }
+
+        themeSwitchEvent.registerCallback((event) => {
+
+            const li = this.querySelector<HTMLElement>('#theme-toggle')
+            const toggler = li.querySelector('.settings-toggler')
+
+            if (toggler.hasAttribute('turned-on')) {
+                toggler.removeAttribute('turned-on')
+            } else {
+                toggler.setAttribute('turned-on', '')
+            }
+        })
+
         // ...
         this.querySelector<HTMLElement>('#theme-toggle').onclick = (e) => {
             if ((e.currentTarget as HTMLElement).hasAttribute('disabled')) return
-            toggleToggler(e.currentTarget)
+            // toggleToggler(e.currentTarget)
             // toggleTheme()
-            this.state.toggleTheme()
+            // this.state.toggleTheme()
+              themeSwitchEvent.dispatchEvent()
         }
         // this.querySelector('#reduced-motion-setting').onclick = toggleTheme
         this.querySelector<HTMLElement>('#ripple-effect-setting').onclick = (e) => {

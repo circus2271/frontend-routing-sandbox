@@ -2,7 +2,7 @@
 import './user-profile-page'
 import './PostComponent'
 import './recent-posts'
-
+import '@modules/sidebar-component'
 
 export const contentWrappers = {
     settingsComponent: document.querySelector('settings-component'),
