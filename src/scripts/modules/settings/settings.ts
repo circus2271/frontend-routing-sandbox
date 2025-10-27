@@ -7,9 +7,22 @@ export default class Settings {
     private _ripplesEnabled = localStorage.getItem('ripplesEnabled') === 'true'
     // language: 'russian' | 'english'
     private _language: 'english' | 'russian' = 'english'
+    private _sidebarPosition: 'left' | 'right' = 'right'
 
     get prefersReducedAnimation() {
         return matchMedia('(prefers-reduced-motion)').matches
+    }
+
+    get sidebarPosition() {
+        return this._sidebarPosition
+    }
+
+    toggleSidebarPosition() {
+        // const newPosition = this._sidebarPosition === 'left' ? 'right' : 'left'
+        // this._sidebarPosition = newPosition
+        this._sidebarPosition = this._sidebarPosition === 'left' ? 'right' : 'left'
+        if (this._sidebarPosition === 'left') document.querySelector('.sidebar').classList.add('from-left')
+            else if (this._sidebarPosition === 'right') document.querySelector('.sidebar').classList.remove('from-left')
     }
 
     get language() {

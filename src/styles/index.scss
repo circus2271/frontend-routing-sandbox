@@ -50,6 +50,10 @@
     padding: 2rem 1.5rem;
     transform: translateX(100%);
     transition-duration: .5s;
+
+    &.from-left {
+      transform: translateX(-100%);
+    }
   }
 
   .avatar {

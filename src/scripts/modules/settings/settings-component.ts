@@ -51,6 +51,14 @@ class SettingsElement extends HTMLElement {
             // toggleRippleEffectSetting()
             this.state.toggleRipples()
         }
+
+        this.querySelector<HTMLElement>('#sidebar-position-setting-toggler').onclick = (e) => {
+            if ((e.currentTarget as HTMLElement).hasAttribute('disabled')) return
+            toggleToggler(e.currentTarget)
+            // toggleRippleEffectSetting()
+            this.state.toggleSidebarPosition()
+
+        }
     }
 
     getMarkup() {
@@ -83,12 +91,22 @@ class SettingsElement extends HTMLElement {
                 <div class="setting-name">
                   ripple effect
                 </div>
-                <div class="settings-toggler" ${!this.state.ripplesEnabled && 'turned-on'}>
+                <div class="settings-toggler" ${this.state.ripplesEnabled && 'turned-on'}>
                   <div class="tumbler-wrapper">
                     <div class="tumbler"></div>
                   </div>
                 </div>
               </li>
+          <li id="sidebar-position-setting-toggler">
+                   <div class="setting-name">
+                       sidebar position (left/right)
+                   </div>
+                   <div class="settings-toggler" ${(this.state.sidebarPosition === 'right') && 'turned-on'}>
+                     <div class="tumbler-wrapper">
+                       <div class="tumbler"></div>
+                     </div>
+                   </div>
+                 </li>
                  <li id="language-setting-toggler" ${!(this.state.language === 'russian') && 'turned-on'} disabled>
                    <div class="setting-name">
 <!--                     язык (русский/английский)-->
