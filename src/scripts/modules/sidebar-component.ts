@@ -1,5 +1,5 @@
 // import {themeSwitchEvent} from '@modules/utils'
-import {themeSwitchEvent} from './utils'
+import {themeSwitchEvent} from '@modules/events'
 import {settings} from '@modules/settings'
  
 class SidebarComponent extends HTMLElement {

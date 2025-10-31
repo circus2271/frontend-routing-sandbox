@@ -51,8 +51,12 @@
     transform: translateX(100%);
     transition-duration: .5s;
 
+    // &:not(.from-left) {}
+
     &.from-left {
       transform: translateX(-100%);
+      left: 0;
+      right: unset;
     }
   }
 

@@ -1,5 +1,5 @@
 import {settings} from './settings'
-import {themeSwitchEvent} from '@modules/utils'
+import {themeSwitchEvent} from '@modules/events'
 
 class SettingsElement extends HTMLElement {
     // state = new Settings()

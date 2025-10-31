@@ -5,9 +5,15 @@ export function attachCallbackToEvent(event, callback) {
 } 
 
 // export function registerEvent(event: string | CustomEvent) {
-export function registerEvent(event: string) {
+export function registerEvent(event: string, action) {
 	const callbacks = []
-	window.addEventListener(event, () => callbacks.forEach(cb => cb(event)))
+	window.addEventListener(event, () => {
+		action()
+
+		// and then notify callbacks...
+		callbacks.forEach(cb => cb(event))
+	})
+
 
 	// return function addCallback(cb) {
 	// 	callbacks.push(cb)
@@ -20,11 +26,11 @@ export function registerEvent(event: string) {
    		    callbacks.push(callback)
    		},
    		dispatchEvent() {
-   			settings.toggleTheme()
    			window.dispatchEvent(new CustomEvent(event))
    		}
 	}
 }
-
-export const themeSwitchEvent = registerEvent('themeSwitchEvent')
+   			
+   			
+export const themeSwitchEvent = registerEvent('themeSwitchEvent', () => settings.toggleTheme())
 
