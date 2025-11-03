@@ -7,8 +7,8 @@ export function attachCallbackToEvent(event, callback) {
 // export function registerEvent(event: string | CustomEvent) {
 export function registerEvent(event: string, action) {
 	const callbacks = []
-	window.addEventListener(event, () => {
-		action()
+	window.addEventListener(event, async () => {
+		await action()
 
 		// and then notify callbacks...
 		callbacks.forEach(cb => cb(event))
