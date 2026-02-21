@@ -44,13 +44,6 @@ class Router {
             const isCustomLink = e.target instanceof HTMLAnchorElement && e.target.hasAttribute('custom-link')
 
             if (isCustomLink) e.preventDefault()
-            // const isSubmitButton = e.target instanceof HTMLButtonElement && e.target.type === 'submit'
-
-            // if (!isSubmitButton) {
-            //     e.preventDefault()
-            // }
-
-            // if ((e.target as HTMLButtonElement).type !== 'submit') e.preventDefault()
 
             if (e.target instanceof HTMLElement && e.target.hasAttribute('ripple-effect')) {
                 if (settings.ripplesEnabled) {
@@ -59,7 +52,6 @@ class Router {
                 }
             }
 
-            // const mobileMenu = document.querySelector('#mobile-menu')
 
             // handle sidebar appearance on click (if mobile sidebar is visible)
             const element = e.target instanceof HTMLElement && e.target
@@ -96,9 +88,6 @@ class Router {
                 const anchor = e.target instanceof HTMLAnchorElement ? e.target : (e.target as HTMLElement).closest('a')
 
                 if (anchor.hasAttribute('custom-link')) {
-                    // let dynamicRoute = false;
-                    // let userProfilePage = false;
-                    // let userPostPage = false
 
                     const { pathname } = anchor
 
@@ -120,10 +109,49 @@ class Router {
 
         let nextRoute = this.staticRoutes.find(r => r.relativePath === pathname)
         if (!nextRoute) {
+
             // check if it's user profile page
             // const urlParts = location.pathname.split('/').filter(l !== '')
             const urlParts = pathname.split('/').filter(l => l !== '');
             if (urlParts[0].startsWith('@')) {
+                debugger
+                if (urlParts.length === 3) {
+                    // too imperative, i know, but for now let it be
+                    if (this.currentUrl.includes('post')) {
+                        if (this.currentUrl.includes('create')) {
+                          // it's a post page of a user
+                            nextRoute = {
+                                // relativePath: user.loggedIn ? '/me' : `/${user.username}`,
+                                // relativePath: `/${user.username}`,
+                                relativePath: this.currentUrl,
+                                canNavigate: () => {
+                                    // if it's not user's personal page, canNavigate should be false
+                                    // if (user.admin === false) return
+                                    // if (user.canCreatePosts === false) return
+                                    // if (urlParts[0] !== user.username) return
+
+                                    showComponent(htmlNodes.createPostComponent)
+
+
+
+                                },
+                                beforeNavigate: async () => {
+                                    // const userComponent = htmlNodes.userProfileComponent
+
+                                    // maybe it's better to use some js object to store current state,
+                                    // for example: state = {currentActivePage: 'userProfilePage', profile: user }
+                                    htmlNodes.userProfileComponent.setAttribute('username', user.username)
+                                    htmlNodes.userProfileComponent.setAttribute('email', user.email)
+                                    htmlNodes.userProfileComponent.setAttribute('name', user.name)
+
+                                    showComponent(htmlNodes.userProfileComponent)
+                                }
+                            }
+
+                        }
+                    }
+                }
+
                 // it's user based page
                 const user = users.find(user => user.username === urlParts[0])
 

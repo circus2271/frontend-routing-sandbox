@@ -2,6 +2,8 @@
 import './user-profile-page'
 import './PostComponent'
 import './recent-posts'
+// import './create-post'
+import './createPostComponent'
 import '@modules/sidebar-component'
 
 export const contentWrappers = {
@@ -11,5 +13,5 @@ export const contentWrappers = {
     recentPostsComponent: document.querySelector('recent-posts'),
     loginComponent: document.querySelector('login-component'),
     signupComponent: document.querySelector('signup-component'),
-    
+    createPostComponent: document.querySelector('create-post'),
 }
