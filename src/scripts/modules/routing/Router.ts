@@ -128,23 +128,14 @@ class Router {
                                     // if it's not user's personal page, canNavigate should be false
                                     // if (user.admin === false) return
                                     // if (user.canCreatePosts === false) return
-                                    // if (urlParts[0] !== user.username) return
+                                    // if (urlParts[0] !== user.username) return false
 
-                                    showComponent(htmlNodes.createPostComponent)
-
+                                    return true
 
 
                                 },
                                 beforeNavigate: async () => {
-                                    // const userComponent = htmlNodes.userProfileComponent
-
-                                    // maybe it's better to use some js object to store current state,
-                                    // for example: state = {currentActivePage: 'userProfilePage', profile: user }
-                                    htmlNodes.userProfileComponent.setAttribute('username', user.username)
-                                    htmlNodes.userProfileComponent.setAttribute('email', user.email)
-                                    htmlNodes.userProfileComponent.setAttribute('name', user.name)
-
-                                    showComponent(htmlNodes.userProfileComponent)
+                                    showComponent(htmlNodes.createPostComponent)
                                 }
                             }
 
