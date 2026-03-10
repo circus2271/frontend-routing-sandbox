@@ -77,6 +77,16 @@ class SettingsElement extends HTMLElement {
                   </div>
                 </div>
               </li>
+              <!--<li id="header-image-setting">
+                <div class="setting-name">
+                  header image
+                </div>
+                <div class="settings-toggler" ${this.state.headerImage === 'default' && 'turned-on'}>
+                  <div class="tumbler-wrapper">
+                    <div class="tumbler"></div>
+                  </div>
+                </div>
+              </li>-->
               <li id="reduced-motion-setting" disabled>
                 <div class="setting-name">
                   reduced motion (reduced animations)

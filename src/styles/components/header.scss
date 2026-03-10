@@ -17,9 +17,11 @@
     img {
       margin: 0 auto;
       position: relative;
-      opacity: 0;
       object-fit: cover;
       visibility: hidden;
+      opacity: 0;
+      
+
       // mixin hidden
       //z-index: 1;
 

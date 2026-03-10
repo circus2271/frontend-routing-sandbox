@@ -6,6 +6,7 @@ import EditorJS from '@editorjs/editorjs'
   //  // ... your tools
   }
 })
+//})
 // var editor = new EditorJS({
 //   holder : 'editorjs',
 //   tools: {

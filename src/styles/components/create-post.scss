@@ -1,0 +1,8 @@
+create-post {
+	display: none;
+
+    &[visible] {
+        display: block
+    }
+ 
+}

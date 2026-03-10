@@ -114,7 +114,7 @@ class Router {
             // const urlParts = location.pathname.split('/').filter(l !== '')
             const urlParts = pathname.split('/').filter(l => l !== '');
             if (urlParts[0].startsWith('@')) {
-                debugger
+                // debugger
                 if (urlParts.length === 3) {
                     // too imperative, i know, but for now let it be
                     if (this.currentUrl.includes('post')) {

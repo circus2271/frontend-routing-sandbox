@@ -90,7 +90,9 @@ export default class Settings {
     //     settings.theme = theme
     // }
  
-    
+    get headerImage() {
+        return 'auto'
+    }
 }
 
 export const settings = new Settings()
