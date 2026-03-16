@@ -202,6 +202,7 @@ class Router {
                                 htmlNodes.postComponent.setAttribute('title', post.title)
                                 htmlNodes.postComponent.setAttribute('description', post.description)
                                 htmlNodes.postComponent.setAttribute('date', post.date)
+                                htmlNodes.postComponent.setAttribute('post-id', post.id)
                                 // make this component visible
                                 // singlePostComponent.setAttribute('visible', '')
                                 // singlePostComponent.setAttribute('visible', '')

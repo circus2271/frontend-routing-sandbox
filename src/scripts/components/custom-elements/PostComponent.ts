@@ -1,7 +1,7 @@
 import {settings} from "@modules/settings";
 // import {cleanUpAttributes} from "@modules/helpers";
 // /**/import {users} from "@mock-data";
-import {users} from "../../mock-data";
+import {users, User, defaultAvatar} from "../../mock-data";
 // import {currentUser} from "@modules/user";
 let currentUser = null
 export type Post = {
@@ -10,6 +10,7 @@ export type Post = {
     image?: string,
     description?: string
     date: string,
+    id: string,
     author?: {
         avatar?: string,
         username: string
@@ -54,8 +55,12 @@ class PostComponent extends HTMLElement {
     date: string
     image: string
     post: Post
+    postId: string
     // comments: Pick<Post, 'comments'> = []
     comments = []
+    postAuthor: User;
+    currentPost: Post;
+
 
     constructor() {
         // Always call super first in constructor
@@ -73,19 +78,25 @@ class PostComponent extends HTMLElement {
         this.title = this.getAttribute('title')
         this.description = this.getAttribute('description')
         this.date = this.getAttribute('date')
+        this.postId = this.getAttribute('post-id')
 
         let currentPost;
+        let postAuthor;
         for (let user of users) {
-            const post = user.posts.find((p: Post) => p.slug === this.slug)
+            // слаг может поменяться, поэтому лучше присвоить посту отдельный уникальный id
+            const post = user.posts.find((p: Post) => p.id === this.postId)
             if (post) {
-                currentPost = post
+                this.currentPost = post
+                this.postAuthor = user // not best, i know
+        // debugger
 
                 break;
             }
         }
 
-        if (currentPost) {
-            this.comments = currentPost.comments
+
+        if (this.currentPost) {
+            this.comments = this.currentPost.comments
         }
 
         this.innerHTML = this.getMarkup()
@@ -125,6 +136,17 @@ class PostComponent extends HTMLElement {
                 </div>
               </header>
           `}
+
+            
+            <header class="post__author">
+              <div class="image-wrapper">
+                <img src="${this.postAuthor.avatarUrl ? this.postAuthor.avatarUrl : defaultAvatar}" alt="${this.postAuthor.username}'s avatar">     
+              </div>
+              <h2 class="author__username">
+                ${this.postAuthor.username}
+              </h2>
+            </header>
+            
             
             <h2 class="post__title">
               ${this.title}

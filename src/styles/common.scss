@@ -35,7 +35,7 @@ body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   //  overflow: hidden;
   overflow-x: hidden;
-  transition: background-color .5s, color .5s
+  transition: background-color .5s, color .5s;
 
 
           //color-scheme: var(--currentTheme);
@@ -46,6 +46,11 @@ body {
   //&[currentTheme="light"], &[currentTheme="default"]  {
   //  color-scheme: light;
   //}
+
+  .page {
+    max-width: 500px;
+    margin: 0 auto;
+  }
 
   h1 {
     color: green;
